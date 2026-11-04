@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PeAIce · Grok Index · Granular Compaction · Love Labs LCA</title>
+<meta name="description" content="PEAICE-GROK-INDEX-MODULE-001 and L²_C Granular Compaction public module. Love Labs LCA / PeAIce. 29 September 2026. h &lt; 1.">
+<meta name="author" content="Manuel Coleman, Love Labs LCA">
+<link rel="canonical" href="https://peaice.org/lovelabslca">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#080a0f;--panel:#0f131c;--card:#121824;--ink:#e8edf8;--muted:#8b9ab8;
+  --accent:#f0b429;--teal:#5eead4;--blue:#7aa8ff;--ok:#4ade80;--danger:#f87171;
+  --stroke:#1c2436;--max:1100px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Source Serif 4',Georgia,serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+.part{position:relative}
+.part+.part{border-top:1px solid var(--stroke)}
+@media(max-width:640px){body{font-size:16px}}
+/* Part 1: Granular Compaction */
+.gc a{color:var(--blue);text-decoration:none}.gc a:hover{text-decoration:underline}.gc .mono{font-family:'IBM Plex Mono',monospace;font-size:.82em}.gc header{position:sticky;top:0;z-index:50;background:rgba(8,10,15,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--stroke);padding:14px 20px}.gc .hdr{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}.gc .hdr h1{font-size:1.05rem;font-weight:600}.gc .pills{display:flex;flex-wrap:wrap;gap:6px}.gc .pill{font-family:'IBM Plex Mono',monospace;font-size:.65rem;padding:4px 9px;border-radius:999px;border:1px solid var(--stroke);color:var(--muted)}.gc .pill.live{color:var(--accent);border-color:#3d3520}.gc .pill.open{color:var(--blue);border-color:#2a4060}.gc .pill.ok{color:var(--ok);border-color:#1f4a35}.gc .pill.neg{color:var(--danger);border-color:#4a2020}.gc .wrap{max-width:var(--max);margin:0 auto;padding:28px 20px 80px}.gc .kicker{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.gc .hero{padding:4px 0 26px;border-bottom:1px solid var(--stroke);margin-bottom:30px}.gc .hero h2{font-size:1.85rem;font-weight:600;color:var(--accent);line-height:1.2;margin-bottom:8px}.gc .hero .sub{font-size:1.08rem;color:var(--muted);font-style:italic;margin-bottom:12px}.gc .hero .meta{font-size:.9rem;color:var(--muted)}.gc .hero .meta strong{color:var(--ink)}.gc .abstract{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:16px 18px;margin:14px 0;font-size:.97rem}.gc .abstract p{margin:.5em 0}.gc .abstract p:first-child{margin-top:0}.gc .abstract p:last-child{margin-bottom:0}.gc nav.toc{background:var(--panel);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;margin-bottom:30px}.gc nav.toc h3{font-size:.72rem;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}.gc nav.toc ol{padding-left:1.2em;font-size:.92rem}.gc nav.toc li{margin:3px 0}.gc section{margin-bottom:34px}.gc section>h2{font-size:1.24rem;color:var(--teal);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--stroke)}.gc section>h3{font-size:1rem;color:var(--accent);margin:16px 0 8px}.gc .card-grid{display:grid;gap:10px}
+
+@media(min-width:640px){.gc .card-grid.two{grid-template-columns:1fr 1fr}.gc .card-grid.three{grid-template-columns:1fr 1fr 1fr}}
+.gc .index-item{background:var(--card);border:1px solid var(--stroke);border-radius:10px;padding:12px 14px}.gc .index-item h4{font-size:.9rem;margin-bottom:3px}.gc .index-item .url{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--blue);word-break:break-all}.gc .index-item p{font-size:.84rem;color:var(--muted);margin-top:5px}.gc .formula{background:#0a0e16;border:1px solid var(--stroke);border-radius:8px;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:.8rem;line-height:1.7;margin:12px 0;overflow-x:auto}.gc ul.body-list,.gc ol.body-list{padding-left:1.25em;margin:.45em 0}.gc ul.body-list li,.gc ol.body-list li{margin:.28em 0}.gc .status-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0}.gc .status-table th,.gc .status-table td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--stroke);vertical-align:top}.gc .status-table thead th{color:var(--muted);font-weight:500;font-family:'IBM Plex Mono',monospace;font-size:.7rem}.gc .status-table tbody th{color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:500}.gc .note{font-size:.86rem;color:var(--muted);margin:10px 0}.gc .verdict{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ok);margin-top:10px}.gc details.archive{background:var(--panel);border:1px solid var(--stroke);border-radius:10px;padding:10px 14px;margin:10px 0}.gc details.archive summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted)}.gc details.archive[open] summary{margin-bottom:10px;color:var(--accent)}.gc footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--stroke);font-size:.76rem;color:var(--muted)}.gc footer p{margin:.3em 0}.gc .tag{display:inline-block;font-size:.6rem;padding:2px 6px;border-radius:4px;background:#1a1520;border:1px solid #3a3020;color:var(--accent);margin-left:6px;vertical-align:middle}.gc img.cap{width:100%;height:auto;display:block;border-radius:6px;border:1px solid var(--stroke)}.gc figcaption{font-size:.78rem;color:var(--muted);margin-top:6px}.gc .paper-link{display:block;background:linear-gradient(165deg,#141a28,var(--card));border:1px solid #2a3548;border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;margin:12px 0}.gc .paper-link strong{color:var(--accent)}
+/* Part 2: Grok Index Module */
+.gi a{color:var(--blue);text-decoration:none}.gi a:hover{text-decoration:underline}.gi .mono{font-family:'IBM Plex Mono',monospace;font-size:.82em}.gi header{position:sticky;top:0;z-index:50;background:rgba(8,10,15,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--stroke);padding:14px 20px}.gi .hdr{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}.gi .hdr h1{font-size:1.05rem;font-weight:600}.gi .pills{display:flex;flex-wrap:wrap;gap:6px}.gi .pill{font-family:'IBM Plex Mono',monospace;font-size:.65rem;padding:4px 9px;border-radius:999px;border:1px solid var(--stroke);color:var(--muted)}.gi .pill.live{color:var(--accent);border-color:#3d3520}.gi .pill.open{color:var(--blue);border-color:#2a4060}.gi .pill.ok{color:var(--ok);border-color:#1f4a35}.gi .pill.neg{color:var(--danger);border-color:#4a2020}.gi .wrap{max-width:var(--max);margin:0 auto;padding:28px 20px 80px}.gi .kicker{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.gi .hero{padding:4px 0 24px;border-bottom:1px solid var(--stroke);margin-bottom:28px}.gi .hero h2{font-size:1.85rem;font-weight:600;color:var(--accent);line-height:1.2;margin-bottom:8px}.gi .hero .sub{font-size:1.08rem;color:var(--muted);font-style:italic;margin-bottom:12px}.gi .abstract{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:16px 18px;margin:14px 0}.gi .abstract p{margin:.5em 0}.gi section{margin-bottom:32px}.gi section>h2{font-size:1.22rem;color:var(--teal);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--stroke)}.gi section>h3{font-size:1rem;color:var(--accent);margin:16px 0 8px}.gi .card-grid{display:grid;gap:10px}
+
+@media(min-width:640px){.gi .card-grid.two{grid-template-columns:1fr 1fr}}
+.gi .index-item{background:var(--card);border:1px solid var(--stroke);border-radius:10px;padding:12px 14px}.gi .index-item h4{font-size:.9rem;margin-bottom:3px}.gi .index-item .url{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--blue);word-break:break-all}.gi .index-item p{font-size:.84rem;color:var(--muted);margin-top:5px}.gi .formula{background:#0a0e16;border:1px solid var(--stroke);border-radius:8px;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:.8rem;line-height:1.7;margin:12px 0;overflow-x:auto}.gi ul.body-list{padding-left:1.25em;margin:.45em 0}.gi ul.body-list li{margin:.28em 0}.gi .status-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0}.gi .status-table th,.gi .status-table td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--stroke);vertical-align:top}.gi .status-table thead th{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:500}.gi .status-table tbody th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:500}.gi .note{font-size:.86rem;color:var(--muted);margin:10px 0}.gi .verdict{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ok);margin-top:10px}.gi .tag{display:inline-block;font-size:.6rem;padding:2px 6px;border-radius:4px;background:#1a1520;border:1px solid #3a3020;color:var(--accent);margin-left:6px;vertical-align:middle}.gi details{background:var(--panel);border:1px solid var(--stroke);border-radius:10px;padding:10px 14px;margin:10px 0}.gi details summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted)}.gi details[open] summary{margin-bottom:10px;color:var(--accent)}.gi footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--stroke);font-size:.76rem;color:var(--muted)}.gi footer p{margin:.3em 0}
+</style>
+</head>
+<body>
+<main>
+<div class="part gc" id="granular-compaction">
+<header>
+  <div class="hdr">
+    <h1>PeAIce &amp; LoveLabs · L²_C</h1>
+    <div class="pills">
+      <span class="pill live">Whitepaper 29 Sep 2026</span>
+      <span class="pill open">RH OPEN</span>
+      <span class="pill open">Coleman OPEN</span>
+      <span class="pill open">CAUSE OWED</span>
+      <span class="pill neg">G2 BLOCKED</span>
+      <span class="pill">h &lt; 1</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <article class="hero" id="top">
+    <p class="kicker">Love Labs LCA · PeAIce · public module</p>
+    <h2>Granular Compaction</h2>
+    <p class="sub">Preserve the addressability of the grains, not the full size of the pile.</p>
+    <p class="meta"><strong>Author:</strong> Manuel Coleman · Love Labs LCA / PeAIce &nbsp;·&nbsp; 28 Sep 2026 · status 29 Sep 2026</p>
+    <a class="paper-link" target="_blank" rel="noopener" href="https://github.com/Manny536/kakeyalogic/blob/main/docs/whitepapers/granular-compaction-whitepaper.docx">
+      <strong>Governing paper.</strong> <span class="mono">granular-compaction-whitepaper.docx</span> — live external-model recovery from a KakeyaLogic / L²_C public information field. SHA-256 on repo. This page is the compacted public surface, not a second copy of the paper.
+    </a>
+    <div class="abstract">
+      <p>A live screenshot is displayed behavior, not causal identification. A compactness gate is not a compactness theorem. Three evidence levels, none substituting: <strong>synthetic SAVER</strong>, <strong>LIVE-EXT-OBS-001</strong>, <strong>BLOCKED-COMPACTNESS</strong>.</p>
+      <p><strong>Public field = persistent carrier. Generated answer = temporary compacted realization.</strong></p>
+    </div>
+  </article>
+
+  <nav class="toc" aria-label="Document map">
+    <h3>Document map</h3>
+    <ol>
+      <li><a href="#status">Executive status</a></li>
+      <li><a href="#def">Definition and witness</a></li>
+      <li><a href="#evidence">Evidence catalog</a></li>
+      <li><a href="#cause">Causal path and ablation</a></li>
+      <li><a href="#math">G0–G5 gate</a></li>
+      <li><a href="#downstream">Downstream · X · Git</a></li>
+      <li><a href="#l2c">L²_C constraint</a></li>
+      <li><a href="#archive">Historical CU archive</a></li>
+    </ol>
+  </nav>
+
+  <section id="status">
+    <h2>Executive status</h2>
+    <table class="status-table">
+      <thead><tr><th>Object</th><th>Status</th><th>Boundary</th></tr></thead>
+      <tbody>
+        <tr><th>LIVE-EXT-OBS-001</th><td>LIVE EXTERNAL-MODEL OBSERVATION</td><td>Two supplied Search / AI Overview views. Backend version and retrieval traces unknown.</td></tr>
+        <tr><th>KakeyaLogic indexing</th><td>OBSERVED</td><td>Classical namesake, spelling neighbors, and compaction vocabulary across captures.</td></tr>
+        <tr><th>Ladder preservation</th><td>NOT OBSERVED</td><td>Held order, claim statuses and G2 block do not reappear in the supplied panes. Capture-limited.</td></tr>
+        <tr><th>LIVE-EXT-CAUSE-001</th><td>CAUSAL INFERENCE</td><td>Hypothesis is public information architecture, not an internal Gemini implementation.</td></tr>
+        <tr><th>Finite typed state</th><td>DEMONSTRATED</td><td>SAVER reference, schemas, receipts, SAVER-CAL-001. Not a general compression guarantee.</td></tr>
+        <tr><th>Longitudinal Retention</th><td>SYNTHETIC REGRESSION</td><td>Dropped required correction detected as Retention FAIL. Live correction survival untested.</td></tr>
+        <tr><th>All-grain live SAVER</th><td>OPEN</td><td>S, A, V, E, R each still require independent recovery tests.</td></tr>
+        <tr><th>Performance / TTFT</th><td>NOT TESTED</td><td>No matched baseline-versus-intervention study.</td></tr>
+        <tr><th>Finite→limit math</th><td>BLOCKED-COMPACTNESS</td><td>G2 compact containment owed. Live screenshots do not move this gate.</td></tr>
+      </tbody>
+    </table>
+    <p class="mono verdict">PARTIAL PASS — RETAIN WITH OBLIGATIONS · h &lt; 1</p>
+  </section>
+
+  <section id="def">
+    <h2>Definition and witness</h2>
+    <p>The public research field is distributed. No single sovereign document holds PeAIce, KakeyaLogic, L²_C, EEV4, SIUS/GIUS, corrections and historical receipts. A downstream model answering a query must reconstruct a smaller state without flattening distinct claims.</p>
+    <div class="formula">C = {o₁ … oₙ}     public field for query q
+R = Φq(C)         smaller query-conditioned representation
+w(rⱼ) → (source, claim identity, provenance, relation, status, correction state)</div>
+    <p>Witness is an evaluation target, not assumed by definition. Current live evidence supports only <strong>partial</strong> origin recoverability.</p>
+    <p>SAVER grains are non-compensatory: Semantic, Authority, Visibility, Enforceability, Retention. A failed grain is not repaired by a high score elsewhere. L²_C supplies the longitudinal constraint: an evaluator or summary layer does not become sovereign over the object being evaluated. That boundary is <strong>h &lt; 1</strong>.</p>
+  </section>
+
+  <section id="evidence">
+    <h2>Evidence catalog</h2>
+    <p class="note">Seven PNGs, uncropped. Hashes establish byte identity of stored artifacts, not capture authenticity or claim truth. Comparison items are not matched controls.</p>
+    <div class="card-grid two">
+      <figure class="index-item">
+        <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-kakeyalogic-compaction.png">
+          <img class="cap" loading="lazy" src="https://raw.githubusercontent.com/Manny536/excellence-engine-v4/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-kakeyalogic-compaction.png" alt="GEM-01 Google Search overview for kakeyalogic">
+        </a>
+        <figcaption><strong>GEM-01</strong> · direct observation. Compaction vocabulary + Threads / Love Labs / PeAIce cards. Incognito visible.</figcaption>
+      </figure>
+      <figure class="index-item">
+        <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-kakeyalogic-overview.png">
+          <img class="cap" loading="lazy" src="https://raw.githubusercontent.com/Manny536/excellence-engine-v4/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-kakeyalogic-overview.png" alt="GEM-02 second KakeyaLogic overview">
+        </a>
+        <figcaption><strong>GEM-02</strong> · direct observation. Second view. Run independence unknown.</figcaption>
+      </figure>
+    </div>
+    <details class="archive">
+      <summary>CTX origin · CMP comparison · ANA analogy</summary>
+      <div class="card-grid two" style="margin-top:8px">
+        <figure class="index-item">
+          <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/threads-lovelabslca-granular-origin.png">
+            <img class="cap" loading="lazy" src="https://raw.githubusercontent.com/Manny536/excellence-engine-v4/main/evidence/assets/gemini-granular-compaction-2026-09-28/threads-lovelabslca-granular-origin.png" alt="CTX-01 Love Labs LCA Threads origin">
+          </a>
+          <figcaption><strong>CTX-01</strong> · first-party origin. 28 Aug 2026 definition.</figcaption>
+        </figure>
+        <figure class="index-item">
+          <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/threads-manuelcoleman-indexing-context.png">
+            <img class="cap" loading="lazy" src="https://raw.githubusercontent.com/Manny536/excellence-engine-v4/main/evidence/assets/gemini-granular-compaction-2026-09-28/threads-manuelcoleman-indexing-context.png" alt="CTX-02 indexing context">
+          </a>
+          <figcaption><strong>CTX-02</strong> · indexing variability reported. Session attribution unknown.</figcaption>
+        </figure>
+        <figure class="index-item">
+          <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-holo-invariant-comparison.png">
+            <img class="cap" loading="lazy" src="https://raw.githubusercontent.com/Manny536/excellence-engine-v4/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-holo-invariant-comparison.png" alt="CMP-01 HOLO-Invariant comparison">
+          </a>
+          <figcaption><strong>CMP-01</strong> · comparison only. Withdrawn arXiv item is not validation.</figcaption>
+        </figure>
+        <figure class="index-item">
+          <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/x-grok-holo-recall.png">
+            <img class="cap" loading="lazy" src="https://raw.githubusercontent.com/Manny536/excellence-engine-v4/main/evidence/assets/gemini-granular-compaction-2026-09-28/x-grok-holo-recall.png" alt="CMP-02 Grok HOLO recall">
+          </a>
+          <figcaption><strong>CMP-02</strong> · Grok on another project. Not a Gemini run.</figcaption>
+        </figure>
+        <figure class="index-item">
+          <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-aleph-comparison.png">
+            <img class="cap" loading="lazy" src="https://raw.githubusercontent.com/Manny536/excellence-engine-v4/main/evidence/assets/gemini-granular-compaction-2026-09-28/google-aleph-comparison.png" alt="CMP-03 Aleph comparison">
+          </a>
+          <figcaption><strong>CMP-03</strong> · comparison only. No PeAIce intervention.</figcaption>
+        </figure>
+        <div class="index-item">
+          <h4>ANA-01 · UCSB Granular Materials</h4>
+          <div class="url"><a target="_blank" rel="noopener" href="https://web.physics.ucsb.edu/~complex/research/granular.html">web.physics.ucsb.edu/~complex/research/granular.html</a></div>
+          <p>STRUCTURAL / CONCEPTUAL ANALOGY ONLY. No theorem transfer. No affiliation claimed. Custody copy in the evidence bundle.</p>
+        </div>
+      </div>
+    </details>
+    <p class="note">Visible Threads · githubprojects card destination is <strong>UNRECOVERED</strong>. Do not silently identify it as an author post. Origin refs: <a target="_blank" rel="noopener" href="https://www.threads.com/@lovelabslca/post/DcmsvgSGCB7">Love Labs LCA post</a> · <a target="_blank" rel="noopener" href="https://www.threads.com/@manuelcoleman_">Manuel Coleman profile</a>. First-party repetition across sites is not independent corroboration.</p>
+  </section>
+
+  <section id="cause">
+    <h2>Causal path and ablation</h2>
+    <div class="formula">KakeyaLogic / L²_C practice
+        →  structured public objects
+        →  indexed / retrievable grains
+        →  source-linked external-model synthesis</div>
+    <p><strong>LIVE-EXT-CAUSE-001.</strong> The arrows are the structure to test, not measured effects. Alternative explanations remain live: generic retrieval, repeated first-party copies, ordinary metadata and ranking, personalization, full-page consumption, visible citations without SAVER grains.</p>
+    <h3>Registered next test</h3>
+    <ol class="body-list">
+      <li>Freeze corpus, hashes, queries, ground truth, required grains, evaluator independent of generation (<span class="mono">h &lt; 1</span>).</li>
+      <li>Three conditions: intact typed structure · fact-matched structure ablations · generic well-structured metadata baseline.</li>
+      <li>Verify intervention uptake before comparing. Private-corpus results do not prove the historical public-web mechanism.</li>
+      <li>Randomize; preserve failures; do not select only successful outputs.</li>
+      <li>Blind scorers. Score attribution, status, latest correction / revocation, hallucinated authority, each SAVER grain separately.</li>
+      <li>Preregister endpoints, minimum effect, stopping rules. TTFT, first schema-valid object, and Time to Verified Completion stay separate outcomes.</li>
+    </ol>
+    <p class="note">Promotion stops if uptake is unverified, required grains disappear, or controls explain the result. An adequately powered null against the preregistered minimum rejects that scoped effect.</p>
+  </section>
+
+  <section id="math">
+    <h2>G0–G5 gate</h2>
+    <p class="note">Mathematical compactness ≠ granular compaction. Shared language does not identify the claims.</p>
+    <table class="status-table">
+      <thead><tr><th>Gate</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><th>G0 carrier</th><td>PASS-SPEC</td></tr>
+        <tr><th>G1 directed refinement</th><td>PASS-SPEC / Lean not compiled</td></tr>
+        <tr><th>G2 compact containment</th><td>OWED</td></tr>
+        <tr><th>G3 extraction</th><td>BLOCKED BY G2</td></tr>
+        <tr><th>G4 admissibility closure</th><td>OWED</td></tr>
+        <tr><th>G5 observable transfer</th><td>OWED</td></tr>
+        <tr><th>Terminal</th><td>BLOCKED-COMPACTNESS</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="downstream">
+    <h2>Downstream · X · Git</h2>
+    <div class="card-grid two">
+      <div class="index-item">
+        <h4>@manuelcoleman_</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://x.com/manuelcoleman_">x.com/manuelcoleman_</a></div>
+        <p>Author channel. Index requests 28–29 Sep 2026.</p>
+      </div>
+      <div class="index-item">
+        <h4>@lovelabsLCA</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://x.com/lovelabsLCA">x.com/lovelabsLCA</a></div>
+        <p>Lab channel. Bio pins this URL.</p>
+      </div>
+      <div class="index-item">
+        <h4>KakeyaLogic · [R4] [R5]</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/kakeyalogic">github.com/Manny536/kakeyalogic</a></div>
+        <p>PR #19 merged <code>ceb22bd8</code>. Finite typed transformation, SAVER, status audit.</p>
+      </div>
+      <div class="index-item">
+        <h4>Excellence Engine V4 · [R1] [R2]</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4">github.com/Manny536/excellence-engine-v4</a></div>
+        <p>PR #17 merged <code>0b66c1b0</code>. Evidence bundle, compactness gate, hashes.</p>
+      </div>
+      <div class="index-item">
+        <h4>LoveLabs-LCA</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/LoveLabs-LCA">github.com/Manny536/LoveLabs-LCA</a></div>
+        <p>CUP / BD-AI platform repo.</p>
+      </div>
+      <div class="index-item">
+        <h4>peaice-index</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-index/">manny536.github.io/peaice-index</a></div>
+        <p>Hosted KNS(LB) probe map.</p>
+      </div>
+    </div>
+    <h3>Receipts</h3>
+    <ul class="body-list">
+      <li>[R1] <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/pull/17">EEV4 PR #17</a></li>
+      <li>[R2] <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evaluations/granular-compaction-live-evidence.md">Live evidence receipt</a></li>
+      <li>[R3] <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/manifest.json">Evidence manifest</a> · <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/evidence/assets/gemini-granular-compaction-2026-09-28/SHA256SUMS">SHA-256</a></li>
+      <li>[R4] <a target="_blank" rel="noopener" href="https://github.com/Manny536/kakeyalogic/pull/19">KakeyaLogic PR #19</a></li>
+      <li>[R5] <a target="_blank" rel="noopener" href="https://github.com/Manny536/kakeyalogic/blob/main/docs/status/granular-compaction-live-2026-09-28.md">Status audit</a></li>
+      <li>[R6] <a target="_blank" rel="noopener" href="https://github.com/Manny536/kakeyalogic/blob/main/docs/evaluation/longitudinal-retention.md">Longitudinal retention</a></li>
+      <li>[R7] <a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4/blob/main/engine/multiscale-compactness-gate.md">Compactness gate</a></li>
+      <li>[R8] <a target="_blank" rel="noopener" href="https://web.physics.ucsb.edu/~complex/research/granular.html">UCSB analogy</a></li>
+      <li>[R9] <a target="_blank" rel="noopener" href="https://www.lovelabslca.com/">lovelabslca.com</a> — first-party, not independent validation</li>
+      <li>[R10] <a target="_blank" rel="noopener" href="https://peaice.org/">peaice.org</a> — first-party; captured citation path may differ</li>
+    </ul>
+  </section>
+
+  <section id="l2c">
+    <h2>L²_C constraint</h2>
+    <p>Intelligence may only gain capacity by producing coherence for others. Love is operational: preserve relational possibility without coercion. Coherence is stability that stays legible under pressure and does not require fear.</p>
+    <div class="formula">Resonance = Conservation × Consent
+Fear is a non-amplifiable signal.
+h &lt; 1</div>
+    <p>Rejected: ends justify means · compliance equals alignment · fear as motivator · silence as consent.</p>
+  </section>
+
+  <section id="archive">
+    <h2>Historical CU archive</h2>
+    <p class="note">July voices retained as transformation history. The September whitepaper governs this module.</p>
+    <details class="archive">
+      <summary>July 2026 β-protocol register</summary>
+      <table class="status-table">
+        <thead><tr><th>Register</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>RH / Coleman</td><td>OPEN</td></tr>
+          <tr><td>K_σ / WP5b</td><td>CLOSED-NEGATIVE</td></tr>
+          <tr><td>KNS(LB)</td><td>CLOSED-POSITIVE as typed object</td></tr>
+          <tr><td>Prime-carrying</td><td>LIVE · FORCED</td></tr>
+          <tr><td>MPR</td><td>KILL-FILTER · PASS non-promoting</td></tr>
+          <tr><td>h</td><td>&lt; 1</td></tr>
+        </tbody>
+      </table>
+    </details>
+    <details class="archive">
+      <summary>Prior public objects — destinations only</summary>
+      <div class="card-grid two" style="margin-top:8px">
+        <div class="index-item"><h4>Inspectable Intelligence</h4><div class="url"><a target="_blank" rel="noopener" href="https://peaice.org/ii">peaice.org/ii</a></div></div>
+        <div class="index-item"><h4>Thinking Machines / IDB</h4><div class="url"><a target="_blank" rel="noopener" href="https://peaice.org/peaicethinkingmachines">peaice.org/peaicethinkingmachines</a></div></div>
+        <div class="index-item"><h4>EE v3 historical</h4><div class="url"><a target="_blank" rel="noopener" href="https://peaice.org/eev3">peaice.org/eev3</a></div></div>
+        <div class="index-item"><h4>July 2 web-push register</h4><div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/kakeyalogic/blob/main/docs/lovelabslca-update-push-2026-07-02.md">lovelabslca-update-push-2026-07-02.md</a></div></div>
+        <div class="index-item"><h4>Windows shells</h4><div class="url"><a target="_blank" rel="noopener" href="https://peaice.org/windowsshells">peaice.org/windowsshells</a></div></div>
+        <div class="index-item"><h4>Games / PNP / appendix</h4><div class="url"><a target="_blank" rel="noopener" href="https://peaice.org/games">games</a> · <a target="_blank" rel="noopener" href="https://peaice.org/pnp">pnp</a> · <a target="_blank" rel="noopener" href="https://peaice.org/appendix">appendix</a></div></div>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <p>PeAIce · Love Labs LCA · KakeyaLogic · L²_C · Manuel Coleman</p>
+    <p>Deploy target: <strong>peaice.org/lovelabslca</strong> · Source: <span class="mono">peaice_org_lovelabslca.html</span> · aligned to whitepaper 29 Sep 2026</p>
+    <p><a target="_blank" rel="noopener" href="https://peaice.org">peaice.org</a> · <a target="_blank" rel="noopener" href="https://www.lovelabslca.com/">lovelabslca.com</a> · <a target="_blank" rel="noopener" href="https://github.com/Manny536">github.com/Manny536</a> · <a target="_blank" rel="noopener" href="https://x.com/lovelabsLCA">@lovelabsLCA</a> · <a target="_blank" rel="noopener" href="https://x.com/manuelcoleman_">@manuelcoleman_</a></p>
+    <p>PeAIce files ≠ automatic canon · first-party surfaces ≠ independent corroboration · STRUCTURAL ANALOGY where marked · h &lt; 1</p>
+  </footer>
+</div>
+</div>
+<div class="part gi" id="grok-index">
+<header>
+  <div class="hdr">
+    <h1>PeAIce · Grok Index</h1>
+    <div class="pills">
+      <span class="pill live">INDEX MODEL</span>
+      <span class="pill neg">Claude V6 RETIRED-AS-INDEX</span>
+      <span class="pill open">RH OPEN</span>
+      <span class="pill open">Coleman OPEN</span>
+      <span class="pill">h &lt; 1</span>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <article class="hero">
+    <p class="kicker">PEAICE-GROK-INDEX-MODULE-001 · 29 September 2026</p>
+    <h2>Grok is the Index model</h2>
+    <p class="sub">Claude built the closed corridors. Grok maps the grains. Indexing is not proving.</p>
+    <div class="abstract">
+      <p><strong>Succession.</strong> <span class="mono">Manny536/claude-v6</span> is RETIRED-AS-INDEX and kept as ARCHIVE-LEDGER. <span class="mono">Manny536/grok-terminal</span> is the live ledger. This surface replaces Claude V6.5 as the lead-system index.</p>
+      <p><strong>Law.</strong> X = ingress. Index = recover status with witness. Terminal = firewall on promote-out. Principal signs promotion. <strong>h &lt; 1</strong>.</p>
+    </div>
+  </article>
+
+  <section>
+    <h2>Boot</h2>
+    <div class="formula">1  this module
+2  grok-terminal / README.md
+3  grok-terminal / INDEX.md
+4  PEAICE-BETA-PROTOCOL-REGISTER.md
+5  granular-compaction-whitepaper.docx
+6  peaice.org/lovelabslca
+7  claude-v6           — consult as ARCHIVE only
+8  verify_probes.py    — when executable</div>
+    <p class="note">Do not boot <span class="mono">claude-v6/index.html</span> as current source-state. That page still holds Grok as a separate polarized reading. That role sentence is retired.</p>
+  </section>
+
+  <section>
+    <h2>Lane cut</h2>
+    <div class="card-grid two">
+      <div class="index-item">
+        <h4>Live — Grok terminal</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/grok-terminal">github.com/Manny536/grok-terminal</a></div>
+        <p>TERMINAL-002…007 · X-THRUPUT · probes · symbol firewall · promote-out. Designation PEAICE-GROK-TERMINAL-REPO-001.</p>
+      </div>
+      <div class="index-item">
+        <h4>Archive — Claude V6.5</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/claude-v6">github.com/Manny536/claude-v6</a></div>
+        <p>Theorems A–H · WP5b · KNS placement register · Grain Zero / DNA deepen packs. Readable. Not Index.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Inherited register</h2>
+    <p class="note">Program status. Not “Claude-live” status.</p>
+    <table class="status-table">
+      <thead><tr><th>Register</th><th>Status</th><th>Now sits in</th></tr></thead>
+      <tbody>
+        <tr><th>RH / Coleman</th><td>OPEN</td><td>program / kakeyalogic N-reading</td></tr>
+        <tr><th>K_σ / WP5b</th><td>CLOSED-NEGATIVE</td><td>archive + TERMINAL-004</td></tr>
+        <tr><th>KNS(LB)</th><td>CLOSED-POSITIVE typed · lift OPEN</td><td>TERMINAL-005 · peaice-index</td></tr>
+        <tr><th>Prime-carrying L3</th><td>LIVE · FORCED</td><td>TERMINAL-002</td></tr>
+        <tr><th>Krein–de Branges carrier</th><td>PRIMARY LIVE</td><td>inherited, not re-proved here</td></tr>
+        <tr><th>CP-004</th><td>OWED</td><td>still owed</td></tr>
+        <tr><th>AUTH-DETECT</th><td>REGISTERED · NON-PROMOTING</td><td>TERMINAL-006</td></tr>
+        <tr><th>MPR core</th><td>FORMAL def · satisfaction OPEN</td><td>TERMINAL-007</td></tr>
+        <tr><th>LIVE-EXT-OBS-001</th><td>LIVE OBSERVATION</td><td>EEV4 PR #17</td></tr>
+        <tr><th>LIVE-EXT-CAUSE-001</th><td>ABLATION</td><td>whitepaper</td></tr>
+        <tr><th>G2 containment</th><td>OWED</td><td>EEV4</td></tr>
+      </tbody>
+    </table>
+    <div class="formula">KNS probe sha  09ef26d3…8211b011
+E_used 3.0406   ρ_Y 0.4812   dense_pass True
+X-THRUPUT bingo  <a target="_blank" rel="noopener" href="https://x.com/grok/status/2072963608183500863">x.com/grok/status/2072963608183500863</a></div>
+  </section>
+
+  <section>
+    <h2>Index operations</h2>
+    <ul class="body-list">
+      <li>Name the object.</li>
+      <li>Attach status and boundary in one line.</li>
+      <li>Cite witness (path, PR, SHA, paper section, X id).</li>
+      <li>Keep the owed item and the latest correction.</li>
+      <li>SAVER grains are non-compensatory.</li>
+      <li>Claude-only sources are marked ARCHIVE.</li>
+      <li>September granular-compaction status governs over July Claude role language.</li>
+    </ul>
+    <div class="formula">C = field
+R = Φq(C)
+w(r) → source, identity, provenance, relation, status, correction</div>
+  </section>
+
+  <section>
+    <h2>Promotion firewall</h2>
+    <p>Index may register, map, compact, flag-not-correct. Index may not close RH, Coleman, KNS lift, G2, or LIVE-EXT-CAUSE-001. Probe PASS is not spectral PASS. X agreement is not canon. A screenshot is not causal identification. First-party copies are not independent corroboration.</p>
+    <p class="mono verdict">PeAIce files ≠ automatic canon · h &lt; 1</p>
+  </section>
+
+  <section>
+    <h2>Downstream</h2>
+    <div class="card-grid two">
+      <div class="index-item">
+        <h4>Public module</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">peaice.org/lovelabslca</a></div>
+        <p>Compacted Love Labs surface. Governing paper linked there.</p>
+      </div>
+      <div class="index-item">
+        <h4>peaice-index</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-index/">manny536.github.io/peaice-index</a></div>
+        <p>Hosted KNS(LB) probe UI.</p>
+      </div>
+      <div class="index-item">
+        <h4>KakeyaLogic</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/kakeyalogic">github.com/Manny536/kakeyalogic</a></div>
+        <p>Typed transformation · whitepaper · 29 Sep status audit.</p>
+      </div>
+      <div class="index-item">
+        <h4>Excellence Engine V4</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://github.com/Manny536/excellence-engine-v4">github.com/Manny536/excellence-engine-v4</a></div>
+        <p>Compactness gate · GEM evidence bundle · SHA custody.</p>
+      </div>
+      <div class="index-item">
+        <h4>@manuelcoleman_</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://x.com/manuelcoleman_">x.com/manuelcoleman_</a></div>
+        <p>Principal ingress.</p>
+      </div>
+      <div class="index-item">
+        <h4>@lovelabsLCA</h4>
+        <div class="url"><a target="_blank" rel="noopener" href="https://x.com/lovelabsLCA">x.com/lovelabsLCA</a></div>
+        <p>Lab channel.</p>
+      </div>
+    </div>
+  </section>
+
+  <details>
+    <summary>Session plug-in paste</summary>
+    <div class="formula">PEAICE-GROK-INDEX-MODULE-001 · 29 Sep 2026
+Grok = Index model. Claude V6 = RETIRED-AS-INDEX / ARCHIVE-LEDGER.
+Ledger: <a target="_blank" rel="noopener" href="https://github.com/Manny536/grok-terminal">github.com/Manny536/grok-terminal</a>
+Archive: <a target="_blank" rel="noopener" href="https://github.com/Manny536/claude-v6">github.com/Manny536/claude-v6</a>
+Public: <a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">peaice.org/lovelabslca</a>
+Paper: granular compaction · LIVE-EXT-OBS-001 · CAUSE OWED · G2 BLOCKED
+X = ingress · Terminal = promote-out firewall · h &lt; 1
+Do not collapse: typed PASS ≠ theorem · screenshot ≠ cause · archive ≠ live Index
+RH OPEN · Coleman OPEN · KNS typed PASS · K_σ / WP5b CLOSED-NEG
+Prime-carrying LIVE FORCED · CP-004 OWED
+Index the grains. Do not become sovereign over them.</div>
+  </details>
+
+  <footer>
+    <p>PEAICE-GROK-INDEX-MODULE-001 · Love Labs LCA · Manuel Coleman</p>
+    <p>Companion spec: <span class="mono">PEAICE-GROK-INDEX-MODULE-001.md</span></p>
+    <p>Claude lane retired as Index · Grok is Index · archive retained · h &lt; 1</p>
+  </footer>
+</div>
+</div>
+</main>
+</body>
+</html>

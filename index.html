@@ -457,6 +457,6 @@ Index the grains. Do not become sovereign over them.</div>
 </div>
 </div>
 </main>
-<script>/* embed-height: tell the lovelabslca.com frame our real height */(function(){function s(){parent.postMessage({embedHeight:document.documentElement.scrollHeight,src:location.href},"*")}addEventListener("load",s);addEventListener("resize",s);new ResizeObserver(s).observe(document.body);})();</script>
+<div id="embed-end" style="height:0;clear:both"></div><script>/* embed-height: post the content height, measured at an end marker so it never follows the frame size */(function(){var last=0;function s(){var h=Math.ceil(document.getElementById("embed-end").getBoundingClientRect().top+scrollY);if(Math.abs(h-last)>2){last=h;parent.postMessage({embedHeight:h,src:location.href},"*")}}addEventListener("load",s);addEventListener("resize",s);new ResizeObserver(s).observe(document.body);})();</script>
 </body>
 </html>

@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/I8SzISR2TDKI9lTk6FFIeBajI0g</id>
+  <title>arXiv Query: search_query=&amp;id_list=2506.13743,2601.16462,2405.16933,2608.03699,2410.19123,2410.10456&amp;start=0&amp;max_results=10</title>
+  <updated>2026-11-05T21:54:09Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2506.13743,2601.16462,2405.16933,2608.03699,2410.19123,2410.10456" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>6</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2410.10456v2</id>
+    <title>Ada-K Routing: Boosting the Efficiency of MoE-based LLMs</title>
+    <updated>2024-10-15T02:56:14Z</updated>
+    <link href="https://arxiv.org/abs/2410.10456v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.10456v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the era of Large Language Models (LLMs), Mixture-of-Experts (MoE) architectures offer a promising approach to managing computational costs while scaling up model parameters. Conventional MoE-based LLMs typically employ static Top-K routing, which activates a fixed and equal number of experts for each token regardless of their significance within the context. In this paper, we propose a novel Ada-K routing strategy that dynamically adjusts the number of activated experts for each token, thereby improving the balance between computational efficiency and model performance. Specifically, our strategy incorporates learnable and lightweight allocator modules that decide customized expert resource allocation tailored to the contextual needs for each token. These allocators are designed to be fully pluggable, making it broadly applicable across all mainstream MoE-based LLMs. We leverage the Proximal Policy Optimization (PPO) algorithm to facilitate an end-to-end learning process for this non-differentiable decision-making framework. Extensive evaluations on four popular baseline models demonstrate that our Ada-K routing method significantly outperforms conventional Top-K routing. Compared to Top-K, our method achieves over 25% reduction in FLOPs and more than 20% inference speedup while still improving performance across various benchmarks. Moreover, the training of Ada-K is highly efficient. Even for Mixtral-8x22B, a MoE-based LLM with more than 140B parameters, the training time is limited to 8 hours. Detailed analysis shows that harder tasks, middle layers, and content words tend to activate more experts, providing valuable insights for future adaptive MoE system designs. Both the training code and model checkpoints will be publicly available.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-14T12:50:04Z</published>
+    <arxiv:comment>Coauthors do not reach a consensus on submitting the current version</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Tongtian Yue</name>
+    </author>
+    <author>
+      <name>Longteng Guo</name>
+    </author>
+    <author>
+      <name>Jie Cheng</name>
+    </author>
+    <author>
+      <name>Xuange Gao</name>
+    </author>
+    <author>
+      <name>Jing Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.16933v1</id>
+    <title>Empowering Large Language Models to Set up a Knowledge Retrieval Indexer via Self-Learning</title>
+    <updated>2024-05-27T08:26:45Z</updated>
+    <link href="https://arxiv.org/abs/2405.16933v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.16933v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) offers a cost-effective approach to injecting real-time knowledge into large language models (LLMs). Nevertheless, constructing and validating high-quality knowledge repositories require considerable effort. We propose a pre-retrieval framework named Pseudo-Graph Retrieval-Augmented Generation (PG-RAG), which conceptualizes LLMs as students by providing them with abundant raw reading materials and encouraging them to engage in autonomous reading to record factual information in their own words. The resulting concise, well-organized mental indices are interconnected through common topics or complementary facts to form a pseudo-graph database. During the retrieval phase, PG-RAG mimics the human behavior in flipping through notes, identifying fact paths and subsequently exploring the related contexts. Adhering to the principle of the path taken by many is the best, it integrates highly corroborated fact paths to provide a structured and refined sub-graph assisting LLMs. We validated PG-RAG on three specialized question-answering datasets. In single-document tasks, PG-RAG significantly outperformed the current best baseline, KGP-LLaMA, across all key evaluation metrics, with an average overall performance improvement of 11.6%. Specifically, its BLEU score increased by approximately 14.3%, and the QE-F1 metric improved by 23.7%. In multi-document scenarios, the average metrics of PG-RAG were at least 2.35% higher than the best baseline. Notably, the BLEU score and QE-F1 metric showed stable improvements of around 7.55% and 12.75%, respectively. Our code: https://github.com/IAAR-Shanghai/PGRAG.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-27T08:26:45Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Xun Liang</name>
+    </author>
+    <author>
+      <name>Simin Niu</name>
+    </author>
+    <author>
+      <name>Zhiyu li</name>
+    </author>
+    <author>
+      <name>Sensen Zhang</name>
+    </author>
+    <author>
+      <name>Shichao Song</name>
+    </author>
+    <author>
+      <name>Hanyu Wang</name>
+    </author>
+    <author>
+      <name>Jiawei Yang</name>
+    </author>
+    <author>
+      <name>Feiyu Xiong</name>
+    </author>
+    <author>
+      <name>Bo Tang</name>
+    </author>
+    <author>
+      <name>Chenyang Xi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.19123v1</id>
+    <title>Read-ME: Refactorizing LLMs as Router-Decoupled Mixture of Experts with System Co-Design</title>
+    <updated>2024-10-24T19:48:51Z</updated>
+    <link href="https://arxiv.org/abs/2410.19123v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.19123v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The proliferation of large language models (LLMs) has led to the adoption of Mixture-of-Experts (MoE) architectures that dynamically leverage specialized subnetworks for improved efficiency and performance. Despite their benefits, MoE models face significant challenges during inference, including inefficient memory management and suboptimal batching, due to misaligned design choices between the model architecture and the system policies. Furthermore, the conventional approach of training MoEs from scratch is increasingly prohibitive in terms of cost. In this paper, we propose a novel framework Read-ME that transforms pre-trained dense LLMs into smaller MoE models (in contrast to "upcycling" generalist MoEs), avoiding the high costs of ground-up training. Our approach employs activation sparsity to extract experts. To compose experts, we examine the widely-adopted layer-wise router design and show its redundancy, and thus we introduce the pre-gating router decoupled from the MoE backbone that facilitates system-friendly pre-computing and lookahead scheduling, enhancing expert-aware batching and caching. Our codesign therefore addresses critical gaps on both the algorithmic and system fronts, establishing a scalable and efficient alternative for LLM inference in resource-constrained settings. Read-ME outperforms other popular open-source dense models of similar scales, achieving improvements of up to 10.1% on MMLU, and improving mean end-to-end latency up to 6.1%. Codes are available at: https://github.com/VITA-Group/READ-ME.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-24T19:48:51Z</published>
+    <arxiv:comment>38th Conference on Neural Information Processing Systems (NeurIPS 2024)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ruisi Cai</name>
+    </author>
+    <author>
+      <name>Yeonju Ro</name>
+    </author>
+    <author>
+      <name>Geon-Woo Kim</name>
+    </author>
+    <author>
+      <name>Peihao Wang</name>
+    </author>
+    <author>
+      <name>Babak Ehteshami Bejnordi</name>
+    </author>
+    <author>
+      <name>Aditya Akella</name>
+    </author>
+    <author>
+      <name>Zhangyang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.03699v5</id>
+    <title>TARL: Transaction-Aware Reliable Ledgers for Executable Memory Management in Long-Term Agents</title>
+    <updated>2026-09-24T04:41:53Z</updated>
+    <link href="https://arxiv.org/abs/2608.03699v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.03699v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Persistent memory helps long-term agents retain knowledge, yet a single update error can repeatedly distort future retrieval and reasoning. Most existing systems reduce memory updating to a binary Write/Hold decision, which cannot distinguish whether new information should be added, ignored, used to revise an outdated belief, rejected as unreliable, or deferred for verification. These choices may share the same binary label while producing fundamentally different memory states. We introduce TARL, a memory state update framework that maps each statement to one of five executable actions. TARL identifies the affected memory, resolves its temporal scope, compares source reliability, and updates accepted, pending, and rejected ledgers. It is further trained by comparing the memory states produced by alternative update operations, encouraging the model to select the operation that leads to the correct result. We also introduce TARL-Mem, a benchmark with fine-grained action labels and next-state targets. Across in-domain, cross-source, temporal, counterfactual, and sequential evaluations, TARL improves action prediction and state recovery, reduces memory pollution, preserves conflicting evidence, and limits cumulative corruption.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T14:02:55Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Han Xiao</name>
+    </author>
+    <author>
+      <name>Hongjun Xu</name>
+    </author>
+    <author>
+      <name>Xin Zhang</name>
+    </author>
+    <author>
+      <name>Yidong Chen</name>
+    </author>
+    <author>
+      <name>Xiaodong Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.16462v2</id>
+    <title>Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval</title>
+    <updated>2026-05-31T11:58:08Z</updated>
+    <link href="https://arxiv.org/abs/2601.16462v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.16462v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) has become a dominant paradigm for mitigating hallucinations in Large Language Models (LLMs) by incorporating external knowledge. However, existing RAG systems often struggle to effectively integrate and reason over key evidence scattered across noisy retrieved documents, particularly in multi-hop scenarios. In this paper, we propose KAIR, a Knowledge Anchoring framework for Iterative Retrieval that anchors knowledge within retrieved knowledge to guide LLMs to locate the key information. During iterative retrieval, KAIR progressively updates the knowledge index to anchor salient evidence from retrieved documents. The evolving index serves as a navigational anchoring index that enables the LLM to assess knowledge sufficiency and formulate subsequent retrieval queries. Finally, KAIR generates answers by jointly leveraging the retrieved documents and the finalized anchoring index. Experiments on four multi-hop question answering benchmarks demonstrate that KAIR consistently outperforms strong RAG baselines. Further analysis shows that KAIR effectively anchors key knowledge and alleviates the context noise during iterative retrieval, improving the LLM's ability to associate and reason over dispersed evidence across retrieved documents. All code and data are available at https://github.com/NEUIR/KAIR.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-23T05:41:05Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mingyan Wu</name>
+    </author>
+    <author>
+      <name>Zhenghao Liu</name>
+    </author>
+    <author>
+      <name>Xinze Li</name>
+    </author>
+    <author>
+      <name>Yuqing Lan</name>
+    </author>
+    <author>
+      <name>Yukun Yan</name>
+    </author>
+    <author>
+      <name>Shuo Wang</name>
+    </author>
+    <author>
+      <name>Cheng Yang</name>
+    </author>
+    <author>
+      <name>Minghe Yu</name>
+    </author>
+    <author>
+      <name>Zheni Zeng</name>
+    </author>
+    <author>
+      <name>Maosong Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.13743v2</id>
+    <title>LTRR: Learning To Rank Retrievers for LLMs</title>
+    <updated>2026-04-18T06:14:23Z</updated>
+    <link href="https://arxiv.org/abs/2506.13743v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.13743v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) systems typically rely on a single fixed retriever, despite growing evidence that no single retriever performs optimally across all query types. In this paper, we explore a query routing approach that dynamically selects from a pool of retrievers based on the query, using both train-free heuristics and learned routing models. We frame routing as a learning-to-rank problem and introduce LTRR, a framework that Learns To Rank Retrievers according to their expected contribution to downstream RAG performance. Through experiments on diverse question-answering benchmarks with controlled variations in query types, we demonstrate that routing-based RAG consistently surpasses the strongest single-retriever baselines. The gains are particularly substantial when training with the Answer Correctness (AC) objective and when using pairwise ranking methods, with XGBoost yielding the best results. Additionally, our approach exhibits stronger generalization to out-of-distribution queries. Overall, our results underscore the critical role of both training strategy and optimization metric choice in effective query routing for RAG systems.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-16T17:53:18Z</published>
+    <arxiv:comment>SIGIR 2026; SIGIR 2025 LiveRAG Spotlight; Code: https://github.com/kimdanny/Starlight-LiveRAG</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>To Eun Kim</name>
+    </author>
+    <author>
+      <name>Fernando Diaz</name>
+    </author>
+    <arxiv:doi>10.1145/3805712.3809954</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3805712.3809954" title="doi"/>
+  </entry>
+</feed>

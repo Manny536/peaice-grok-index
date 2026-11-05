@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PeAIce · Grok Index · Granular Compaction · Love Labs LCA</title>
-<meta name="description" content="PEAICE-GROK-INDEX-MODULE-001 and L²_C Granular Compaction public module. Love Labs LCA / PeAIce. 29 September 2026. h &lt; 1.">
+<title>PeAIce · Grok Index · Granular Compaction · Boolean Index Alignment · Love Labs LCA</title>
+<meta name="description" content="PEAICE-GROK-INDEX-MODULE-001 and L²_C Granular Compaction public module. Love Labs LCA / PeAIce. 29 September 2026. h &lt; 1. Boolean Index Alignment continuation by Manuel Coleman, 5 November 2026.">
 <meta name="author" content="Manuel Coleman, Love Labs LCA">
 <link rel="canonical" href="https://peaice.org/lovelabslca">
 <style>
@@ -30,10 +30,50 @@ body{font-family:'Source Serif 4',Georgia,serif;background:var(--bg);color:var(-
 
 @media(min-width:640px){.gi .card-grid.two{grid-template-columns:1fr 1fr}}
 .gi .index-item{background:var(--card);border:1px solid var(--stroke);border-radius:10px;padding:12px 14px}.gi .index-item h4{font-size:.9rem;margin-bottom:3px}.gi .index-item .url{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--blue);word-break:break-all}.gi .index-item p{font-size:.84rem;color:var(--muted);margin-top:5px}.gi .formula{background:#0a0e16;border:1px solid var(--stroke);border-radius:8px;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:.8rem;line-height:1.7;margin:12px 0;overflow-x:auto}.gi ul.body-list{padding-left:1.25em;margin:.45em 0}.gi ul.body-list li{margin:.28em 0}.gi .status-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0}.gi .status-table th,.gi .status-table td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--stroke);vertical-align:top}.gi .status-table thead th{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:500}.gi .status-table tbody th{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:500}.gi .note{font-size:.86rem;color:var(--muted);margin:10px 0}.gi .verdict{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ok);margin-top:10px}.gi .tag{display:inline-block;font-size:.6rem;padding:2px 6px;border-radius:4px;background:#1a1520;border:1px solid #3a3020;color:var(--accent);margin-left:6px;vertical-align:middle}.gi details{background:var(--panel);border:1px solid var(--stroke);border-radius:10px;padding:10px 14px;margin:10px 0}.gi details summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted)}.gi details[open] summary{margin-bottom:10px;color:var(--accent)}.gi footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--stroke);font-size:.76rem;color:var(--muted)}.gi footer p{margin:.3em 0}
+.root-nav{background:#080a0f;border-bottom:1px solid var(--stroke)}
+.root-nav ul{max-width:var(--max);margin:0 auto;padding:10px 20px;display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none}
+.root-nav a{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.root-nav a:hover{color:var(--accent)}
+.ia a{color:var(--blue);text-decoration:none}.ia a:hover{text-decoration:underline}.ia .mono{font-family:'IBM Plex Mono',monospace;font-size:.82em}
+.ia header{position:sticky;top:0;z-index:50;background:rgba(8,10,15,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--stroke);padding:14px 20px}
+.ia .hdr{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.ia .hdr h1{font-size:1.05rem;font-weight:600}
+.ia .wrap{max-width:var(--max);margin:0 auto;padding:28px 20px 80px}
+.ia .kicker{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.ia .hero{padding:4px 0 24px;border-bottom:1px solid var(--stroke);margin-bottom:28px}
+.ia .hero h2{font-size:1.85rem;font-weight:600;color:var(--accent);line-height:1.2;margin-bottom:8px}
+.ia .hero .sub{font-size:1.08rem;color:var(--muted);font-style:italic;margin-bottom:12px}
+.ia .hero .meta{font-size:.9rem;color:var(--muted)}.ia .hero .meta strong{color:var(--ink)}
+.ia .abstract{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:16px 18px;margin:14px 0;font-size:.97rem}
+.ia .abstract p{margin:.5em 0}.ia .abstract p:first-child{margin-top:0}.ia .abstract p:last-child{margin-bottom:0}
+.ia nav.toc{background:var(--panel);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;margin:18px 0 30px}
+.ia nav.toc h3{font-size:.72rem;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+.ia nav.toc ol{padding-left:1.2em;font-size:.92rem}.ia nav.toc li{margin:3px 0}
+.ia section{margin-bottom:32px}
+.ia section>h2{font-size:1.22rem;color:var(--teal);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--stroke)}
+.ia section>h3{font-size:1rem;color:var(--accent);margin:16px 0 8px}
+.ia .card-grid{display:grid;gap:10px}
+@media(min-width:640px){.ia .card-grid.two{grid-template-columns:1fr 1fr}}
+.ia .index-item{background:var(--card);border:1px solid var(--stroke);border-radius:10px;padding:12px 14px}
+.ia .index-item h4{font-size:.9rem;margin-bottom:3px}
+.ia .index-item .url{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--blue);word-break:break-all}
+.ia .index-item p{font-size:.84rem;color:var(--muted);margin-top:5px}
+.ia .note{font-size:.86rem;color:var(--muted);margin:10px 0}
+.ia .paper-link{display:block;background:linear-gradient(165deg,#141a28,var(--card));border:1px solid #2a3548;border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;margin:12px 0}
+.ia .paper-link strong{color:var(--accent)}
+.ia footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--stroke);font-size:.76rem;color:var(--muted)}
+.ia footer p{margin:.3em 0}
 </style>
 </head>
 <body>
 <main>
+<nav class="root-nav" aria-label="Page sections">
+  <ul>
+    <li><a href="#granular-compaction">Granular Compaction</a></li>
+    <li><a href="#grok-index">Grok Index</a></li>
+    <li><a href="#index-alignment">Boolean Index Alignment</a></li>
+  </ul>
+</nav>
 <div class="part gc" id="granular-compaction">
 <header>
   <div class="hdr">
@@ -453,6 +493,159 @@ Index the grains. Do not become sovereign over them.</div>
     <p>PEAICE-GROK-INDEX-MODULE-001 · Love Labs LCA · Manuel Coleman</p>
     <p>Companion spec: <span class="mono">PEAICE-GROK-INDEX-MODULE-001.md</span></p>
     <p>Claude lane retired as Index · Grok is Index · archive retained · h &lt; 1</p>
+  </footer>
+</div>
+</div>
+<div class="part ia" id="index-alignment">
+<header>
+  <div class="hdr">
+    <h1>PeAIce · Index Alignment</h1>
+  </div>
+</header>
+<div class="wrap">
+  <article class="hero">
+    <p class="kicker">Research continuation · 5 November 2026</p>
+    <h2>Boolean Index Alignment</h2>
+    <p class="sub">Traceable Induction on Scales for Sparse Language-Model Systems</p>
+    <p class="meta"><strong>Author:</strong> Manuel Coleman · AgreeYa Solutions (Computacenter), Folsom, CA, USA<br>
+    <strong>Correspondence:</strong> <a href="mailto:manuel.coleman@agreeya.net">manuel.coleman@agreeya.net</a></p>
+    <a class="paper-link" href="research/index-alignment/README.md">
+      <strong>Research package.</strong> <span class="mono">research/index-alignment/README.md</span> — manuscript, abstract, nine deep dives, claim–evidence matrix, references, both former papers, audit files, and SHA-256 checksums.
+    </a>
+    <a class="paper-link" href="research/index-alignment/index-alignment-boolean-induction.pdf">
+      <strong>Manuscript PDF.</strong> <span class="mono">index-alignment-boolean-induction.pdf</span> — 55 US-Letter pages, the same text as <span class="mono">index-alignment-boolean-induction.md</span>.
+    </a>
+    <div class="abstract" id="ia-abstract">
+      <p>Sparse language-model systems make sequences of discrete choices: expert identifiers, agent identifiers, retrieval locations, tool names, memory paths, and provenance links. Coleman (2026a) called their mutual consistency <strong>index alignment</strong> and separated non-authoritative routers, state ledgers, and generative continuity experts. This paper turns that framework into a finite, inspectable decision construction. At every declared scale we ask four evidence-conditioned questions: are the activated indices live, permitted, and task-admissible (<span class="mono">A_route</span>); are the associated commitments authorized, provenance-complete, correctly ordered, and non-silently superseded (<span class="mono">A_ledger</span>); do externally dependent generated claims resolve through activated indices and supported claim paths (<span class="mono">A_gen</span>); and does the continuation preserve the accepted ledger view, open obligations, and correction scope (<span class="mono">A_cont</span>)? Their conjunction is <span class="mono">A(k)</span>, with an explicit PASS-only release bit and retained UNKNOWN or NO_VERDICT diagnostics when observations or caller contracts are absent. A finite trace is the vector of these outcomes, and <span class="mono">FIRST_FAIL</span> is the least scale at which a required conjunct fails. Under a finite total scale order, finite enumeration, deterministic non-vacuous checking, and a declared sub-conjunct order, the first failed scale and reported failing conjunct are unique and computable; on causal DAGs, concurrent failures are instead returned as a frontier set. This is a property of the construction, not a theorem imported from harmonic analysis.</p>
+      <p>The geometric analogy from Coleman (2026b) supplies an organizing discipline rather than an implication: begin with a sticky or single-parent case, isolate a non-sticky band, factor only that band, recurse with a declared cap, and account for the residual. Wang–Zahl and Guth–Wang–Zahl use asymptotic inequalities with losses; they do <strong>not</strong> prove that alignment is boolean. Booleanity here is imposed by caller-supplied thresholds and explicit checkers. We develop typed index lineages, scale trees, correction-invalidation semantics, sticky and non-sticky cases, bounded-refactoring recursion, localization and composition lemmas, and the proposed decision object <span class="mono">INDEX-ALIGN-CERT</span>, whose outcomes are <span class="mono">{CERTIFIED, HELD_PARTIAL, REFUSED, AWAITING_HUMAN, NO_VERDICT}</span>. Restricted certificate verification is polynomial in the supplied trace, chunks, claims, and edges; this does not classify the search problem or assert NP-hardness. Worked traces cover MoE routing, retrieval-grounded generation, tool and agent handoffs, stale evidence, revoked authority, correction propagation, false coverage, and multiscale partial release. The protocol separates mathematical background, formal construction, synthetic tests, registered observations, and unperformed live evaluation. The fourteen traces and thirty-two mutations are designs only, not test executions. Coverage is not fidelity, order is not authority, custody is not truth, and <span class="mono">Act = 0</span> does not entail <span class="mono">Stop</span>.</p>
+      <p><strong>Keywords:</strong> index alignment; boolean certificates; traceability; induction on scales; sparse routing; mixture of experts; mixture of agents; retrieval-augmented generation; state ledgers; provenance; correction propagation; failure localization; decision procedures.</p>
+    </div>
+  </article>
+
+  <nav class="toc" aria-label="Index Alignment documents">
+    <h3>Documents</h3>
+    <ol>
+      <li><a href="research/index-alignment/README.md">Package entry</a></li>
+      <li><a href="research/index-alignment/index-alignment-boolean-induction.pdf">Manuscript PDF</a></li>
+      <li><a href="#ia-package">Package files</a></li>
+    </ol>
+  </nav>
+
+  <section id="ia-package">
+    <h2>Package</h2>
+    <p>The Granular Compaction module and the Grok Index module above keep their existing text. This section links the Index Alignment research package.</p>
+    <div class="card-grid two">
+      <div class="index-item">
+        <h4>Package entry</h4>
+        <div class="url"><a href="research/index-alignment/README.md">README.md</a></div>
+        <p>Reading order and the file inventory.</p>
+      </div>
+      <div class="index-item">
+        <h4>Manuscript</h4>
+        <div class="url"><a href="research/index-alignment/index-alignment-boolean-induction.md">index-alignment-boolean-induction.md</a></div>
+        <p>Manuel Coleman, 5 November 2026. Same text as the PDF.</p>
+      </div>
+      <div class="index-item">
+        <h4>Manuscript PDF</h4>
+        <div class="url"><a href="research/index-alignment/index-alignment-boolean-induction.pdf">index-alignment-boolean-induction.pdf</a></div>
+        <p>55 US-Letter pages.</p>
+      </div>
+      <div class="index-item">
+        <h4>Abstract</h4>
+        <div class="url"><a href="research/index-alignment/ABSTRACT.md">ABSTRACT.md</a></div>
+        <p>Standalone abstract.</p>
+      </div>
+      <div class="index-item">
+        <h4>References</h4>
+        <div class="url"><a href="research/index-alignment/REFERENCES.md">REFERENCES.md</a></div>
+        <p>45 entries, identical to the manuscript bibliography.</p>
+      </div>
+      <div class="index-item">
+        <h4>Claim–evidence matrix</h4>
+        <div class="url"><a href="research/index-alignment/CLAIM-EVIDENCE-MATRIX.md">CLAIM-EVIDENCE-MATRIX.md</a></div>
+        <p>Claims mapped to manuscript sections, deep-dive anchors, and citations.</p>
+      </div>
+      <div class="index-item">
+        <h4>Deep dives PDF</h4>
+        <div class="url"><a href="research/index-alignment/index-alignment-deep-dives.pdf">index-alignment-deep-dives.pdf</a></div>
+        <p>43 pages. All nine deep dives and the matrix.</p>
+      </div>
+      <div class="index-item">
+        <h4>Checksums</h4>
+        <div class="url"><a href="research/index-alignment/SHA256SUMS">SHA256SUMS</a></div>
+        <p>SHA-256 of every file in the package.</p>
+      </div>
+      <div class="index-item">
+        <h4>01 Index foundations</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/01-index-foundations.md">deep-dives/01-index-foundations.md</a></div>
+        <p>Typed indices, registries, lineage, receipts, scale trees.</p>
+      </div>
+      <div class="index-item">
+        <h4>02 Boolean evidence</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/02-boolean-evidence-semantics.md">deep-dives/02-boolean-evidence-semantics.md</a></div>
+        <p>Semantic and evidence layers, strong Kleene soundness, non-compensation, non-vacuity.</p>
+      </div>
+      <div class="index-item">
+        <h4>03 Scale and composition</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/03-scale-refinement-composition.md">deep-dives/03-scale-refinement-composition.md</a></div>
+        <p>Refinement, coverage, noninterference, freshness, and cross-scale induction.</p>
+      </div>
+      <div class="index-item">
+        <h4>04 Routing, ledger, continuity</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/04-routing-ledger-continuity.md">deep-dives/04-routing-ledger-continuity.md</a></div>
+        <p>The four predicate families.</p>
+      </div>
+      <div class="index-item">
+        <h4>05 Correction and freshness</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/05-correction-causal-freshness.md">deep-dives/05-correction-causal-freshness.md</a></div>
+        <p>Corrections, happened-before, staleness, affected closure.</p>
+      </div>
+      <div class="index-item">
+        <h4>06 Custody and release</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/06-custody-release.md">deep-dives/06-custody-release.md</a></div>
+        <p>Custody, authority, release, and partial output.</p>
+      </div>
+      <div class="index-item">
+        <h4>07 Localization and traces</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/07-localization-traces.md">deep-dives/07-localization-traces.md</a></div>
+        <p>First failure, frontiers, and the fourteen traces.</p>
+      </div>
+      <div class="index-item">
+        <h4>08 Evaluation</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/08-evaluation-falsification.md">deep-dives/08-evaluation-falsification.md</a></div>
+        <p>Fixtures, mutations, labels, metrics, baselines, and cost.</p>
+      </div>
+      <div class="index-item">
+        <h4>09 Bibliography</h4>
+        <div class="url"><a href="research/index-alignment/deep-dives/09-related-work-bibliography.md">deep-dives/09-related-work-bibliography.md</a></div>
+        <p>Annotated bibliography and positioning.</p>
+      </div>
+      <div class="index-item">
+        <h4>Coleman (2026a)</h4>
+        <div class="url"><a href="research/index-alignment/sources/coleman-2026a-index-alignment-llms.md">sources/coleman-2026a-index-alignment-llms.md</a></div>
+        <p>Index Alignment in Large Language Models.</p>
+      </div>
+      <div class="index-item">
+        <h4>Coleman (2026b)</h4>
+        <div class="url"><a href="research/index-alignment/sources/coleman-2026b-kakeya-grain-at-the-slab.md">sources/coleman-2026b-kakeya-grain-at-the-slab.md</a></div>
+        <p>Kakeya Grain at the Slab.</p>
+      </div>
+      <div class="index-item">
+        <h4>Reference verification</h4>
+        <div class="url"><a href="research/index-alignment/audit/reference-verification.md">audit/reference-verification.md</a></div>
+        <p>Audit record for the bibliography.</p>
+      </div>
+      <div class="index-item">
+        <h4>Citation audits</h4>
+        <div class="url"><a href="research/index-alignment/audit/prior-citation-wordcount-audit.md">prior-citation-wordcount-audit.md</a> · <a href="research/index-alignment/audit/prior-39-paper-citation-audit.md">prior-39-paper-citation-audit.md</a></div>
+        <p>Prior length and citation counts, kept with the package audit.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Manuel Coleman · AgreeYa Solutions (Computacenter), Folsom, CA, USA · <a href="mailto:manuel.coleman@agreeya.net">manuel.coleman@agreeya.net</a></p>
+    <p><a href="#granular-compaction">Granular Compaction</a> · <a href="#grok-index">Grok Index</a> · <a href="research/index-alignment/README.md">Package</a> · <a href="research/index-alignment/index-alignment-boolean-induction.pdf">PDF</a></p>
   </footer>
 </div>
 </div>

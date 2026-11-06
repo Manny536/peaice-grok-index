@@ -6,7 +6,7 @@
 **Contributors / reviewers (seat-scoped):** KakeyaLogic (field); L / L²_C hold; AIce (sticky custody); P-NP (complexity lane); Riemann probe (status vector / SOURCE_MAP); Excellence Engine V4 (custody lab); PeAIce Index (program index); Love Labs LCA (relational / CUP / Benevolence Drift lab); Claude V6 (theorem ledger); Grok Terminal (polarized TERMINAL pole, not program index); cwi-main / CoWork-Inference (causal cast construction)  
 
 ¹AgreeYa Solutions / Computacenter, Folsom, CA, USA  
-Correspondence: manuel.coleman@agreeya.net  
+Correspondence: manuel.coleman@lovelabslca.com  
 
 **Sites (honor live status tags; this paper is not a site publish):** https://lovelabslca.com · https://peaice.org  
 

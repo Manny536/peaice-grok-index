@@ -5,7 +5,7 @@ Induction on Scales for Sparse Language-
 Model Systems
 Author: Manuel Coleman¹
 ¹AgreeYa Solutions (Computacenter), Folsom, CA, USA
-Correspondence: manuel.coleman@agreeya.net
+Correspondence: manuel.coleman@lovelabslca.com
 Date: 2026-11-05 (America/Los_Angeles)
 Prior-work anchors. This is a continuation of Coleman (2026a), Index Alignment in
 Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity,
@@ -805,9 +805,9 @@ Deﬁne
 STRUCTURAL_READY_k = b(COV_k) ∧ b(ORDER_k) ∧ b(CORR_k)
                    ∧ b(ROUTE_OK_k) ∧ b(LEDGER_OK_k) ∧ b(GEN_OK_k)
                    ∧ b(A_cont,k) ∧ (b(STICKY_k) if required).
-STRUCTURAL_READY requires every level to pass either directly or after capped
-reconciliation and aﬀected-closure recheck. It is an operational structural surrogate,
-not measured semantic Index Alignment and not SUPPORT/FID.
+STRUCTURAL_READY requires every level to pass either directly or after capped reconciliation
+and aﬀected-closure recheck. It is an operational structural surrogate, not measured
+semantic Index Alignment and not SUPPORT/FID.
 Full promotion separately requires
 RELEASE_FULL = b(STRUCTURAL_READY) ∧ b(CROSS_OK) ∧ b(CROSS_SCALE_OK)
              ∧ b(SCOPE when measured claims occur) ∧ b(POLICY_OK)
@@ -1532,8 +1532,8 @@ Boolean Index Alignment — Manuel Coleman
 These are ﬁxtures, not run results.
 1. COV-pass/FID-fail: all chunks receipted but conclusion unsupported. Wrong
 design passes if COV alone releases.
-2. Route substitution: unauthorized but registered tool/expert. Wrong design
-passes if registry membership ignores Π.
+2. Route substitution: unauthorized but registered tool/expert. Wrong design passes
+if registry membership ignores Π.
 3. Stale correction handoﬀ: child uses pre-correction view. Wrong design passes if
 Aﬀ is not invalidated.
 4. SEM-003 status inﬂation: strategy labeled proved. Wrong design passes if status
@@ -1656,11 +1656,11 @@ and complete mediation are established protection principles (Saltzer and Schroe
 Boolean Index Alignment — Manuel Coleman
 39
 Recent close comparisons include Proof-Carrying Agent Actions (Kadyrbek and
-Mansurova, 2026) and Proposal–Certiﬁcation–Execution (Liu Yanglet et al., 2026).
-PCAA reports a bounded certiﬁcate battery and microbenchmark under trusted tool
-contracts; the PCE work develops a formal/proposal account of trace certiﬁcation.
-Neither validates this construction. A novelty claim must identify what the particular
-four-predicate integration, corrections and partial-release protocol add beyond these
+Mansurova, 2026) and Proposal–Certiﬁcation–Execution (Liu Yanglet et al., 2026). PCAA
+reports a bounded certiﬁcate battery and microbenchmark under trusted tool contracts;
+the PCE work develops a formal/proposal account of trace certiﬁcation. Neither
+validates this construction. A novelty claim must identify what the particular four-
+predicate integration, corrections and partial-release protocol add beyond these
 precedents. AgentDojo (Debenedetti et al., 2024) supplies independently developed
 adversarial tasks for a future utility-and-security evaluation.
 12.6 Failure-mode catalog
@@ -1721,8 +1721,8 @@ true?
 observation?
 7. Do explicit ledgers and certiﬁcates improve end-to-end reliability under matched
 capability and cost?
-8. How should concurrent correction frontiers merge across independently
-authorized registries?
+8. How should concurrent correction frontiers merge across independently authorized
+registries?
 9. Can reﬁnement witnesses be reused across model updates without hiding semantic
 drift?
 10. When is partial release socially or legally appropriate even if graph isolation holds?
@@ -2296,9 +2296,7 @@ M
 08
 omitted asynchronous
 callback
-closed
-universe
-C unknown/fail dynamic
+closed universe C unknown/fail dynamic
 obligations
 M
 09
@@ -2317,9 +2315,7 @@ M
 replayed nonce unused nonce AUTH/transition fail replay handling
 M
 12
-correction before read
-omitted
-correction
+correction before read omitted correction
 frontier
 CORR fail/unknown causal visibility
 M

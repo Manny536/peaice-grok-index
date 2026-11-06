@@ -186,7 +186,7 @@
     "No model calls, live actions, framework mutation trials, performance claims or empirical cost savings are tested."
   ],
   "passed": true,
-  "python_version": "3.13.3",
+  "python_version": "3.12.3",
   "scope": "Deterministic finite examples and counterexamples only; not INDEX-ALIGN-CERT implementation or LLM efficacy tests.",
   "script_sha256": "03ea96dcde77a2f27b9ce00536d1682f6dabf77d4224ed6e2b78d512c80be914",
   "tests_run": 24

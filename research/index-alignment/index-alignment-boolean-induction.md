@@ -2,7 +2,7 @@
 
 **Author:** Manuel Coleman¹  
 ¹AgreeYa Solutions (Computacenter), Folsom, CA, USA  
-**Correspondence:** manuel.coleman@agreeya.net  
+**Correspondence:** manuel.coleman@lovelabslca.com  
 **Date:** 2026-11-05 (America/Los_Angeles)
 
 

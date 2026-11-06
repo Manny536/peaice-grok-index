@@ -1,7 +1,7 @@
 # Boolean Index Alignment: Traceable Induction on Scales for Sparse Language-Model Systems — Abstract
 
 **Manuel Coleman**
-AgreeYa Solutions (Computacenter), Folsom, CA, USA · manuel.coleman@agreeya.net
+AgreeYa Solutions (Computacenter), Folsom, CA, USA · manuel.coleman@lovelabslca.com
 November 5, 2026
 
 Sparse language-model systems make discrete choices among experts, agents, retrieval locations, tools, memory paths, and provenance links. Coleman (2026a) called their mutual consistency **index alignment** and separated non-authoritative routers, state ledgers, and generative continuity experts. This paper turns that framework into a finite, evidence-conditioned certification construction. At each declared scale, four predicate families test routing (`A_route`), ledger commitments (`A_ledger`), generation and support (`A_gen`), and continuity (`A_cont`); their conjunction is `A(k)`. At a fixed specification and caller-supplied thresholds, authorization and compliance are boolean, while the monitor reports PASS, FAIL, UNKNOWN, or NO_VERDICT and only PASS yields release bit 1. Missing evidence therefore blocks promotion without being misreported as an observed failure. A finite trace returns the earliest known failed scale, or on a causal DAG the frontier of concurrent minimal failures, each with a witness or counterexample.

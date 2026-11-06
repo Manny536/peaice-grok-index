@@ -1,7 +1,11 @@
 # Index Alignment Research Package
 
 **Boolean Index Alignment: Traceable Induction on Scales for Sparse Language-Model Systems**
-Manuel Coleman · AgreeYa Solutions (Computacenter), Folsom, CA · November 5, 2026
+Manuel Coleman · AgreeYa Solutions (Computacenter), Folsom, CA, USA · November 5, 2026
+
+Correspondence: manuel.coleman@lovelabslca.com
+
+Love Labs is the company and the project context. AgreeYa Solutions (Computacenter), Folsom, CA, USA is the professional affiliation.
 
 This package contains the manuscript, its abstract, nine companion research documents, a revised claim–evidence matrix, an annotated bibliography, and the two historical papers it continues. An independent source review assessed all 47 listed claims; its findings and applied corrections are included in `audit/`. The architecture remains proposed and no LLM efficacy evaluation is reported.
 

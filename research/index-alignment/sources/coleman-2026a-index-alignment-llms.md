@@ -4,7 +4,7 @@
 
 **Authors:** Manuel Coleman$^{1}$ \\
 $^{1}$AgreeYa Solutions (Computacenter), Folsom, CA, USA \\
-Correspondence: manuel.coleman@agreeya.net
+Correspondence: manuel.coleman@lovelabslca.com
 
 **Status:** Research draft (arXiv-style). Sections marked *Proposal* introduce framing and architectures that synthesize prior work rather than claiming completed empirical validation.
 

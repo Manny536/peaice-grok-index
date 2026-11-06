@@ -35,8 +35,8 @@ captures a task's relevant failures remains an empirical coverage question.
 1.2 Why every index must be typed and versioned
 Deﬁnition 1 writes an index as ι = (type, name, epoch, version). Each component removes
 a speciﬁc ambiguity that otherwise breaks a checker.
-Type. Coleman (2026a) already used a disjoint union 𝓘 _expert ∪ 𝓘 _agent ∪ 𝓘 _mem ∪ 𝓘 _tool ∪
-𝓘 _doc. The continuation extends it with claim, correction, source, and obligation, because
+Type. Coleman (2026a) already used a disjoint union 𝓘 _expert ∪ 𝓘 _agent ∪ 𝓘 _mem ∪ 𝓘 _tool
+∪ 𝓘 _doc. The continuation extends it with claim, correction, source, and obligation, because
 those are the objects corrections and continuity act on. Disjointness matters
 operationally: a string such as search can be a tool, an agent persona, and a memory
 namespace at once. A checker that compares untyped names can certify that "the cited
@@ -401,9 +401,9 @@ local — one activation, one retrieval, one commit — or a cross-operation inv
 as a shared budget or a correction frontier. Cross-operation obligations are the entire
 reason composition is nontrivial; deep dive 03.7 shows what fails without them.
 For each obligation q the paper uses two predicates, authorization A_q and compliance
-C_q, because they answer diﬀerent questions: "an authorized write can violate a
-schema; a well-formed retrieved instruction can be unauthorized." Keeping them
-separate prevents a single combined "ok" bit from hiding which question failed.
+C_q, because they answer diﬀerent questions: "an authorized write can violate a schema;
+a well-formed retrieved instruction can be unauthorized." Keeping them separate
+prevents a single combined "ok" bit from hiding which question failed.
 3.3 The four composition conditions
 Proposition 2 lifts sound local certiﬁcates to sound global ones under four conditions.
 The proof uses all four as suﬀicient premises. They are not claimed to be a minimal
@@ -836,9 +836,9 @@ only on d1. With dependency enumeration and N independently established, Aff = {
 q4, s4, x4}. Those are held. q1 may be released as HELD_PARTIAL with an explicit exclusion
 notice, after its own authority and support checks pass.
 Trace F applies closure to concurrency. Agent A commits a valid plan; agent B uses a
-revoked memory item; agent C drops an unrelated open obligation. B and C are
-causally incomparable. The frontier contains both, repair computes two closures, and A
-may be released only if its dependencies intersect neither.
+revoked memory item; agent C drops an unrelated open obligation. B and C are causally
+incomparable. The frontier contains both, repair computes two closures, and A may be
+released only if its dependencies intersect neither.
 5.9 Correction storms and the round cap
 Trace H is the adversarial case for closure: two authorized registries alternately
 supersede conﬂicting values. Each correction correctly invalidates the other's
@@ -1072,8 +1072,8 @@ If each checker terminates on its ﬁnite slice, reachability is over a ﬁnite 
 thresholds are present, the trace, frontier, and aﬀected closure are computable in ﬁnite
 time. The proposition is deliberately weak: it is a termination guarantee, not a cost
 bound, and it excludes semantic discovery. Its practical point is the converse — when a
-checker does not terminate (an LLM assessor times out), that is an execution status,
-not a semantic failure. Deep dive 08 develops the execution taxonomy.
+checker does not terminate (an LLM assessor times out), that is an execution status, not
+a semantic failure. Deep dive 08 develops the execution taxonomy.
 7.5 Two-ends support and directional coverage
 Two predicates detect a failure that counting receipts misses: concentration.
 TWO_ENDS(q) (Deﬁnition 25) requires that no admissible window shorter than ε|S| contain
@@ -1353,9 +1353,9 @@ Kakeya geometry supplies an order of work. Governance work supplies the boundary
 what a technical certiﬁcate can settle. Keeping those roles distinct is itself part of the
 argument: no cited work is used as evidence for something it does not study.
 9.2 Sparse experts and routing
-Shazeer et al. (2017), Outrageously Large Neural Networks: The Sparsely-
-Gated Mixture-of-Experts Layer, ICLR; arXiv:1701.06538. Introduces noisy top-k
-gating over thousands of experts with a load-balancing loss. Source of the gated routing
+Shazeer et al. (2017), Outrageously Large Neural Networks: The Sparsely-Gated
+Mixture-of-Experts Layer, ICLR; arXiv:1701.06538. Introduces noisy top-k gating
+over thousands of experts with a load-balancing loss. Source of the gated routing
 decision R_t = TopK(softmax(W_r x)) used in Coleman (2026a). Its gate is a learned aﬀinity,
 which is why the manuscript treats gate weight as telemetry.
 Lepikhin et al. (2020), GShard, arXiv:2006.16668. Top-2 routing with expert

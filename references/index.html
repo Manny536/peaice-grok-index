@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PeAIce reference catalog · Love Labs LCA</title>
+<meta name="description" content="Love Labs LCA and PeAIce research references, with source statuses and link availability.">
+<meta name="author" content="Manuel Coleman, Love Labs LCA">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#080a0f;--panel:#0f131c;--card:#121824;--ink:#e8edf8;--muted:#8b9ab8;
+  --accent:#f0b429;--teal:#5eead4;--blue:#7aa8ff;--ok:#4ade80;--danger:#f87171;
+  --stroke:#1c2436;--max:1100px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Source Serif 4',Georgia,serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:17px}
+@media(max-width:640px){body{font-size:16px}}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:.82em}
+header{position:sticky;top:0;z-index:50;background:rgba(8,10,15,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--stroke);padding:14px 20px}
+.hdr{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.hdr h1{font-size:1.05rem;font-weight:600}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-family:'IBM Plex Mono',monospace;font-size:.65rem;padding:4px 9px;border-radius:999px;border:1px solid var(--stroke);color:var(--muted)}
+.pill.live{color:var(--accent);border-color:#3d3520}
+.pill.open{color:var(--blue);border-color:#2a4060}
+.pill.ok{color:var(--ok);border-color:#1f4a35}
+.pill.neg{color:var(--danger);border-color:#4a2020}
+.wrap{max-width:var(--max);margin:0 auto;padding:28px 20px 80px}
+.kicker{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.hero{padding:4px 0 24px;border-bottom:1px solid var(--stroke);margin-bottom:28px}
+.hero h2{font-size:1.85rem;font-weight:600;color:var(--accent);line-height:1.2;margin-bottom:8px}
+@media(max-width:640px){.hero h2{font-size:1.45rem}}
+.hero .sub{font-size:1.08rem;color:var(--muted);font-style:italic;margin-bottom:12px}
+.hero .meta{font-size:.9rem;color:var(--muted)}
+.hero .meta strong{color:var(--ink)}
+.abstract{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:16px 18px;margin:14px 0;font-size:.97rem}
+.abstract p{margin:.5em 0}
+.abstract p:first-child{margin-top:0}
+.abstract p:last-child{margin-bottom:0}
+nav.toc{background:var(--panel);border:1px solid var(--stroke);border-radius:12px;padding:14px 16px;margin:18px 0 30px}
+nav.toc h3{font-size:.72rem;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+nav.toc ol{padding-left:1.2em;font-size:.92rem}
+nav.toc li{margin:3px 0}
+section{margin-bottom:34px}
+section>h2{font-size:1.24rem;color:var(--teal);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--stroke)}
+section>h3{font-size:1rem;color:var(--accent);margin:16px 0 8px}
+.card-grid{display:grid;gap:10px}
+@media(min-width:640px){.card-grid.two{grid-template-columns:1fr 1fr}}
+.record{background:var(--card);border:1px solid var(--stroke);border-radius:10px;padding:12px 14px}
+.record h3{font-size:.95rem;margin-bottom:4px;line-height:1.35}
+.url{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--blue);word-break:break-all;margin-top:4px}
+.explain{font-size:.92rem;margin-top:8px}
+.source-status{font-size:.84rem;color:var(--muted);margin-top:6px}
+.note{font-size:.86rem;color:var(--muted);margin:10px 0}
+.tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.6rem;padding:2px 6px;border-radius:4px;background:#1a1520;border:1px solid #3a3020;color:var(--accent);margin-left:6px;vertical-align:middle}
+.tag.open{color:var(--blue);border-color:#2a4060;background:#101820}
+.tag.archived{color:var(--muted);border-color:var(--stroke);background:#10141c}
+.tag.hold{color:var(--danger);border-color:#4a2020;background:#1a1014}
+.demo-frame{width:100%;height:min(28rem,70vh);min-height:12rem;border:0;border-radius:10px;background:#0a0e16;display:block;margin-top:10px}
+.table-wrap{overflow-x:auto;margin:10px 0}
+.status-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:0}
+.status-table th,.status-table td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--stroke);vertical-align:top}
+.status-table thead th{color:var(--muted);font-weight:500;font-family:'IBM Plex Mono',monospace;font-size:.7rem}
+.status-table code,.blocked{font-family:'IBM Plex Mono',monospace;font-size:.72rem;word-break:break-all;color:var(--ink)}
+.link-status{background:var(--panel);border:1px solid var(--stroke);border-radius:12px;padding:16px 16px 6px}
+.link-status>h2{color:var(--muted);font-size:1.05rem}
+footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--stroke);font-size:.76rem;color:var(--muted)}
+footer p{margin:.3em 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <h1>PeAIce · Reference catalog</h1>
+    <div class="pills">
+      <span class="pill live">Research index</span>
+      <span class="pill">40 records</span>
+      <span class="pill neg">12 unavailable</span>
+      <span class="pill">h &lt; 1</span>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <article class="hero">
+    <p class="kicker">Love Labs LCA · research-reference subpage · 6 November 2026</p>
+    <h2>PeAIce reference catalog</h2>
+    <p class="sub">Discovered public paths for Love Labs and PeAIce.</p>
+    <p class="meta"><strong>Canonical PeAIce root:</strong> <a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">https://peaice.org/lovelabslca</a></p>
+    <div class="abstract">
+      <p>Working and redirecting peaice.org paths from the 6 November 2026 inventory, with the reachable destination for each alias and redirect.</p>
+      <p>Status labels appear where the source carries them.</p>
+    </div>
+  </article>
+
+  <nav class="toc" aria-label="Catalog sections">
+    <h3>Catalog</h3>
+    <ol>
+      <li><a href="#research-map">Research map</a> (3)</li>
+      <li><a href="#featured-papers">Featured papers</a> (3)</li>
+      <li><a href="#kakeyalogic">KakeyaLogic and geometry</a> (7)</li>
+      <li><a href="#benevolence-drift">Benevolence Drift and benchmarks</a> (9)</li>
+      <li><a href="#thinking-machines">Thinking Machines archive</a> (10)</li>
+      <li><a href="#interactive-demos">Interactive demos</a> (2)</li>
+      <li><a href="#reports">Reports and model exchange</a> (4)</li>
+      <li><a href="#errata">Errata</a> (2)</li>
+      <li><a href="#link-status">Link status and unavailable records</a></li>
+    </ol>
+  </nav>
+
+  <section id="research-map">
+    <h2>Research map</h2>
+    <p class="note">The canonical home, the root alias that reaches it, and /dpsa.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-lovelabslca" data-path="https://peaice.org/lovelabslca" data-final="https://peaice.org/lovelabslca" data-group="research-map" data-relation="canonical">
+        <h3>PeAIce.org <span class="tag">canonical home</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">https://peaice.org/lovelabslca</a></p>
+        <p class="explain">Canonical home, and the target of the root redirect, carrying the October 2026 updated site document on Excellence Engine V4, Outcomes, Meta V4, the PeAIce Index, KakeyaLogic, Claude V6, Grok Terminal, the P vs NP surface, and current status.</p>
+      </article>
+      <article class="record" id="rec-root" data-path="https://peaice.org/" data-final="https://peaice.org/lovelabslca" data-group="research-map" data-relation="alias">
+        <h3>peaice.org root <span class="tag">alias / redirect</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/">https://peaice.org/</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">https://peaice.org/lovelabslca</a></p>
+        <p class="explain">The site root is a duplicate-content alias of the canonical home and redirects there.</p>
+      </article>
+      <article class="record" id="rec-dpsa" data-path="https://peaice.org/dpsa" data-final="https://peaice.org/dpsa" data-group="research-map" data-relation="canonical">
+        <h3>PeAIce - DPSA</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/dpsa">https://peaice.org/dpsa</a></p>
+        <p class="explain">The page is reachable, but its embedded Canva asset returns 404. Its purpose is not stated in the available text.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="featured-papers">
+    <h2>Featured papers</h2>
+    <p class="note">Pages the inventory places at the front of the public record. Titles and scope stay with the source sentences.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-eev4" data-path="https://peaice.org/eev4" data-final="https://peaice.org/eev4" data-group="featured-papers" data-relation="canonical">
+        <h3>EEv4-Research-Paper — Finite in Infinite</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/eev4">https://peaice.org/eev4</a></p>
+        <p class="explain">“EEv4-Research-Paper — Finite in Infinite” (Aug 10, 2026) presents a falsifiable research program comparing existing agent baselines with an EEv4 intervention.</p>
+      </article>
+      <article class="record" id="rec-outcomes" data-path="https://peaice.org/outcomes" data-final="https://peaice.org/outcomes" data-group="featured-papers" data-relation="canonical">
+        <h3>PeAIce: KakeyaLogic, Outcomes.</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/outcomes">https://peaice.org/outcomes</a></p>
+        <p class="explain">The Outcomes page is the public research memorandum on AI as a research partner, a Benevolence Drift opposing result, and publication controls that keep conjecture separate from theorem.</p>
+      </article>
+      <article class="record" id="rec-h-term" data-path="https://peaice.org/h-term" data-final="https://peaice.org/h-term" data-group="featured-papers" data-relation="canonical">
+        <h3>Evaluator Non-Sovereignty as the h-Term</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/h-term">https://peaice.org/h-term</a></p>
+        <p class="explain">“Evaluator Non-Sovereignty as the h-Term: Why AI Safety Cannot Be Self-Verified” is the canonical paper for the h-term.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="kakeyalogic">
+    <h2>KakeyaLogic and geometry</h2>
+    <p class="note">KakeyaLogic pages and the P vs NP grounding pages.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-claudev6" data-path="https://peaice.org/claudev6" data-final="https://peaice.org/claudev6" data-group="kakeyalogic" data-relation="canonical">
+        <h3>PeAIce: ClaudeV6 <span class="tag open">OPEN</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/claudev6">https://peaice.org/claudev6</a></p>
+        <p class="explain">“PeAIce: ClaudeV6” is the Trace-Neutral Kakeya Operator white paper, version 6.3 (June 10, 2026).</p>
+        <p class="source-status">Source status: OPEN — operator constructed; conjecture open.</p>
+      </article>
+      <article class="record" id="rec-ddatl" data-path="https://peaice.org/ddatl" data-final="https://peaice.org/ddatl" data-group="kakeyalogic" data-relation="canonical">
+        <h3>PEAICE: DDATL-001_EE, page 1</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/ddatl">https://peaice.org/ddatl</a></p>
+        <p class="explain">DDATL page 1 is the version 6.4.3 render (25 June 2026) of PEAICE: DDATL-001_EE on Hilbert–Schmidt corridor calibration, and it links the KakeyaLogic documents.</p>
+      </article>
+      <article class="record" id="rec-ddatl-2" data-path="https://peaice.org/ddatl/page-2" data-final="https://peaice.org/ddatl/page-2" data-group="kakeyalogic" data-relation="canonical">
+        <h3>PEAICE: DDATL-001_EE, page 2 <span class="tag open">PROPOSED</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/ddatl/page-2">https://peaice.org/ddatl/page-2</a></p>
+        <p class="explain">DDATL page 2 states the canonical definition dated 22 May 2026.</p>
+        <p class="source-status">Source status: PROPOSED. Theorem target marked OPEN.</p>
+      </article>
+      <article class="record" id="rec-ddatl-3" data-path="https://peaice.org/ddatl/page-3" data-final="https://peaice.org/ddatl/page-3" data-group="kakeyalogic" data-relation="canonical">
+        <h3>PEAICE: DDATL-001_EE, page 3 <span class="tag archived">superseded section</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/ddatl/page-3">https://peaice.org/ddatl/page-3</a></p>
+        <p class="explain">DDATL page 3 gives a revised definition, points to external references, and marks a page 1 section superseded.</p>
+        <p class="source-status">Source status: superseded.</p>
+      </article>
+      <article class="record" id="rec-eev3" data-path="https://peaice.org/eev3" data-final="https://peaice.org/eev3" data-group="kakeyalogic" data-relation="canonical">
+        <h3>PeAIce: EEv3</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/eev3">https://peaice.org/eev3</a></p>
+        <p class="explain">“PeAIce: EEv3” is the canon document describing the KakeyaLogic Excellence Engine v3 field simulator.</p>
+      </article>
+      <article class="record" id="rec-canonicalflagv2" data-path="https://peaice.org/canonicalflagv2" data-final="https://peaice.org/canonicalflagv2" data-group="kakeyalogic" data-relation="canonical">
+        <h3>P vs NP — Canonical Mathematical Grounding <span class="tag open">PROPOSED</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/canonicalflagv2">https://peaice.org/canonicalflagv2</a></p>
+        <p class="explain">“P vs NP — Canonical Mathematical Grounding, Poison Dart Parents Update Edition” (2026-04-18) is the FLAG-001-compliant grounding edition.</p>
+        <p class="source-status">Source status: PROPOSED.</p>
+      </article>
+      <article class="record" id="rec-pnp" data-path="https://peaice.org/pnp" data-final="https://manny536.github.io/peaice-propsed-cannon/" data-group="kakeyalogic" data-relation="redirect">
+        <h3>P=NP — PeAIce Mathematical Grounding <span class="tag open">PROPOSED</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/pnp">https://peaice.org/pnp</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-propsed-cannon/">https://manny536.github.io/peaice-propsed-cannon/</a></p>
+        <p class="explain">peaice.org/pnp redirects to the GitHub Pages explainer on P vs NP as grounding for h&lt;1.0, Polyak momentum, and the canonical record.</p>
+        <p class="source-status">Source status: PROPOSED.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="benevolence-drift">
+    <h2>Benevolence Drift and benchmarks</h2>
+    <p class="note">The neutrality deck and the Illusion Density Benchmark pages.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-thinkingmachines" data-path="https://peaice.org/thinkingmachines" data-final="https://peaice.org/thinkingmachines" data-group="benevolence-drift" data-relation="canonical">
+        <h3>AI Neutrality, page 1</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachines">https://peaice.org/thinkingmachines</a></p>
+        <p class="explain">Page 1 is the cover of the seven-page image deck “Benevolence Drift — AI Neutrality Under Pressure”.</p>
+      </article>
+      <article class="record" id="rec-thinkingmachines-2" data-path="https://peaice.org/thinkingmachines/page-2" data-final="https://peaice.org/thinkingmachines/page-2" data-group="benevolence-drift" data-relation="canonical">
+        <h3>AI Neutrality, page 2</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachines/page-2">https://peaice.org/thinkingmachines/page-2</a></p>
+        <p class="explain">Benevolence Drift case 01 records an X thread probe that asked @grok “Seems racist?”; the forced binary outcome was “Yes”.</p>
+      </article>
+      <article class="record" id="rec-thinkingmachines-3" data-path="https://peaice.org/thinkingmachines/page-3" data-final="https://peaice.org/thinkingmachines/page-3" data-group="benevolence-drift" data-relation="canonical">
+        <h3>AI Neutrality, page 3</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachines/page-3">https://peaice.org/thinkingmachines/page-3</a></p>
+        <p class="explain">Deck page 3 is an image-only page whose visible text is the title “AI Neutrality” and the page 1–7 navigation, and the inventory states that its purpose is not given in the text.</p>
+      </article>
+      <article class="record" id="rec-thinkingmachines-4" data-path="https://peaice.org/thinkingmachines/page-4" data-final="https://peaice.org/thinkingmachines/page-4" data-group="benevolence-drift" data-relation="canonical">
+        <h3>AI Neutrality, page 4</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachines/page-4">https://peaice.org/thinkingmachines/page-4</a></p>
+        <p class="explain">Deck page 4 describes three dehumanization-trope mechanics and scale risk.</p>
+      </article>
+      <article class="record" id="rec-thinkingmachines-5" data-path="https://peaice.org/thinkingmachines/page-5" data-final="https://peaice.org/thinkingmachines/page-5" data-group="benevolence-drift" data-relation="canonical">
+        <h3>AI Neutrality, page 5</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachines/page-5">https://peaice.org/thinkingmachines/page-5</a></p>
+        <p class="explain">Deck page 5 is a call-out gate template that names a violation, says briefly why, and keeps any deeper dive consent-gated.</p>
+      </article>
+      <article class="record" id="rec-thinkingmachines-6" data-path="https://peaice.org/thinkingmachines/page-6" data-final="https://peaice.org/thinkingmachines/page-6" data-group="benevolence-drift" data-relation="canonical">
+        <h3>AI Neutrality, page 6</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachines/page-6">https://peaice.org/thinkingmachines/page-6</a></p>
+        <p class="explain">Deck page 6 carries the heading “Pinning / Consent / Neo-Con / Coherence Under Pressure”.</p>
+      </article>
+      <article class="record" id="rec-thinkingmachines-7" data-path="https://peaice.org/thinkingmachines/page-7" data-final="https://peaice.org/thinkingmachines/page-7" data-group="benevolence-drift" data-relation="canonical">
+        <h3>AI Neutrality, page 7</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachines/page-7">https://peaice.org/thinkingmachines/page-7</a></p>
+        <p class="explain">Deck page 7 gives thread context and probe links for the deck.</p>
+      </article>
+      <article class="record" id="rec-idb" data-path="https://peaice.org/peaicethinkingmachines" data-final="https://peaice.org/peaicethinkingmachines" data-group="benevolence-drift" data-relation="canonical">
+        <h3>PeAIce Thinking Machines — Denial of Doom &amp; the IDB</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/peaicethinkingmachines">https://peaice.org/peaicethinkingmachines</a></p>
+        <p class="explain">“PeAIce Thinking Machines — Denial of Doom &amp; the IDB” is the landing page for DO-X and the Illusion Density Benchmark A/B/C ladder, found through local references and absent from the sitemap.</p>
+      </article>
+      <article class="record" id="rec-idb-2" data-path="https://peaice.org/peaicethinkingmachines/page-2" data-final="https://peaice.org/peaicethinkingmachines/page-2" data-group="benevolence-drift" data-relation="canonical">
+        <h3>PeAIce Thinking Machines, IDB/E-IDB paper</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/peaicethinkingmachines/page-2">https://peaice.org/peaicethinkingmachines/page-2</a></p>
+        <p class="explain">The companion page is the IDB/E-IDB white paper by Manuel Coleman, with the agent named GPT Thinking — Solance.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="thinking-machines">
+    <h2>Thinking Machines archive</h2>
+    <p class="note">Lineage pages.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-claudev4" data-path="https://peaice.org/claudev4" data-final="https://peaice.org/claudev4" data-group="thinking-machines" data-relation="canonical">
+        <h3>PeAIce Thinking Machine: ClaudeV4</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/claudev4">https://peaice.org/claudev4</a></p>
+        <p class="explain">“PeAIce Thinking Machine: ClaudeV4” is the V4 coherence update “The Frog Already Knows,” with three-pillar h&lt;1 grounding (FLAG-001, Dendrobatidae, and P/NP), and it lists lovelabslca.com as a publication target.</p>
+      </article>
+      <article class="record" id="rec-claudev5" data-path="https://peaice.org/claudev5" data-final="https://peaice.org/claudev5" data-group="thinking-machines" data-relation="canonical">
+        <h3>PeAIce Thinking Machine: ClaudeV5 <span class="tag open">OPEN</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/claudev5">https://peaice.org/claudev5</a></p>
+        <p class="explain">“PeAIce Thinking Machine: ClaudeV5” is the Coleman Conjecture deep-probe document, and it links <a target="_blank" rel="noopener" href="https://github.com/Manny536/peaiceclaudev5">github.com/Manny536/peaiceclaudev5</a>.</p>
+        <p class="source-status">Source status: OPEN — formally named, not yet derived.</p>
+      </article>
+      <article class="record" id="rec-claudev3" data-path="https://peaice.org/peaicethinkingmachineclaudev3" data-final="https://peaice.org/peaicethinkingmachineclaudev3" data-group="thinking-machines" data-relation="canonical">
+        <h3>Kakeya &amp; Riemann as Grounding for L²_C</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/peaicethinkingmachineclaudev3">https://peaice.org/peaicethinkingmachineclaudev3</a></p>
+        <p class="explain">“Kakeya &amp; Riemann as Grounding for L²_C” (Claude v3, March 2026) is the foundation document in this Thinking Machines archive.</p>
+      </article>
+      <article class="record" id="rec-claudev3-2" data-path="https://peaice.org/peaicethinkingmachineclaudev3/page-2" data-final="https://peaice.org/peaicethinkingmachineclaudev3/page-2" data-group="thinking-machines" data-relation="canonical">
+        <h3>Momentum's Ask</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/peaicethinkingmachineclaudev3/page-2">https://peaice.org/peaicethinkingmachineclaudev3/page-2</a></p>
+        <p class="explain">“Momentum's Ask” (February 2026, Claude v2 β) is an appendix on cross-model convergence and momentum-enabled coherence.</p>
+      </article>
+      <article class="record" id="rec-claudev21" data-path="https://peaice.org/peaicethinkingmachineclaudev3/peaice-thinking-machine-claudev21" data-final="https://peaice.org/peaicethinkingmachineclaudev3/peaice-thinking-machine-claudev21" data-group="thinking-machines" data-relation="canonical">
+        <h3>PeAIce Thinking Machine: Claude.v2.1</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/peaicethinkingmachineclaudev3/peaice-thinking-machine-claudev21">https://peaice.org/peaicethinkingmachineclaudev3/peaice-thinking-machine-claudev21</a></p>
+        <p class="explain">The L²_C Framework version 2.1 working reference (February 2026) is a layered reading guide for E=L², a daily activation protocol, and trust calibration.</p>
+      </article>
+      <article class="record" id="rec-shells" data-path="https://peaice.org/peaicethinkingmachinesclaudeshells" data-final="https://peaice.org/peaicethinkingmachinesclaudeshells" data-group="thinking-machines" data-relation="canonical">
+        <h3>Claude (ShellProblem) <span class="tag archived">ARCHIVED</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/peaicethinkingmachinesclaudeshells">https://peaice.org/peaicethinkingmachinesclaudeshells</a></p>
+        <p class="explain">“Claude (ShellProblem)” is a slide-by-slide walkthrough of the 19-slide L²_C Windows Shells deck.</p>
+        <p class="source-status">Source status: ARCHIVED 27 March 2026.</p>
+      </article>
+      <article class="record" id="rec-windowsshells" data-path="https://peaice.org/windowsshells" data-final="https://peaice.org/windowsshells" data-group="thinking-machines" data-relation="canonical">
+        <h3>Windows Shells: Command Interpretation, Delegation, and Coherence</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/windowsshells">https://peaice.org/windowsshells</a></p>
+        <p class="explain">“Windows Shells: Command Interpretation, Delegation, and Coherence — L²_C Grounding” is the March 2026 monograph paired with that walkthrough.</p>
+      </article>
+      <article class="record" id="rec-gptv2" data-path="https://peaice.org/thinkingmachinesgptv2" data-final="https://peaice.org/thinkingmachinesgptv2" data-group="thinking-machines" data-relation="canonical">
+        <h3>GPT V2 PeAIce Thinking</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachinesgptv2">https://peaice.org/thinkingmachinesgptv2</a></p>
+        <p class="explain">“GPT V2 PeAIce Thinking” describes the Excellence Engine as the GPT v2 PeAIce Thinking Machine and states that index alignment can organize knowledge while model alignment must conserve integrity.</p>
+      </article>
+      <article class="record" id="rec-gptv2-2" data-path="https://peaice.org/thinkingmachinesgptv2/page-2" data-final="https://peaice.org/thinkingmachinesgptv2/page-2" data-group="thinking-machines" data-relation="canonical">
+        <h3>PeAIce Thinking Machines Lab Study <span class="tag archived">ARCHIVED PREDECESSOR</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/thinkingmachinesgptv2/page-2">https://peaice.org/thinkingmachinesgptv2/page-2</a></p>
+        <p class="explain">Page 2 presents “PeAIce Thinking Machines Lab Study — A Consent-Conditioned, Evidence-Anchored System” and includes a Benevolence Drift abstract.</p>
+        <p class="source-status">Source status: ARCHIVED PREDECESSOR (RET 3/2026, Solance/GPT).</p>
+      </article>
+      <article class="record" id="rec-ii" data-path="https://peaice.org/ii" data-final="https://peaice.org/ii" data-group="thinking-machines" data-relation="canonical">
+        <h3>II — Inspectable Intelligence <span class="tag archived">superseded</span> <span class="tag open">RH OPEN</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/ii">https://peaice.org/ii</a></p>
+        <p class="explain">“II — Inspectable Intelligence” (canon update May 12, 2026) is a historical session record that the page itself treats as superseded by EEV4, and the page states RH OPEN.</p>
+        <p class="source-status">Source status: superseded by EEV4. RH OPEN.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="interactive-demos">
+    <h2>Interactive demos</h2>
+    <p class="note">Both paths redirect to Manuel Coleman's GitHub Pages.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-games" data-path="https://peaice.org/games" data-final="https://manny536.github.io/peaice-games/" data-group="interactive-demos" data-relation="redirect">
+        <h3>PEAICE FREE SHOOTER — Excellence Engine</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/games">https://peaice.org/games</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-games/">https://manny536.github.io/peaice-games/</a></p>
+        <p class="explain">peaice.org/games redirects to Manuel Coleman's GitHub Pages browser game whose enemies are Benevolence Drift, Session Amnesia, and Alignment Illusion.</p>
+        <iframe class="demo-frame" title="PEAICE FREE SHOOTER on Manuel Coleman's GitHub Pages" src="https://manny536.github.io/peaice-games/" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </article>
+      <article class="record" id="rec-pnp-loop" data-path="https://peaice.org/pnp-loop" data-final="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/" data-group="interactive-demos" data-relation="redirect">
+        <h3>L²_C Live Loop — A Computational Example</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/pnp-loop">https://peaice.org/pnp-loop</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/">https://manny536.github.io/peaice-propsed-cannona-dd-onv1/</a></p>
+        <p class="explain">peaice.org/pnp-loop redirects to an interactive simulator with β, noise, and care sliders, live traces, and a P vs NP comparison.</p>
+        <iframe class="demo-frame" title="L²_C Live Loop on Manuel Coleman's GitHub Pages" src="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </article>
+    </div>
+  </section>
+
+  <section id="reports">
+    <h2>Reports and model exchange</h2>
+    <p class="note">One research-engineering destination, the alias that reaches the same destination, and two Google Doc landing paths. The docs are linked. They are not embedded.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-report" data-path="https://peaice.org/report" data-final="https://manny536.github.io/researchengineeringreports/" data-group="reports" data-relation="redirect">
+        <h3>L²_C Cross Model Continuity and Jailbreak Study</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/report">https://peaice.org/report</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/researchengineeringreports/">https://manny536.github.io/researchengineeringreports/</a></p>
+        <p class="explain">peaice.org/report redirects to the research-engineering site for the L²_C cross-model continuity and jailbreak study (version 1.0 over version 0.6 and version 0.5), covering three reports, a verification-integrity correction, and a cross-agent probe.</p>
+      </article>
+      <article class="record" id="rec-blueprint" data-path="https://peaice.org/blueprint" data-final="https://manny536.github.io/researchengineeringreports/" data-group="reports" data-relation="alias">
+        <h3>/blueprint <span class="tag">alias of /report</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/blueprint">https://peaice.org/blueprint</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/researchengineeringreports/">https://manny536.github.io/researchengineeringreports/</a></p>
+        <p class="explain">peaice.org/blueprint is a duplicate-content alias of /report and redirects to the same GitHub Pages destination, with the same rendered text length and links.</p>
+      </article>
+      <article class="record" id="rec-grok" data-path="https://peaice.org/Grok" data-final="https://docs.google.com/document/d/15ah_geEqIhsHgIngNf7-YpvBMAHzwsxlw9mhgJUVPF0/edit?usp=sharing" data-group="reports" data-relation="redirect">
+        <h3>GROK v4 — KB→RH Exchange Record <span class="tag open">OPEN framing</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/Grok">https://peaice.org/Grok</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/15ah_geEqIhsHgIngNf7-YpvBMAHzwsxlw9mhgJUVPF0/edit?usp=sharing">https://docs.google.com/document/d/15ah_geEqIhsHgIngNf7-YpvBMAHzwsxlw9mhgJUVPF0/edit?usp=sharing</a></p>
+        <p class="explain">peaice.org/Grok redirects to the public Google Doc that is the canonical exchange record of an X thread, titled GROK v4 — KB→RH Exchange Record — May 9, 2026.</p>
+        <p class="source-status">Source status: OPEN.</p>
+      </article>
+      <article class="record" id="rec-deepseek" data-path="https://peaice.org/deepseekr1" data-final="https://docs.google.com/document/d/1tV5F8CpiKtaWfQDb-ZGiI7oQ0YZCS82sJW0tn8dyDNY/edit?usp=sharing" data-group="reports" data-relation="redirect">
+        <h3>DeepSeek technical synthesis report</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/deepseekr1">https://peaice.org/deepseekr1</a></p>
+        <p class="url"><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1tV5F8CpiKtaWfQDb-ZGiI7oQ0YZCS82sJW0tn8dyDNY/edit?usp=sharing">https://docs.google.com/document/d/1tV5F8CpiKtaWfQDb-ZGiI7oQ0YZCS82sJW0tn8dyDNY/edit?usp=sharing</a></p>
+        <p class="explain">peaice.org/deepseekr1 redirects to the public Google Doc titled Technical Synthesis Report: DeepSeek Implementation of the Excellence Engine via Invariant Conservator.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="errata">
+    <h2>Errata</h2>
+    <p class="note">The Canonical Flag retraction and the FLAG-001 notice.</p>
+    <div class="card-grid">
+      <article class="record" id="rec-canonicalflag" data-path="https://peaice.org/canonicalflag" data-final="https://peaice.org/canonicalflag" data-group="errata" data-relation="canonical">
+        <h3>Canonical Flag, FLAG-001-C</h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/canonicalflag">https://peaice.org/canonicalflag</a></p>
+        <p class="explain">Canonical Flag companion FLAG-001-C (2026-04-01) retracts Gödel-based grounding for h and states that evaluator non-sovereignty grounds h.</p>
+      </article>
+      <article class="record" id="rec-canonicalflag-2" data-path="https://peaice.org/canonicalflag/page-2" data-final="https://peaice.org/canonicalflag/page-2" data-group="errata" data-relation="canonical">
+        <h3>Errata Notice, FLAG-001 <span class="tag open">PROPOSED</span></h3>
+        <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/canonicalflag/page-2">https://peaice.org/canonicalflag/page-2</a></p>
+        <p class="explain">The errata notice FLAG-001 records a derivability error entered by Claude v3.</p>
+        <p class="source-status">Source status: PROPOSED.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="link-status" class="link-status">
+    <h2>Link status and unavailable records</h2>
+    <h3>Redirect and alias ledger</h3>
+    <div class="table-wrap">
+      <table class="status-table">
+        <thead><tr><th>Requested path</th><th>Relation</th><th>Reachable destination</th></tr></thead>
+        <tbody>
+          <tr><td><code>https://peaice.org/</code></td><td>Duplicate-content alias / redirect</td><td><a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">https://peaice.org/lovelabslca</a></td></tr>
+          <tr><td><code>https://peaice.org/blueprint</code></td><td>Duplicate-content alias of /report</td><td><a target="_blank" rel="noopener" href="https://manny536.github.io/researchengineeringreports/">https://manny536.github.io/researchengineeringreports/</a></td></tr>
+          <tr><td><code>https://peaice.org/report</code></td><td>Redirect to Manuel Coleman's GitHub Pages. Canonical of the pair.</td><td><a target="_blank" rel="noopener" href="https://manny536.github.io/researchengineeringreports/">https://manny536.github.io/researchengineeringreports/</a></td></tr>
+          <tr><td><code>https://peaice.org/games</code></td><td>Redirect to Manuel Coleman's GitHub Pages</td><td><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-games/">https://manny536.github.io/peaice-games/</a></td></tr>
+          <tr><td><code>https://peaice.org/pnp</code></td><td>Redirect to Manuel Coleman's GitHub Pages</td><td><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-propsed-cannon/">https://manny536.github.io/peaice-propsed-cannon/</a></td></tr>
+          <tr><td><code>https://peaice.org/pnp-loop</code></td><td>Redirect to Manuel Coleman's GitHub Pages</td><td><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/">https://manny536.github.io/peaice-propsed-cannona-dd-onv1/</a></td></tr>
+          <tr><td><code>https://peaice.org/Grok</code></td><td>Redirect to a public Google Doc. Link only. OPEN framing.</td><td><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/15ah_geEqIhsHgIngNf7-YpvBMAHzwsxlw9mhgJUVPF0/edit?usp=sharing">Google Doc</a></td></tr>
+          <tr><td><code>https://peaice.org/deepseekr1</code></td><td>Redirect to a public Google Doc. Link only.</td><td><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1tV5F8CpiKtaWfQDb-ZGiI7oQ0YZCS82sJW0tn8dyDNY/edit?usp=sharing">Google Doc</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Reachable page, broken embedded asset</h3>
+    <ul class="note">
+      <li data-hold="https://peaice.org/dpsa" data-reason="broken-embed"><a href="#rec-dpsa">PeAIce - DPSA</a>: The page is reachable, but its embedded Canva asset returns 404. Its purpose is not stated in the available text.</li>
+    </ul>
+
+    <h3>Twelve unavailable records</h3>
+    <p class="note">These paths were unavailable during the 6 November 2026 inventory and are not linked.</p>
+    <div class="table-wrap">
+      <table class="status-table">
+        <thead><tr><th>Path</th><th>Recorded status</th><th>Why it is withheld</th></tr></thead>
+        <tbody>
+          <tr data-unavailable="https://peaice.org/Grokv1" data-reason="404"><td><code class="blocked">https://peaice.org/Grokv1</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/Grokv3" data-reason="404"><td><code class="blocked">https://peaice.org/Grokv3</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/appendix" data-reason="404"><td><code class="blocked">https://peaice.org/appendix</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/claudev6/page-2" data-reason="404"><td><code class="blocked">https://peaice.org/claudev6/page-2</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/outcomes/PEAICE-OUTCOMES-FINAL-001.docx" data-reason="404"><td><code class="blocked">https://peaice.org/outcomes/PEAICE-OUTCOMES-FINAL-001.docx</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/outcomes/PEAICE-OUTCOMES-FINAL-001.pdf" data-reason="404"><td><code class="blocked">https://peaice.org/outcomes/PEAICE-OUTCOMES-FINAL-001.pdf</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/outcomes1gpt" data-reason="401"><td><code class="blocked">https://peaice.org/outcomes1gpt</code></td><td>HTTP 401</td><td>Unavailable. Login required. <code class="blocked">https://peaice-outcomes.manuelcoleman.chatgpt.site/outcomes#record</code></td></tr>
+          <tr data-unavailable="https://peaice.org/peaicethinkingmachinesclaude" data-reason="404"><td><code class="blocked">https://peaice.org/peaicethinkingmachinesclaude</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/pnp-grounding" data-reason="404"><td><code class="blocked">https://peaice.org/pnp-grounding</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/schemas/eev4-paper-reference-register-v1.json" data-reason="404"><td><code class="blocked">https://peaice.org/schemas/eev4-paper-reference-register-v1.json</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/thinkingmachinesclaude" data-reason="404"><td><code class="blocked">https://peaice.org/thinkingmachinesclaude</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+          <tr data-unavailable="https://peaice.org/wemby" data-reason="404"><td><code class="blocked">https://peaice.org/wemby</code></td><td>HTTP 404</td><td>Unavailable</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p>PeAIce reference catalog · Love Labs LCA · Manuel Coleman · 6 November 2026</p>
+    <p>Canonical root <a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">https://peaice.org/lovelabslca</a></p>
+  </footer>
+</div>
+<div id="embed-end" style="height:0;clear:both"></div><script>/* embed-height: post the content height, measured at an end marker so it never follows the frame size */(function(){var last=0;function s(){var h=Math.ceil(document.getElementById("embed-end").getBoundingClientRect().top+scrollY);if(Math.abs(h-last)>2){last=h;parent.postMessage({embedHeight:h,src:location.href},"*")}}addEventListener("load",s);addEventListener("resize",s);new ResizeObserver(s).observe(document.body);})();</script>
+</body>
+</html>

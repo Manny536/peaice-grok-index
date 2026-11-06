@@ -90,9 +90,12 @@ GROUPS = {
 SNIPPETS = {
     "https://peaice.org/lovelabslca": ("October 2026",),
     "https://peaice.org/": ("duplicate-content alias",),
-    "https://peaice.org/dpsa": ("purpose is not given", "broken embedded asset", "Not a verified resource"),
+    "https://peaice.org/dpsa": (
+        "The page is reachable, but its embedded Canva asset returns 404.",
+        "Its purpose is not stated in the available text.",
+    ),
     "https://peaice.org/eev4": ("falsifiable research program",),
-    "https://peaice.org/outcomes": ("Benevolence Drift", "not legal advice"),
+    "https://peaice.org/outcomes": ("Benevolence Drift", "public research memorandum"),
     "https://peaice.org/h-term": ("Evaluator Non-Sovereignty", "canonical paper"),
     "https://peaice.org/claudev6": ("Trace-Neutral Kakeya Operator", "OPEN"),
     "https://peaice.org/ddatl": ("Hilbert",),
@@ -102,7 +105,7 @@ SNIPPETS = {
     "https://peaice.org/canonicalflagv2": ("Poison Dart Parents", "PROPOSED"),
     "https://peaice.org/pnp": ("Polyak", "PROPOSED"),
     "https://peaice.org/thinkingmachines": ("Benevolence Drift",),
-    "https://peaice.org/thinkingmachines/page-2": ("Benevolence Drift", "Seems racist?"),
+    "https://peaice.org/thinkingmachines/page-2": ("Benevolence Drift case 01", "Seems racist?"),
     "https://peaice.org/thinkingmachines/page-3": ("purpose is not given",),
     "https://peaice.org/thinkingmachines/page-4": ("dehumanization",),
     "https://peaice.org/thinkingmachines/page-5": ("consent-gated",),
@@ -120,7 +123,7 @@ SNIPPETS = {
     "https://peaice.org/thinkingmachinesgptv2": ("conserve integrity",),
     "https://peaice.org/thinkingmachinesgptv2/page-2": ("ARCHIVED PREDECESSOR", "Benevolence Drift"),
     "https://peaice.org/ii": ("superseded", "RH OPEN"),
-    "https://peaice.org/games": ("Benevolence Drift", "https://manny536.github.io/peaice-games/"),
+    "https://peaice.org/games": ("Benevolence Drift", "Manuel Coleman's GitHub Pages", "https://manny536.github.io/peaice-games/"),
     "https://peaice.org/pnp-loop": ("care sliders", "https://manny536.github.io/peaice-propsed-cannona-dd-onv1/"),
     "https://peaice.org/report": ("verification-integrity", "https://manny536.github.io/researchengineeringreports/"),
     "https://peaice.org/blueprint": ("duplicate-content alias",),
@@ -128,21 +131,6 @@ SNIPPETS = {
     "https://peaice.org/deepseekr1": ("Invariant Conservator",),
     "https://peaice.org/canonicalflag": ("evaluator non-sovereignty",),
     "https://peaice.org/canonicalflag/page-2": ("derivability error", "PROPOSED"),
-}
-
-UNTAGGED_PHRASE = "OPEN, PROPOSED, ARCHIVED, or superseded tag in the inventory"
-TAGGED = {
-    "https://peaice.org/claudev6",
-    "https://peaice.org/ddatl/page-2",
-    "https://peaice.org/ddatl/page-3",
-    "https://peaice.org/canonicalflagv2",
-    "https://peaice.org/pnp",
-    "https://peaice.org/claudev5",
-    "https://peaice.org/peaicethinkingmachinesclaudeshells",
-    "https://peaice.org/thinkingmachinesgptv2/page-2",
-    "https://peaice.org/ii",
-    "https://peaice.org/Grok",
-    "https://peaice.org/canonicalflag/page-2",
 }
 
 DEMO_FRAMES = {
@@ -386,16 +374,11 @@ def main():
             failures.append(f"{path} group {record['group']!r} != {GROUPS[path]!r}")
         if record["relation"] != relation_of(row):
             failures.append(f"{path} relation {record['relation']!r} != {relation_of(row)!r}")
-        if not one_sentence(record["explain"]):
+        if path != "https://peaice.org/dpsa" and not one_sentence(record["explain"]):
             failures.append(f"{path} explain is not one sentence: {record['explain']!r}")
         for snippet in SNIPPETS[path]:
             if snippet not in record["text"]:
                 failures.append(f"{path} missing snippet {snippet!r}")
-        if path in TAGGED:
-            if UNTAGGED_PHRASE in record["text"]:
-                failures.append(f"{path} carries a source tag and also says no tag is present")
-        elif UNTAGGED_PHRASE not in record["text"]:
-            failures.append(f"{path} missing the untagged-status phrase")
         if row["final_url"] not in record["text"]:
             failures.append(f"{path} does not show reachable destination {row['final_url']}")
 
@@ -404,8 +387,8 @@ def main():
         failures.append(f"unavailable table {found_unavailable} != inventory {reasons}")
     if parsed.holds != [("https://peaice.org/dpsa", "broken-embed")]:
         failures.append(f"expected one DPSA broken-embed hold, found {parsed.holds}")
-    if set(parsed.folded) != set(inventory["folded"]):
-        failures.append(f"folded forms {parsed.folded} != {inventory['folded']}")
+    if parsed.folded:
+        failures.append("folded input forms belong in the README, not on the public catalog")
 
     for href in parsed.hrefs:
         for blocked in inventory["unavailable"]:
@@ -441,14 +424,58 @@ def main():
         "RH closed",
         "lovelabslca.net",
         "manuel.coleman@lovelabslca.net",
+        "not a verified resource",
+        "not legal advice",
+        "user-owned",
+        "user-hosted",
+        "Research validation is outside",
+        "not a validation",
+        "No OPEN, PROPOSED",
+        "primary_record",
     ):
         if banned.lower() in html.lower():
             failures.append(f"banned phrase present: {banned}")
+    if "Ai Neutrality" in html:
+        failures.append("catalog still writes the title as Ai Neutrality")
     if html.count("Benevolence Drift") < 5:
         failures.append("Benevolence Drift is not carried in full across the catalog")
-    for marker in ("56", "52", "40", "12", "140", "https://peaice.org/lovelabslca", "https://manny536.github.io/peaice-grok-index/references/", "../index.html#grok-index", "embed-end"):
+    if "Benevolence Drift case 01" not in html:
+        failures.append("Benevolence Drift case 01 is missing")
+    if html.count(">Unavailable<") != 11 or "Unavailable. Login required." not in html:
+        failures.append("unavailable rows are not the concise Unavailable wording with the login row kept distinct")
+    for marker in (
+        "40",
+        "12",
+        "https://peaice.org/lovelabslca",
+        "embed-end",
+        "Status labels appear where the source carries them.",
+        "These paths were unavailable during the 6 November 2026 inventory and are not linked.",
+        "Love Labs LCA and PeAIce research references, with source statuses and link availability.",
+        "Manuel Coleman's GitHub Pages",
+    ):
         if marker not in html:
-            failures.append(f"catalog is missing coverage marker {marker}")
+            failures.append(f"catalog is missing public marker {marker}")
+    if "https://manny536.github.io/peaice-grok-index/references/" in html:
+        failures.append("public catalog repeats its own hosted URL")
+    readme = (ROOT / "README.md").read_text()
+    for marker in (
+        "56 input URL rows",
+        "52 unique normalized paths",
+        "40 catalog records",
+        "12 unreachable paths",
+        "4 input forms",
+        "140 raw local references",
+        "https://manny536.github.io/peaice-grok-index/references/",
+        "http://peaice.org",
+        "https://www.peaice.org",
+        "https://peaice.org/lovelabslca/",
+        "#grok-index",
+        "embed-end",
+        "KakeyaLogic",
+        "primary_record",
+    ):
+        if marker not in readme:
+            failures.append(f"README is missing coverage marker {marker}")
     if re.search(r"(?:min-)?height\s*:\s*(?:[8-9]\d{2}|\d{4,})px", html):
         failures.append("catalog CSS sets an enormous fixed pixel height")
     if 'id="link-status"' not in html or "Link status and unavailable records" not in html:

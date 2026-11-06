@@ -26,3 +26,12 @@ tr { break-inside:avoid; }
 a { color:#164c74; text-decoration:none; overflow-wrap:anywhere; }
 blockquote { margin:0.08in 0.15in; padding-left:0.12in; border-left:2pt solid #777; color:#333; }
 hr { border:0; border-top:0.6pt solid #aaa; margin:0.16in 0; }
+
+h1 { break-before: page; }
+h1:first-child { break-before: auto; }
+thead { display: table-header-group; }
+
+/* Long schema blocks may span pages without leaving a title-only page. */
+pre { break-inside: auto; }
+
+.claim-matrix th:first-child, .claim-matrix td:first-child { white-space: nowrap; min-width: 12pt; }

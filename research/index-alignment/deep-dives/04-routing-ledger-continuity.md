@@ -28,7 +28,7 @@ Trace B shows the family's diagnostic value. Expert `e7` is typed, live, within 
 
 `A_ledger(k) := PROV ∧ AUTH ∧ TRANSITION ∧ NOSILENT ∧ COV ∧ ORDER ∧ CORR`.
 
-Coleman (2026a, §3.2) made the ledger the authority for durable commitments: routers and generators propose, only accepted transitions change committed state. That mirrors transactional designs for agent memory such as TARL (Xiao et al., 2026), from which Coleman (2026a) draws its ACCEPT/PEND/REJECT/SUPERSEDE action types, and path-addressed shared memory such as StateLedger (Yang et al., 2026). Magentic-One (Fourney et al., 2024) uses task and progress ledgers in its orchestrator. The continuation's contribution is to name the clauses a ledger must satisfy for its authority to be certified rather than assumed.
+Coleman (2026a, §3.2) made the ledger the authority for durable commitments: routers and generators propose, only accepted transitions change committed state. That mirrors transactional designs for agent memory such as TARL (Xiao et al., 2026), from which Coleman (2026a) draws its ACCEPT/PEND/REJECT/SUPERSEDE action types. The package's StateLedger citation (Yang et al., 2026) remains unresolved in the independent review and is not relied on as verified support. Magentic-One (Fourney et al., 2024) uses task and progress ledgers in its orchestrator. The continuation's contribution is to name the clauses a ledger must satisfy for its authority to be certified rather than assumed.
 
 The seven clauses are separated in pairs that are commonly conflated:
 

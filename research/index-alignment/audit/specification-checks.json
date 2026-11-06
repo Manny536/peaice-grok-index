@@ -1,0 +1,193 @@
+{
+  "checks": [
+    {
+      "name": "test_absent_measure_is_unknown",
+      "passed": true
+    },
+    {
+      "name": "test_absent_window_contract_is_unknown",
+      "passed": true
+    },
+    {
+      "name": "test_declared_threshold_separates_examples",
+      "passed": true
+    },
+    {
+      "name": "test_empty_or_ineligible_windows_are_unknown",
+      "passed": true
+    },
+    {
+      "name": "test_failed_sufficient_child_does_not_establish_false_parent",
+      "passed": true
+    },
+    {
+      "name": "test_final_allowed_repair_is_assessed_before_exhaustion",
+      "passed": true
+    },
+    {
+      "name": "test_finite_calls_or_assumed_enforced_deadlines_supply_a_bound",
+      "passed": true
+    },
+    {
+      "name": "test_first_failure_depends_on_declared_order_and_records_partition",
+      "passed": true
+    },
+    {
+      "name": "test_frontier_excludes_nonminimal_incomparable_descendant",
+      "passed": true
+    },
+    {
+      "name": "test_frontier_rejects_cycles_and_undeclared_nodes",
+      "passed": true
+    },
+    {
+      "name": "test_frontier_uses_transitive_order_through_nonfailed_nodes",
+      "passed": true
+    },
+    {
+      "name": "test_individually_valid_field_reads_do_not_establish_joint_snapshot",
+      "passed": true
+    },
+    {
+      "name": "test_initially_clean_state_needs_no_repair_budget",
+      "passed": true
+    },
+    {
+      "name": "test_invalid_observable_inputs_do_not_become_passes",
+      "passed": true
+    },
+    {
+      "name": "test_missing_threshold_is_no_verdict",
+      "passed": true
+    },
+    {
+      "name": "test_partition_and_induction_indices_run_in_opposite_directions",
+      "passed": true
+    },
+    {
+      "name": "test_restricted_concentration_distinguishes_two_distributions",
+      "passed": true
+    },
+    {
+      "name": "test_round_cap_alone_cannot_bound_an_unbounded_call",
+      "passed": true
+    },
+    {
+      "name": "test_strong_kleene_preserves_sound_finite_inputs",
+      "passed": true
+    },
+    {
+      "name": "test_superseded_full_chunk_formula_is_constant",
+      "passed": true
+    },
+    {
+      "name": "test_unknown_does_not_license_release_or_imply_false",
+      "passed": true
+    },
+    {
+      "name": "test_window_size_boundary_excludes_full_chunk",
+      "passed": true
+    },
+    {
+      "name": "test_zero_mass_denominator_is_unknown",
+      "passed": true
+    },
+    {
+      "name": "test_zero_threshold_scalar_matches_conjunction",
+      "passed": true
+    }
+  ],
+  "errors": 0,
+  "examples": {
+    "concentrated_mass": [
+      4,
+      0,
+      0,
+      0
+    ],
+    "concentration_alpha": "1/2",
+    "failed_sufficient_child_counterexample": {
+      "children": [
+        false,
+        true
+      ],
+      "parent_disjunction": true,
+      "sufficient_implication_holds_on_all_four_assignments": true
+    },
+    "field_read_snapshot_counterexample": {
+      "individually_valid_mixed_pair": [
+        "policy-v1",
+        "registry-v2"
+      ],
+      "joint_states": [
+        [
+          "policy-v1",
+          "registry-v1"
+        ],
+        [
+          "policy-v2",
+          "registry-v2"
+        ]
+      ],
+      "mixed_pair_was_jointly_present": false
+    },
+    "finite_repair_examples": {
+      "initially_clean_at_zero_budget": [
+        "READY",
+        0
+      ],
+      "insufficient_repair_budget": [
+        "NO_VERDICT",
+        1
+      ],
+      "success_on_final_allowed_repair": [
+        "READY",
+        2
+      ]
+    },
+    "first_failure_partition_depth": {
+      "coarse_first": 1,
+      "finest_first": 3
+    },
+    "minimal_frontier": [
+      "a",
+      "b"
+    ],
+    "partition_depths_for_induction_levels_0_1_2": [
+      2,
+      1,
+      0
+    ],
+    "repaired_concentration": {
+      "concentrated": "1",
+      "uniform": "1/2"
+    },
+    "round_cap_only_with_unbounded_call": "NO_FINITE_BOUND",
+    "scalar_conjunction_cases": 252,
+    "strong_kleene_sound_input_cases": 340,
+    "superseded_concentration": {
+      "concentrated": "1",
+      "uniform": "1"
+    },
+    "uniform_mass": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "failures": 0,
+  "kind": "finite-specification-examples",
+  "limitations": [
+    "Sound primitive checkers, complete obligation/dependency inventories and valid real-system refinement witnesses are not established.",
+    "Finite truth-table checks supplement, but do not replace, general proofs.",
+    "The mixed-field snapshot history is a counterexample; it does not test a concurrent store or an actual linearizability implementation.",
+    "The deadline example assumes effective interruption including cleanup; it does not execute or validate a timeout mechanism.",
+    "No model calls, live actions, framework mutation trials, performance claims or empirical cost savings are tested."
+  ],
+  "passed": true,
+  "python_version": "3.13.3",
+  "scope": "Deterministic finite examples and counterexamples only; not INDEX-ALIGN-CERT implementation or LLM efficacy tests.",
+  "script_sha256": "03ea96dcde77a2f27b9ce00536d1682f6dabf77d4224ed6e2b78d512c80be914",
+  "tests_run": 24
+}

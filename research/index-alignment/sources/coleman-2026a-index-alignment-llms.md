@@ -1,5 +1,7 @@
 # Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity
 
+> Historical source text. Read with the [source errata and inherited-claim limits](ERRATA.md). This notice does not convert the source’s proposals, numerical reports or program labels into independently validated results.
+
 **Authors:** Manuel Coleman$^{1}$ \\
 $^{1}$AgreeYa Solutions (Computacenter), Folsom, CA, USA \\
 Correspondence: manuel.coleman@agreeya.net

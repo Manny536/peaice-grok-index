@@ -1,6 +1,6 @@
 # References — Boolean Index Alignment (Manuel Coleman, 2026)
 
-Identical to the manuscript bibliography. Verification record: `audit/reference-verification.md`.
+Identical to the manuscript bibliography. Current verification scope and unresolved entries: [reference verification](audit/reference-verification.md). This revision has 51 entries, including two same-author manuscripts and one unresolved external citation.
 
 1. Coleman, M. (2026a). *Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity*. Unpublished manuscript.
 
@@ -26,7 +26,7 @@ Identical to the manuscript bibliography. Verification record: `audit/reference-
 
 12. Kim, T. E., & Diaz, F. (2025). LTRR: Learning To Rank Retrievers for LLMs. https://arxiv.org/abs/2506.13743
 
-13. Wu, M., Liu, Z., Li, X., Lan, Y., Yan, Y., Wang, S., Yang, C., Yu, M., Zeng, Z., & Sun, M. (2026). Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval (GraphAnchor). https://arxiv.org/abs/2601.16462
+13. Wu, M., Liu, Z., Li, X., Lan, Y., Yan, Y., Wang, S., Yang, C., Yu, M., Zeng, Z., & Sun, M. (2026). Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval (KAIR). https://arxiv.org/abs/2601.16462
 
 14. Liang, X., Niu, S., Li, Z., Zhang, S., Song, S., Wang, H., Yang, J., Xiong, F., Tang, B., & Xi, C. (2024). Empowering Large Language Models to Set up a Knowledge Retrieval Indexer via Self-Learning. https://arxiv.org/abs/2405.16933
 
@@ -46,7 +46,7 @@ Identical to the manuscript bibliography. Verification record: `audit/reference-
 
 22. Xiao, H., Xu, H., Zhang, X., Chen, Y., & Shi, X. (2026). TARL: Transaction-Aware Reliable Ledgers for Executable Memory Management in Long-Term Agents. https://arxiv.org/abs/2608.03699
 
-23. Yang, G., Liu, X., Wu, B., & Wang, S. (2026). StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems. NeurIPS 2026 poster. https://neurips.cc/virtual/2026/poster/151469
+23. Yang, G., Liu, X., Wu, B., & Wang, S. (2026). StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems. Reported NeurIPS 2026 poster. https://neurips.cc/virtual/2026/poster/151469 **Unresolved citation:** the independent review could not recover a confirming primary record; retained for traceability and excluded from supporting evidence pending verification.
 
 24. Wang, H., & Zahl, J. (2025). Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions. https://arxiv.org/abs/2502.17655
 
@@ -91,3 +91,15 @@ Identical to the manuscript bibliography. Verification record: `audit/reference-
 44. Herlihy, M. P., & Wing, J. M. (1990). Linearizability: A Correctness Condition for Concurrent Objects. ACM TOPLAS 12(3), 463–492. https://doi.org/10.1145/78969.78972
 
 45. Lamport, L. (1978). Time, Clocks, and the Ordering of Events in a Distributed System. Communications of the ACM 21(7), 558–565. https://doi.org/10.1145/359545.359563
+
+46. Necula, G. C. (1997). Proof-carrying code. Proceedings of POPL. https://doi.org/10.1145/263699.263712
+
+47. Chaki, S., Gurfinkel, A., Wallnau, K., & Weinstock, C. (2009). Assurance Cases for Proofs as Evidence. Proceedings of the Third International Workshop on Proof-Carrying Code and Software Certification. https://ntrs.nasa.gov/citations/20150004720
+
+48. Saltzer, J. H., & Schroeder, M. D. (1975). The Protection of Information in Computer Systems. Proceedings of the IEEE 63(9), 1278–1308. https://doi.org/10.1109/PROC.1975.9939
+
+49. Kadyrbek, N., & Mansurova, M. (2026). Proof carrying agent actions enable verifiable licensing of language model tool use. Scientific Reports. https://doi.org/10.1038/s41598-026-74900-x
+
+50. Liu Yanglet, X.-Y., Wang, X., & Capponi, A. (2026). No Certificate, No Execution: Certified Traces as a Foundation for Trustworthy AI Agents. Preprint. https://arxiv.org/abs/2605.24462
+
+51. Debenedetti, E., Zhang, J., Balunović, M., Beurer-Kellner, L., Fischer, M., & Tramèr, F. (2024). AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents. https://arxiv.org/abs/2406.13352

@@ -1,9 +1,16 @@
-# Package QA
+# Package QA — independent-review revision
 
-- Manuscript read in full (1,540 lines); both former papers and seat packets consulted; cleaned manuscript keeps every definition, proposition, proof, trace, table, appendix and reference.
-- Status-label cleanup: removed the document-status line, section "Status:" banners, badge parentheticals on contributions and propositions, the §13.6 status table; Appendix G rewritten as a scope register; footer replaced with a pointer to the deep dives. Residual grep for `PROPOSED|CLOSED|THEOREM-BACKGROUND|ILLUSTRATIVE` in the manuscript: 0 hits. Remaining "OPEN" tokens are the obligation-state enum value in Definition 12, which is part of the formalism.
-- Substantive qualifications (no experiments run, traces hand-constructed, induction over declared levels, geometry gives an order not an implication) are kept as plain prose.
-- Bibliography: 43/43 external references verified; GraphAnchor title corrected; 7 placeholder author lists filled from primary records; Lepikhin author list expanded.
-- Deep dives: 9 files, all original prose with section-level anchors cited by the matrix; no new experimental results, proofs beyond the manuscript's, or bibliographic data were invented.
-- Rendering: manuscript PDF 55 pages; deep-dive PDF 43 pages. Rendering wrote only inside this package (original `/workspace/peaice` HTML/CSS restored after one accidental overwrite by the shared render script; restored files regenerated from the unchanged original Markdown).
-- No external action, publication, or repository change was made.
+Final validation: November 6, 2026 (America/Los_Angeles). Research and source review began November 5. This record supersedes the original authoring QA, retained as [prior-package-QA.md](prior-package-QA.md).
+
+- **Specification examples:** `python3 audit/check_specification.py` passed 24 tests with zero failures/errors. The JSON receipt records the test names and source hash. Cases include concentration discrimination, 252 scalar/conjunction assignments, 340 sound strong-Kleene input cases, minimal failure frontiers, reversed scale indexing, declared failure order, inconsistent mixed-field snapshots, failed sufficient children with a true parent, and readiness at zero/final repair budgets. These are finite examples, not framework or LLM evaluation results.
+- **Source consistency:** 51 numbered bibliography entries match between the manuscript and REFERENCES.md; the current matrix has 47 numbered claims; there are 14 A–N trace designs and 32 M01–M32 mutation designs. The Appendix A JSON excerpt parses. The specification receipt matches the current script hash. Current Markdown file links resolve within the package.
+- **Historical preservation:** removing only the inserted errata notice from each Coleman source reproduces its text at base commit `74c910e5843d973fd8d4fcbde5dcea5a56171770` exactly. The archived independent review is labeled as a pre-revision snapshot; its original verdicts are paired with REVISION.md dispositions.
+- **Rendering:** both PDFs rebuilt from current Markdown with Node 24.22.1, marked 17.0.5, Playwright 1.62.1, Google Chrome 156.0.8078.80 and locally supplied DejaVu fonts. The manuscript has 57 US-Letter pages; the companion has 48. The saved HTML and both extracted-text files are included. No remote content was fetched by the renderer.
+- **PDF inspection:** page contact sheets were inspected across both documents, followed by larger views of the concentration formula, certificate schema, revised lift/reconciliation algorithms and claim matrix. Long schema blocks now flow across pages and claim numbers do not split. Extracted text contains no empty pages or Unicode replacement characters. Final page-count links in the repository entry points match these PDFs.
+- **Integrity and whitespace:** the final SHA256SUMS covers every package file except itself, including this QA record and the new audit files; all entries were checked. `git diff --check` was run on the complete staged revision.
+
+## Evidence limits
+
+No LLM, production trace, real support assessor, effect-enforcement mechanism or deployment benchmark was run. The 14 traces and 32 mutations remain proposed designs. Numerical claims inherited from other programs were not rerun. StateLedger remains unresolved; it is excluded from substantive support. Matching a source identity or DOI does not establish claim support or replicate a paper’s results. The conditional propositions do not establish their premises for a real system.
+
+See [REVISION.md](REVISION.md), [source errata](../sources/ERRATA.md), and [reference verification](reference-verification.md) for the correction trail. Build instructions are in [RENDERING.md](RENDERING.md).

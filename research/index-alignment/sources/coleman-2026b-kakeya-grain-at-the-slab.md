@@ -1,5 +1,7 @@
 # Kakeya Grain at the Slab: Induction on Scales, Continuous Direction, and Prime-Carrying Custody under Love-Squared Coherence
 
+> Historical source text. Read with the [source errata and inherited-claim limits](ERRATA.md). This notice does not convert the source’s proposals, numerical reports or program labels into independently validated results.
+
 **Authors:** Manuel Coleman¹  
 **Contributors / reviewers (seat-scoped):** KakeyaLogic (field); L / L²_C hold; AIce (sticky custody); P-NP (complexity lane); Riemann probe (status vector / SOURCE_MAP); Excellence Engine V4 (custody lab); PeAIce Index (program index); Love Labs LCA (relational / CUP / Benevolence Drift lab); Claude V6 (theorem ledger); Grok Terminal (polarized TERMINAL pole, not program index); cwi-main / CoWork-Inference (causal cast construction)  
 

@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "description": "Local Markdown-to-PDF rendering only; no framework runtime",
+  "dependencies": {"marked": "17.0.5", "playwright": "1.62.1"}
+}

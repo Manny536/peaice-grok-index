@@ -1,0 +1,1032 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Boolean Index Alignment — deep-dives</title><style>
+@page {
+  size: Letter;
+  margin: 0.82in 0.82in 0.80in 0.82in;
+  @bottom-center { content: counter(page); font-family: "DejaVu Serif", serif; font-size: 9pt; color:#333; }
+  @top-right { content: "Boolean Index Alignment — Manuel Coleman"; font-family: "DejaVu Sans", sans-serif; font-size: 7.5pt; color:#555; }
+}
+@page :first { @top-right { content: none; } }
+html { font-family: "DejaVu Serif", "Liberation Serif", serif; font-size: 11pt; line-height: 1.35; color: #111; }
+body { margin:0; padding:0; }
+h1 { font-family:"DejaVu Sans",sans-serif; font-size:20pt; line-height:1.17; text-align:center; margin:0.12in 0 0.18in; color:#102b46; }
+h2.new-page { break-before: page; }
+h2 { font-family:"DejaVu Sans",sans-serif; font-size:14pt; line-height:1.2; margin:0.22in 0 0.09in; color:#153e60; border-bottom:0.7pt solid #8199ab; padding-bottom:3pt; break-after:avoid; }
+h3 { font-family:"DejaVu Sans",sans-serif; font-size:11.1pt; line-height:1.25; margin:0.16in 0 0.055in; color:#1e4b69; break-after:avoid; }
+p { margin:0 0 0.075in; text-align:justify; orphans:3; widows:3; }
+strong { color:#101d29; }
+ul,ol { margin:0.035in 0 0.085in 0.23in; padding-left:0.12in; }
+li { margin:0 0 0.027in; }
+code { font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:8.8pt; overflow-wrap:anywhere; }
+pre { font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:8.1pt; line-height:1.24; white-space:pre-wrap; overflow-wrap:anywhere; background:#f3f5f7; border-left:2.5pt solid #54768e; padding:7pt 8pt; margin:0.08in 0 0.11in; break-inside:avoid; }
+pre code { font-size:inherit; }
+table { width:100%; border-collapse:collapse; margin:0.08in 0 0.12in; font-family:"DejaVu Sans",sans-serif; font-size:7.7pt; line-height:1.2; }
+th { background:#e5edf2; color:#102b46; font-weight:bold; }
+th,td { border:0.5pt solid #7f8f99; padding:3.4pt 3.8pt; text-align:left; vertical-align:top; overflow-wrap:anywhere; }
+tr { break-inside:avoid; }
+a { color:#164c74; text-decoration:none; overflow-wrap:anywhere; }
+blockquote { margin:0.08in 0.15in; padding-left:0.12in; border-left:2pt solid #777; color:#333; }
+hr { border:0; border-top:0.6pt solid #aaa; margin:0.16in 0; }
+
+h1 { break-before: page; }
+h1:first-child { break-before: auto; }
+thead { display: table-header-group; }
+
+/* Long schema blocks may span pages without leaving a title-only page. */
+pre { break-inside: auto; }
+
+.claim-matrix th:first-child, .claim-matrix td:first-child { white-space: nowrap; min-width: 12pt; }
+</style></head><body><h1>Boolean Index Alignment: Deep Dives and Claim–Evidence Matrix</h1>
+<p>Manuel Coleman · Independent-review revision · November 5, 2026</p>
+<p>Nine companion essays and the current 47-claim map. Definitions and examples are proposed or conditional; no LLM efficacy evaluation is reported. The archived review and source errata are in the package audit and sources folders.</p>
+<hr>
+<h1>01 — Index Foundations: Typed Indices, Registries, Lineage, and Scale Trees</h1>
+<p><em>Backs manuscript §§1.1, 2.1, 3.1–3.2, 3.6 and Appendix C.</em></p>
+<h2>1.1 The problem the index abstraction solves</h2>
+<p>A sparse language-model system does not produce text from a single undifferentiated computation. At each step it makes discrete selections: a top-k gate chooses experts inside a layer (Shazeer et al., 2017; Fedus et al., 2022; Jiang et al., 2024); an orchestrator chooses an agent (Wu et al., 2023; Fourney et al., 2024); a retriever chooses passages (Lewis et al., 2020); a planner chooses a tool (Schick et al., 2023; Yao et al., 2023); a memory manager chooses a path (Packer et al., 2023). Each selection is an identifier drawn from a finite set. Coleman (2026a, §3.1) named these identifiers <em>indices</em> and observed that a large class of production failures is a mismatch between indices rather than a defect of fluency: the citation that names a document never retrieved, the tool call that uses a deregistered version, the summary that silently drops a committed fact.</p>
+<p>The value of the abstraction is that indices are <em>observable</em>. Hidden activations are not certifiable objects; an expert ID in a router log, a document hash in a retrieval record, and a commit record in a ledger are. This finite verifier requires an explicitly represented, enumerable obligation universe. Typed indices supply one such representation for the exposed trace; they are not a necessary condition for every meaningful boolean proposition or every possible verifier. Whether this abstraction captures a task&#39;s relevant failures remains an empirical coverage question.</p>
+<h2>1.2 Why every index must be typed and versioned</h2>
+<p>Definition 1 writes an index as <code>ι = (type, name, epoch, version)</code>. Each component removes a specific ambiguity that otherwise breaks a checker.</p>
+<p><strong>Type.</strong> Coleman (2026a) already used a disjoint union <code>𝓘_expert ∪ 𝓘_agent ∪ 𝓘_mem ∪ 𝓘_tool ∪ 𝓘_doc</code>. The continuation extends it with <code>claim</code>, <code>correction</code>, <code>source</code>, and <code>obligation</code>, because those are the objects corrections and continuity act on. Disjointness matters operationally: a string such as <code>search</code> can be a tool, an agent persona, and a memory namespace at once. A checker that compares untyped names can certify that &quot;the cited <code>search</code> was active&quot; when the active <code>search</code> was a tool and the cited one a document. Typing converts that silent category error into a failed cast (<code>⊥</code>) in Definition 3.</p>
+<p><strong>Epoch.</strong> A registry changes. Tools are deprecated, experts are retrained, policies are revised. The epoch names the registry state against which liveness and permission are evaluated. Without it, <code>Live(ι)</code> is ill-posed: live <em>when</em>? Trace E in the manuscript (stale tool authority) depends entirely on this field — the approval was genuine under <code>r7</code> and obsolete under <code>r8</code>.</p>
+<p><strong>Version.</strong> The version distinguishes contents or interface of the resource itself. A document revised from version 2 to 3 (Trace G) keeps its name; claims supported by version 2 may be unsupported by version 3. Version is the hook by which a correction finds its dependents.</p>
+<p>The rule &quot;an index name without a type is not a well-formed certificate field&quot; is therefore a parsing rule with semantic consequences: it forces every downstream predicate to operate on unambiguous objects.</p>
+<h2>1.3 Registry entries and the separation of liveness from permission</h2>
+<p>A registry entry <code>Reg(ι) = (type, capabilities, input_schema, output_schema, authority_scope, validity_interval, digest)</code> supports two predicates the manuscript keeps apart:</p>
+<ul>
+<li><code>Live_k(ι)</code>: the entry exists at scale <code>k</code>, its validity interval covers the relevant logical time, and its digest matches the observed artifact.</li>
+<li><code>Permitted_k(ι, a)</code>: policy <code>Π_k</code> permits action <code>a</code> on that entry for the authenticated principal.</li>
+</ul>
+<p>The distinction is the content of Trace B. A registered, live, in-budget expert can be activated for a task it is not permitted to perform. Registry membership answers &quot;does this thing exist and is it the thing I think it is?&quot;; policy answers &quot;may this principal use it for this?&quot;. Conflating them creates an authorization failure when a tool&#39;s presence in the tool list is treated as license to call it. No comparative prevalence claim is established here. The digest field closes a third gap — substitution — by binding the name to the artifact actually executed.</p>
+<p>The policy is declared an <em>input</em> to the audit, &quot;not something inferred from successful execution.&quot; This is a deliberate refusal of a tempting inference. A call that succeeded shows that the environment accepted it; it does not show that it was permitted. Many environments accept calls they should not.</p>
+<h2>1.4 Activation records and why gate weights are telemetry</h2>
+<p>Definition 2&#39;s activation record <code>r = (ι, parent, gate, input_digest, output_digest, principal, event_id)</code> records the fact of selection. The manuscript states that &quot;a nonzero gate does not imply permission, authority, support, or correctness.&quot; The reason is mechanistic. In a softmax gate <code>p_i(x) = exp(h_i)/Σ_j exp(h_j)</code> followed by top-k (Coleman 2026a, §3.1, following Shazeer et al. 2017), the gate value measures the router&#39;s learned affinity between an input and an expert. It is trained for loss reduction, often with an auxiliary load-balancing term (Lepikhin et al., 2020; Fedus et al., 2022). Nothing in that objective encodes authorization or factual support. A high gate on a wrong expert and a low gate on the right one are both ordinary. Hence <code>A_route</code> never reads gate magnitude as quality; gates enter only as telemetry and, where a budget is declared, through <code>Budget(r)</code>.</p>
+<h2>1.5 Morphisms and lineage: the pointer discipline generalized</h2>
+<p>Pointer Networks (Vinyals et al., 2015) make a model&#39;s output an index into its input, which guarantees by construction that the output refers to something present. Definition 3 generalizes that guarantee across stores. A typed morphism <code>μ: 𝓘_a → 𝓘_b ∪ {⊥}</code> records a legal cast — document to memory path, tool output to ledger subject. A lineage for <code>c</code> is a witnessed path <code>ι_0 → … → c</code> with <code>ι_0</code> in the visible activation history <code>R_{≤t}</code>.</p>
+<p>Three properties follow directly from the definition and are used throughout the manuscript:</p>
+<ol>
+<li><strong>Existence is not lineage.</strong> &quot;If no path exists, <code>c</code> is unaligned with the activation history even when its display name is real in some registry.&quot; A citation to a real document that was never activated in this run fails. This is the &quot;index echo&quot; falsifier (§11.9, item 8).</li>
+<li><strong>Lineage is not support.</strong> A path shows that evidence was visible, not that it entails the claim. The generation predicate (deep dive 02 and §4.4) therefore adds <code>Fidelity</code> separately.</li>
+<li><strong>Lineage is finite and checkable.</strong> Given a finite trace, deciding whether a witnessed path exists is graph reachability, which is linear in nodes and edges. This is the basis of the verification bound in Proposition 10.</li>
+</ol>
+<h2>1.6 Content-bound receipts: what a hash does and does not show</h2>
+<p>Definition 4 introduces the receipt <code>R(u) = (digest, version, quoted_span, span_offset, verifier_id, intake_event, vector_clock, scope)</code>. The key analytical point is the difference between <em>binding</em> and <em>reading</em>. Given candidate byte strings, matching SHA-256 digests provide an integrity check under the cryptographic assumptions. A party can copy a digest without possessing the source bytes. Neither possession of a digest nor computing a hash shows that a model read or understood the source, relied on it, or was entitled to use it. Trusted evidence of a hash computation can support file access by that computing component; a reported digest alone cannot.</p>
+<p>An unpredictable quoted-span challenge can supply sampled evidence that the responder can return content at the specified offset under a declared threat model. A guessed, memorized, cached or relayed answer must be accounted for; a successful challenge does not prove historical reading, understanding or causal use. This is one possible content-evidence mechanism, not a universal requirement for every verifier. Its strength also depends on the verifier&#39;s independence. The manuscript&#39;s rule that &quot;independent verification requires a verifier outside the process capable of forging the receipt&quot; is the standard trust-boundary argument: if the same process chooses the challenge, holds the key, and checks the answer, it can produce passing receipts for content it never handled. Section 8.5 applies the same reasoning to in-process HMACs. This distinction is the basis of the PROV-002 hash-only falsifier and of mutation M03 (valid hash, wrong quoted span).</p>
+<h2>1.7 Scale trees: what &quot;scale&quot; means here</h2>
+<p>Definition 5 defines a ladder <code>s_0 &gt; … &gt; s_M</code> of partitions <code>P_k</code>, each refining the previous one: every child chunk has a unique parent containing it. Partition depth <code>k</code> increases toward finer chunks. The composition proof uses a separate lift index <code>j</code>, with <code>Q_j</code> corresponding to <code>P_{M-j}</code>; increasing <code>j</code> moves from fine base obligations to coarse parents. Three choices in this definition carry the weight of later results.</p>
+<p><strong>Finiteness.</strong> <code>M</code> is finite and declared by the implementation. Every localization result in §6 depends on finite enumeration; nothing is claimed about limits.</p>
+<p><strong>Refinement as containment.</strong> Requiring <code>C ⊆ parent(C)</code> gives each fine item exactly one coarse ancestor. That is what makes the sticky case (deep dive 03) well defined and what makes failure localization a tree walk.</p>
+<p><strong>Scales are audit levels, not model scales.</strong> &quot;Leaves represent the finest declared units, not unknowable token-level neural semantics.&quot; A scale may be a routing layer, a retrieval-to-claim stage, a tool boundary, a handoff, or a chunk refinement. The induction in §6.2 is over these declared levels. It is not induction over parameter count, training compute, or context length, and no result about those is implied. Keeping this explicit prevents the most tempting misreading of &quot;induction on scales.&quot;</p>
+<p>The manuscript also notes that &quot;no formula for <code>M</code> is imported from geometry.&quot; In Guth–Wang–Zahl (2026) the scale chain <code>ρ_k = δ^{k/M}</code> is part of a proof; here depth is an engineering budget.</p>
+<h2>1.8 Density observables and boolean stickiness</h2>
+<p>Definitions 6–7 introduce <code>KT_k</code> (maximum ratio of selected chunks in a window to the data owner&#39;s expected count) and <code>F_k(alpha)</code> (maximum supported-mass share in a declared family of short contiguous subspans). For each positive-mass chunk <code>C</code>, eligible subspans satisfy <code>0 &lt; length(V) ≤ alpha_k length(C)</code>, with <code>0 &lt; alpha_k &lt; 1</code>. The family, length convention and measure are declared inputs. Excluding the full chunk repairs the original unrestricted maximum, which was identically 1 because <code>V=C</code> was eligible. These computational analogues are not Katz–Tao or Frostman quantities. They can distinguish selected distributions under their chosen windows, but useful thresholds and any relationship to omitted evidence require independent evaluation.</p>
+<p><code>STICKY_k</code> requires fresh nesting and governing acknowledgments, with clustering caps added only when the contract declares them applicable: <code>NEST_OK_k ∧ ANCEST_OK_k ∧ optional([KT_k ≤ θ_KT] ∧ [F_k(alpha) ≤ θ_F])</code>. Explicit inapplicability is required to omit the caps. If a required observable&#39;s denominator, measure, expected count or eligible window family is unavailable, including when no eligible windows or no positive-mass chunks exist, its value is <code>UNKNOWN</code>. Missing required contract parameters or thresholds yield <code>NO_VERDICT</code>. A cap comparison does not replace nesting or authority checks.</p>
+<h2>1.9 Events, happened-before, and slices</h2>
+<p>Definition 13&#39;s event tuple collects routing, proposals, commits, text, continuity state, reads, writes, actor, authority evidence, lineage edges, and clocks into one record per step, so all four predicate families read from a common trace. Definition 14 defines happened-before as the smallest relation containing program order, send/receive, intake/receipt, proposal/commit, and correction/dependency edges — Lamport&#39;s (1978) relation specialized to the event kinds that matter for certification. Wall clocks alone are insufficient across distributed components because clock skew can invert causal order; explicit edges cannot.</p>
+<p>Definition 16&#39;s slice completeness rule — a predicate whose required inputs are absent returns <code>UNKNOWN</code> — is what prevents a truncated log from being certified. It is the foundation of every non-vacuity argument in the paper.</p>
+<h2>1.10 Summary of what this layer establishes</h2>
+<p>The foundation layer makes three things true by construction: every object a predicate inspects is unambiguous (typed, epoched, versioned); every relationship a predicate relies on is an explicit, witnessed edge in a finite graph; and every absent input produces a named non-pass rather than a default. Those three properties are what allow the later sections to state results about boolean outcomes that are provable rather than aspirational.</p>
+<hr>
+<h1>02 — Boolean Evidence Semantics: Why Alignment Can Be Boolean Without Pretending to Know</h1>
+<p><em>Backs manuscript §§1.1, 4.1, 4.6–4.9, 5.1, 6.1, 6.6, Appendix A.1 and B.1–B.2.</em></p>
+<h2>2.1 The central claim, stated exactly</h2>
+<p>The manuscript&#39;s thesis is that alignment, in a specific declared sense, &quot;can be treated as a boolean kind of problem.&quot; The precise content is a separation of two layers:</p>
+<ol>
+<li><strong>Semantic layer.</strong> For an obligation <code>q</code>, a fixed history <code>H_q</code>, a policy snapshot <code>Π(q)</code>, and a specification <code>Spec_k</code>, the authorization predicate <code>A_q</code> and the compliance predicate <code>C_q</code> each take a value in <code>{0,1}</code>. Once the specification and history are fixed, either the history satisfies the specification or it does not. This is ordinary bivalence of a well-defined proposition.</li>
+<li><strong>Evidence layer.</strong> A monitor observing partial evidence returns a verdict <code>V ∈ {T, F, U}</code>, refined operationally into <code>PASS</code>, <code>FAIL</code>, <code>UNKNOWN</code>, and <code>NO_VERDICT</code>. The monitor may not know the semantic value.</li>
+</ol>
+<p>The release decision is then a third object: a bit <code>b(P) = 1</code> iff <code>Ev(P) = PASS</code>. That bit is boolean by design. The thesis is not that knowledge is always available; it is that the <em>question</em> is boolean and the <em>control</em> is boolean, while the <em>evidence state</em> is honestly three-valued. Deep confusion about &quot;boolean alignment&quot; usually comes from collapsing those three layers.</p>
+<h2>2.2 Why this monitor retains an inconclusive outcome</h2>
+<p>Suppose a monitor were required to answer only true or false. Given incomplete evidence about obligation <code>q</code>, it must either answer <code>T</code> — and be unsound whenever the missing evidence would have shown a violation — or answer <code>F</code> — and be unsound whenever the missing evidence would have shown compliance. The manuscript&#39;s &quot;Unknown is not true&quot; counterexample (§6.11) makes this concrete: three required operations, two observed and passing. Reporting &quot;2/2 passed&quot; silently changes the denominator. Reporting <code>F</code> asserts a violation nobody observed. Within the chosen total-response interface, <code>U</code> is the sound response when neither truth value is justified. An abstaining interface or a richer evidence algebra could also preserve soundness; exactly three values are not universally forced.</p>
+<p>This is the same structure runtime verification faces. Bauer, Leucker, and Schallhart (2011) define three-valued LTL semantics for finite trace prefixes precisely because a finite observation of an unfinished execution may neither satisfy nor violate a property; an inconclusive outcome preserves soundness in their monitor design. The index-alignment monitor adopts this design for its own evidence conditions and is in the same position with respect to missing receipts, unavailable assessors, and incomplete causal histories.</p>
+<h2>2.3 Strong Kleene conjunction and Proposition 1</h2>
+<p>The manuscript aggregates verdicts with strong Kleene conjunction: <code>F</code> dominates, <code>T</code> is the identity, and otherwise the result is <code>U</code>. Proposition 1 proves that if each local verdict is sound (<code>V_q = T ⇒ P_q = 1</code>, <code>V_q = F ⇒ P_q = 0</code>), the aggregate is sound for the conjunction.</p>
+<p>The proof is short, but each case does work:</p>
+<ul>
+<li><strong>Aggregate <code>T</code>.</strong> Strong Kleene yields <code>T</code> only if every input is <code>T</code>. Soundness gives every <code>P_q = 1</code>, so the conjunction is 1.</li>
+<li><strong>Aggregate <code>F</code>.</strong> Some input is <code>F</code>, so some <code>P_q = 0</code>, so the conjunction is 0 — <em>regardless of unknowns elsewhere</em>. This is why an observed failure can be reported even when other evidence is missing; Trace C relies on it.</li>
+<li><strong>Aggregate <code>U</code>.</strong> No input is <code>F</code> and some is <code>U</code>. The semantic conjunction might be 0 or 1. The monitor correctly asserts neither.</li>
+</ul>
+<p>Two consequences matter. First, soundness is <em>inherited</em>, not <em>created</em>: &quot;it does not make an unsound checker sound.&quot; A support model that labels contradictions as support breaks the guarantee at its source, which is why deep dive 08 insists on independent labels. Second, strong Kleene conjunction retains a decisive observed <code>F</code> even alongside <code>U</code>. Weak Kleene conjunction can remain sound but is less informative in that case because it returns <code>U</code>. A different rule that relabels unknown evidence as observed falsehood can be unsound: an aggregate <code>F</code> would no longer imply an actual violation. Mapping unknown to a release bit of zero is instead an allowed control choice when the evidence reason remains visible.</p>
+<h2>2.4 PASS, FAIL, UNKNOWN, NO_VERDICT: four reasons, one release rule</h2>
+<p>At the diagnostic layer the manuscript keeps four statuses:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Required witness (Appendix A.1)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PASS</td>
+<td>required evidence present, fresh, satisfies contract</td>
+<td>positive evidence</td>
+</tr>
+<tr>
+<td>FAIL</td>
+<td>present evidence violates contract</td>
+<td>identified counterexample</td>
+</tr>
+<tr>
+<td>UNKNOWN</td>
+<td>evidence missing, incomplete, stale, or assessor unavailable</td>
+<td>insufficiency reason</td>
+</tr>
+<tr>
+<td>NO_VERDICT</td>
+<td>thresholds or assessor contracts not supplied, or reconciliation exhausted</td>
+<td>name of missing contract</td>
+</tr>
+</tbody></table>
+<p><code>UNKNOWN</code> and <code>NO_VERDICT</code> both map to <code>U</code> semantically, but they demand different repairs. <code>UNKNOWN</code> asks the operator to collect evidence; <code>NO_VERDICT</code> asks the contract owner to decide something — a threshold, a coverage floor, a round cap. Merging them would send work to the wrong person. Trace I (missing <code>min_coverage</code>) exists to show that a contract gap must never be repaired by quietly assuming a default: if a system picks <code>min_coverage = 0.9</code> on its own, it has made a policy decision it had no authority to make.</p>
+<p>The reference pseudocode in Appendix B.1 orders the checks deliberately: undeclared obligation → missing thresholds → execution failure → counterexample → positive witness → otherwise <code>UNKNOWN</code>. The final fall-through is the important line. Absence of a counterexample does not produce <code>PASS</code>; only a positive witness does.</p>
+<h2>2.5 Non-compensation</h2>
+<p>Coleman (2026a, Definition 2) defined the alignment deficit <code>Δ_t = λ_1 d_route + λ_2 d_led + λ_3 d_gen + λ_4 (1 − Cont)</code>. Weighted scores can summarize defects and support optimization; differentiability requires differentiable constituent functions on an appropriate domain. Whether release compensates for a failed required condition depends on the score ranges, weights and release threshold, not on scalar representation alone. For example, if <code>b_i∈{0,1}</code>, <code>w_i&gt;0</code> and <code>D=Σ_i w_i(1-b_i)</code>, releasing exactly when <code>D=0</code> is equivalent to conjunction. No term can compensate for a positive deficit because every term is nonnegative.</p>
+<p>The manuscript requires a noncompensatory release rule, expressed as conjunction; an equivalent scalar encoding is permitted. §4.9 states the formal property: replacing any required <code>True</code> by <code>False</code> makes <code>A(k)</code> false regardless of other values. A boolean rule that is true exactly when every required input is true is, by definition, conjunction; any rule that can return true while some required input is false is compensatory. The same discipline appears in Coleman (2026b) for SAVER and SIUS grain vectors (&quot;no weighted average compensates a failed grain&quot;), and the manuscript adopts it as the operational meaning of &quot;boolean alignment&quot;: named necessary conditions.</p>
+<p>Non-compensation is a design choice with costs. A conjunctive release rule may block outputs that a compensatory weighted rule would pass; an equivalent zero-deficit scalar rule makes the same decisions as conjunction. The partial-release machinery (deep dive 06) exists to recover utility without reintroducing compensation: rather than averaging a failure away, it isolates the failure and releases what does not depend on it.</p>
+<h2>2.6 Composite definitions: A(k), ALIGNED_k, ALIGNED(T)</h2>
+<p>The manuscript defines three related conjunctions and keeps them distinct:</p>
+<ul>
+<li><code>A(k) := A_route(k) ∧ A_ledger(k) ∧ A_gen(k) ∧ A_cont(k)</code> — full per-scale alignment.</li>
+<li><code>ALIGNED_k := COV_k ∧ ORDER_k ∧ CORR_k (∧ STICKY_k)</code> — a narrower coverage/order/correction diagnostic contributed by the Kakeyalogic seat packet.</li>
+<li><code>ALIGNED(T) := ∀k, A(k)</code> — global alignment across scales.</li>
+</ul>
+<p><code>ALIGNED_k</code> is not an alias of <code>A(k)</code>. A trace can have complete coverage, valid order, and closed corrections and still fail <code>Fidelity</code> (Trace C). Naming the narrow diagnostic separately prevents a coverage dashboard from being read as an alignment certificate. Likewise <code>ALIGNED(T)</code> is not <code>CERTIFIED</code>: certification adds release authority and non-vacuity.</p>
+<h2>2.7 Non-vacuity and the empty denominator</h2>
+<p>Any universally quantified predicate over an empty set is true. A checker that finds no required routes, no claims, and no obligations will therefore &quot;pass&quot; vacuously. Definition 27 lists the vacuous cases — empty required set, unknown denominator, empty route or claim sets despite required work, skipped checks reported as passes — and Proposition 6 shows that if <code>NONVACUOUS</code> is a required conjunct, a non-PASS value forces the release bit to zero.</p>
+<p>The companion rule <code>EvidenceCoverage = |Q_sound|/|Q_req|</code>, with <code>n/a</code> when <code>Q_req = ∅</code>, closes the reporting loophole. Reporting 100% coverage on an empty universe is the denominator version of the same error. The manuscript&#39;s insistence that the obligation universe be <em>independently</em> established (§5.5) — by a specification manifest rather than by counting observed records — follows: the denominator cannot come from the same evidence it is meant to audit. The 10-agent-team notes flagged exactly this circularity in an early version of Trace A (&quot;all five obligations present&quot; includes itself); the manuscript now states that the fifth obligation&#39;s completeness comes from the manifest.</p>
+<h2>2.8 SKIPPED is not PASS</h2>
+<p>§4.7 adds a fifth operational marker: when an earlier failure makes a later check unsafe to run, the later check is <code>SKIPPED</code>. This prevents a common reporting artifact in which tests that never ran appear green. It also preserves the rest of the evidence: a certificate reports the first failure <em>and</em> all later observed failures, so an early failure does not hide independent later defects.</p>
+<h2>2.9 Boolean predicates are only as good as their specifications</h2>
+<p>The boolean framing makes one limitation sharper rather than softer. A semantic predicate is boolean only relative to a fixed specification. If the specification is wrong, a correct certificate certifies the wrong thing. §12.6 lists &quot;semantic booleanization error&quot; — forcing a graded or contested judgment into PASS/FAIL — as a failure mode, with the defense of retaining <code>CONTESTED</code> and <code>UNKNOWN</code> labels and booleanizing only the release control. Deep dive 09 connects this to Grill (2024) on the politics of testing infrastructure: who writes the specification is a governance question the certificate cannot answer.</p>
+<h2>2.10 What this layer establishes</h2>
+<p>Booleanity in this paper is achieved by three moves: fix the specification so the semantic question has a truth value; report monitor knowledge in three values so that soundness is preserved under incomplete evidence; and project to a PASS-only bit at the control boundary so that release is conservative without mislabeling unknowns as failures. Proposition 1 shows these moves compose soundly; Proposition 6 shows non-vacuity can be enforced by the same conjunction. The rest of the paper builds on this algebra.</p>
+<hr>
+<h1>03 — Scale Refinement and Composition: Induction on Declared Scales</h1>
+<p><em>Backs manuscript §§1.2, 2.2, 5.1–5.9, 6.2, 6.8–6.9, 6.11, Traces A and K.</em></p>
+<h2>3.1 What &quot;induction on scales&quot; borrows and what it does not</h2>
+<p>In three-dimensional Kakeya geometry, Wang and Zahl (2025) prove that Kakeya sets in <code>ℝ³</code> have full Minkowski and Hausdorff dimension, and Guth, Wang, and Zahl (2026) give a streamlined proof. Coleman (2026b, §2.4) reads their architecture as an order of work: control the sticky configuration, then the non-sticky sparse two-scale case, then factor via slabs and planks, then account for the residual, and only then state the general result. That order is the part this paper borrows.</p>
+<p>What it does not borrow is any inequality. The geometric arguments establish asymptotic volume and dimension bounds stated with <code>≲</code>-type inequalities and losses that are acceptable in the limit. An audit needs a threshold comparison at a finite scale. §1.2 of the manuscript says the analogy &quot;changes how we organize an audit; it does not supply the audit&#39;s semantic predicates or prove their validity.&quot; The Kakeyalogic seat packet makes the same point: boolean, traceable induction on scales is not a consequence of Wang–Zahl or Guth–Wang–Zahl. Everything proved in this deep dive is proved from finite combinatorics and the stated hypotheses.</p>
+<h2>3.2 The obligation universe</h2>
+<p>At each lift level <code>j</code> the manuscript requires an independently specified finite obligation universe <code>Q_j</code> (§5.1), corresponding to partition <code>P_{M-j}</code>. Partition depth <code>k</code> increases toward finer chunks; lift index <code>j</code> increases toward coarser parents. An obligation can be local — one activation, one retrieval, one commit — or a <em>cross-operation invariant</em> such as a shared budget or a correction frontier. Cross-operation obligations are the entire reason composition is nontrivial; deep dive 03.7 shows what fails without them.</p>
+<p>For each obligation <code>q</code> the paper uses two predicates, authorization <code>A_q</code> and compliance <code>C_q</code>, because they answer different questions: &quot;an authorized write can violate a schema; a well-formed retrieved instruction can be unauthorized.&quot; Keeping them separate prevents a single combined &quot;ok&quot; bit from hiding which question failed.</p>
+<h2>3.3 The four composition conditions</h2>
+<p>Proposition 2 lifts sound local certificates to sound global ones under four conditions. The proof uses all four as sufficient premises. They are not claimed to be a minimal axiom set or universally necessary for every alternative architecture. Their failure permits recognizable counterexamples.</p>
+<p><strong>R — Evidence-preserving refinement.</strong> For each parent obligation <code>q</code> there is a child set <code>D_j(q)</code> with <code>(⋀_{r∈D_j(q)} (A_r ∧ C_r)) ⇒ (A_q ∧ C_q)</code>. This is a refinement mapping in the spirit of Abadi and Lamport (1991): it states how a coarse specification is implemented by finer steps. The manuscript&#39;s R is narrower than their existence theorem; it is a certificate-specific implication that must be witnessed. Renaming an index or matching a label does not supply it.</p>
+<p><strong>C — Complete obligation coverage.</strong> <code>D_j(q)</code> accounts for every operation, effect, and cross-operation premise relevant to <code>q</code>, and <code>Q_j</code> is closed under work generated during the trace — retries, callbacks, dynamically spawned tasks. Without C, the induction proves the parent from an incomplete set of premises.</p>
+<p><strong>N — Noninterference.</strong> Operations outside the certified set cannot alter state on which authorization, compliance, evidence, or refinement depends. This is the noninterference idea of Goguen and Meseguer (1982) applied to certificate premises: low-integrity content must not influence high-integrity decisions. Concretely, retrieved text cannot rewrite policy, routers cannot commit, generators cannot self-accept.</p>
+<p><strong>K — Correction-aware concurrency and freshness.</strong> The contract states operation/transaction boundaries and its required real-time freshness guarantee. Single-object operations may use linearizability, but individually linearizable field reads can straddle an update. Cross-field reads require a joint atomic snapshot, a justified strictly serializable transaction, or validated version protocol across all relevant fields, with appropriate effect-boundary validation. Ordinary serializability is not equivalent to either guarantee (Herlihy and Wing, 1990, §3.3). Relevant reads use the specified snapshot semantics; every causally preceding correction is included; versions are valid at effect boundaries; accepted corrections invalidate dependents before promotion; concurrent conflicts are resolved; replayed approvals do not create fresh authority.</p>
+<h2>3.4 The proof of Proposition 2, annotated</h2>
+<p>The manuscript&#39;s proof is induction over the finite lift index <code>j</code>, from <code>Q_0</code> at partition <code>P_M</code> toward <code>Q_M</code> at <code>P_0</code>. The annotated version below shows exactly where each hypothesis is consumed.</p>
+<ul>
+<li><strong>Base.</strong> Every <code>q ∈ Q_0</code> has sound <code>T</code> verdicts. Soundness converts them into <code>A_q = C_q = 1</code>.</li>
+<li><strong>Step.</strong> Assume all obligations at lift level <code>j−1</code> are true with certificates. Take <code>q ∈ Q_j</code>.<ul>
+<li><em>C</em> ensures <code>D_j(q)</code> contains every relevant premise, so nothing outside the child set needs to be true for <code>q</code>.</li>
+<li><em>N</em> ensures nothing outside the certified set altered those premises after they were certified, and that composition conferred no authority the children lacked.</li>
+<li><em>K</em> ensures the child certificates refer to current, correction-closed snapshots, so they are still about the state the parent depends on.</li>
+<li>The induction hypothesis makes every child predicate true.</li>
+<li><em>R</em> converts true children into a true parent.</li>
+<li>The parent&#39;s certificate is the child certificates plus the refinement witness, so every global <code>T</code> has a finite path to base evidence.</li>
+</ul>
+</li>
+</ul>
+<p>Removing any hypothesis breaks a specific line. Without C, a missing child can be false. Without N, an uncertified operation can falsify a child after certification. Without K, a child certificate can refer to a superseded state. Without R, true children need not imply anything about the parent. This is why the paper describes the hypotheses as &quot;substantial&quot;: they are exactly the places where real systems leak.</p>
+<h2>3.5 Proposition 9: certificates are defeasible</h2>
+<p>Because the parent certificate is built from child paths and hypotheses, it inherits their defeasibility. Proposition 9 states that if any certificate on the path is invalidated, or R, C, N, or K stops holding, the old parent <code>T</code> is no longer justified by Proposition 2. The proposition is careful: it does not say the parent becomes false, only that the old proof no longer supports it. This is the logical basis for treating policy updates, source version changes, and verifier upgrades as part of certificate identity (deep dive 05).</p>
+<h2>3.6 Sticky, non-sticky, and the band</h2>
+<p>The <strong>sticky case</strong> (§5.3) is the regime in which each fine item has one visible coarse parent, authority and correction scope are shared, all versions agree with the snapshot, and no unlisted channel affects the parent. In that regime the parent check depends only on its declared children and the certificate is small: parent identity, children, receipts, correction acknowledgments, refinement witness.</p>
+<p>The manuscript defines a concrete stable-custody nesting from the Riemann-probe packet. For every applicable ancestor <code>a</code> of grain <code>g</code>, <code>ANCEST_OK_k</code> requires an acknowledgment <code>(a.id, c_id, c_ver)</code> naming the currently governing correction in <code>a</code>&#39;s own registry. <code>NEST_OK_k</code> requires fresh parent edges and content hashes. The paper explicitly declines a global comparison <code>correction_version(parent) ≤ correction_version(child)</code> because counters from different registries are incomparable — a subtle point: version numbers are only ordered within the registry that issues them.</p>
+<p>The <strong>non-sticky band</strong> is the set of grains, claims, and transitions for which nesting fails. The geometric reading in Coleman (2026b) is that coarse tubes can overlap heavily while fine tubes inside them are sparse; the systems reading is that ancestry, authority, or correction scope diverge across children. The discipline imported is <em>factor only the band</em>: repair the region that left the sticky regime rather than restarting the whole trace or averaging its failure into global telemetry. Deep dive 05 gives the affected-closure algorithm that does this.</p>
+<h2>3.7 The shared-budget counterexample</h2>
+<p>§6.11 and Trace K give the canonical demonstration that local passes do not compose. A parent permits total spend 100. Two children each spend 60 and each is individually authorized up to 60. Locally, both <code>(A, C) = (T, T)</code>. Globally, <code>60 + 60 = 120 &gt; 100</code>, so parent compliance is false.</p>
+<p>The example identifies precisely which hypothesis failed. R and C omitted a cross-operation obligation — the shared cap. No number of additional local checks repairs this, because the violation is a property of the pair, not of either element. The repair is structural: add the shared-cap invariant to <code>D(parent)</code>, partition the budget in advance, or use an atomic reservation in the ledger so that the second reservation observes remaining capacity 40 and is rejected. The manuscript records detection and rejection separately, anticipating the selection/gate/execution distinction of deep dive 06.</p>
+<p>This counterexample generalizes. Any global property that is not the conjunction of local properties — capacity, uniqueness, mutual exclusion, global ordering, aggregate privacy budgets — requires an explicit cross-operation obligation. The obligation universe must be designed with that in mind.</p>
+<h2>3.8 Retention on a finite DAG (Proposition 8)</h2>
+<p>AIce&#39;s contribution adds a complementary result. For each node <code>v</code> of a finite refinement DAG, let <code>Required(v)</code> be the governing evidence and transitions needed for its action and <code>C(v)</code> the admitted carried set. Under base coverage, edge preservation, admission of newly governing patches before action, valid scoped fresh supersession, an enforced gate on every execution, and no unmodeled execution channel, topological induction gives <code>Required(v) ⊆ C(v)</code>.</p>
+<p>The result is about retention, not semantic sufficiency: it shows required constraints are carried, not that they are the right constraints. AIce&#39;s sources also show why the enforced-gate hypothesis is load-bearing. The shipped simulator was advisory — it could execute a selection the gate had rejected — and a local enforcing wrapper that blocked correctly also produced a false stop on legitimate work (E2). Custody and enforcement are different properties, and both need evidence.</p>
+<h2>3.9 The capped schedule and why a loop is not a proof</h2>
+<p>§5.9 gives the general schedule: for each scale, establish <code>Q_j</code> and versions; if sticky, verify locally with refinement witnesses; otherwise factor the band and repair the affected closure under R/C/N/K; recheck; record residuals; return <code>STRUCTURAL_READY</code> only if every level passes. The manuscript is careful that &quot;a finite loop is not by itself an induction proof.&quot; The loop is how the proof&#39;s premises are gathered; Proposition 2 is what turns gathered premises into a conclusion. <code>max_rounds</code> bounds iterations. Total termination additionally requires terminating calls or enforceable per-call timeouts/cancellation, and neither the cap nor a timeout certifies correctness. Residuals — items no admissible carrier explains, the analogue of Grain Zero in Coleman (2026b) — remain visible in the certificate rather than disappearing.</p>
+<h2>3.10 What this layer establishes</h2>
+<p>Composition across scales is proved valid under four explicit conditions that correspond to well-understood formal traditions: refinement mapping, closed-world coverage, noninterference, and linearizable freshness. The counterexamples motivate preserving these premises; they do not establish minimality or empirical necessity in every system. The sticky/non-sticky distinction proposes targeted repair and visible residuals. Any efficiency or utility advantage remains to be measured.</p>
+<hr>
+<h1>04 — Routing, Ledger, and Generative Continuity: The Four Predicate Families</h1>
+<p><em>Backs manuscript §§2.1, 2.3–2.5, 3.3–3.5, 4.2–4.5, 7.1–7.5, Appendix E, Traces B, C, N.</em></p>
+<h2>4.1 From four consistency relations to four predicate families</h2>
+<p>Coleman (2026a, Definition 1) declared a system state <code>(R_t, L_t, y_{1:t}, C_t)</code> index-aligned when four relations hold: routing–capability, routing–ledger, generation–index, and continuity–ledger consistency. The continuation keeps that decomposition and replaces each informal relation with a conjunction of named, separately checkable clauses. The crosswalk in Appendix E records the correspondence; this deep dive explains why each clause is in its family and what failure it isolates.</p>
+<h2>4.2 <code>A_route</code>: routing is a proposal, not a judgment</h2>
+<p><code>A_route(k) := ∀r ∈ RequiredRoutes(k), Typed ∧ Live ∧ Permitted ∧ Budget ∧ Parent ∧ Admissible</code>.</p>
+<ul>
+<li><strong>Typed</strong> and <strong>Live</strong> rely on deep dive 01: the index is well-formed and the registry entry it names exists, is valid at this epoch, and matches its digest.</li>
+<li><strong>Permitted</strong> applies policy <code>Π_k</code> for the authenticated principal.</li>
+<li><strong>Budget</strong> checks declared sparsity, cost, and latency. In MoE terms this covers top-k limits and expert capacity factors (Lepikhin et al., 2020; Fedus et al., 2022); in agent systems, the number of agents activated per step (Coleman 2026a, Definition 4, sparse Mixture-of-Agents).</li>
+<li><strong>Parent</strong> checks ancestry: a fine route must descend from a declared coarse route.</li>
+<li><strong>Admissible</strong> applies a task-specific rule when one is part of the contract and must be explicitly declared out of scope otherwise.</li>
+</ul>
+<p>The family deliberately excludes semantic expert quality. Routing literature studies load balance, entropy, and router collapse (Cai et al., 2024 survey; Yue et al., 2024 on dynamic expert counts; Cai et al., 2024 Read-ME on router decoupling). Those are optimization concerns. A low-entropy route can be right for a narrow task and a balanced route wrong. §2.3 therefore states that <code>A_route</code> &quot;does not declare an oracle expert from routing entropy alone.&quot; What it does certify — that the selected index is real, current, permitted, budgeted, and parented — is narrower and checkable.</p>
+<p>Trace B shows the family&#39;s diagnostic value. Expert <code>e7</code> is typed, live, within budget, with normal gates and load balance. Policy permits privileged repository transformations only on <code>e8</code>. <code>Permitted = F</code>, so <code>A_route = F</code> and <code>FIRST_FAIL = 0 (A_route.Permitted)</code>. A scalar routing score would have been excellent.</p>
+<h3>Soft mixtures</h3>
+<p>§7.1 notes that a soft mixture with no hard expert identity may fall outside the routing contract. The correct response is reduced scope or <code>UNKNOWN</code>, not an invented discrete index. This keeps the framework honest about what is observable: if a system does not expose discrete selections, the routing family cannot certify them.</p>
+<h2>4.3 <code>A_ledger</code>: authority lives at the commit boundary</h2>
+<p><code>A_ledger(k) := PROV ∧ AUTH ∧ TRANSITION ∧ NOSILENT ∧ COV ∧ ORDER ∧ CORR</code>.</p>
+<p>Coleman (2026a, §3.2) made the ledger the authority for durable commitments: routers and generators propose, only accepted transitions change committed state. That mirrors transactional designs for agent memory such as TARL (Xiao et al., 2026), from which Coleman (2026a) draws its ACCEPT/PEND/REJECT/SUPERSEDE action types. The package&#39;s StateLedger citation (Yang et al., 2026) remains unresolved in the independent review and is not relied on as verified support. Magentic-One (Fourney et al., 2024) uses task and progress ledgers in its orchestrator. The continuation&#39;s contribution is to name the clauses a ledger must satisfy for its authority to be certified rather than assumed.</p>
+<p>The seven clauses are separated in pairs that are commonly conflated:</p>
+<ul>
+<li><strong>PROV vs COV.</strong> One cited lineage on an accepted record (PROV) does not show that every required unit was received (COV).</li>
+<li><strong>ORDER vs AUTH.</strong> Happened-before (ORDER) shows which write came first; it does not authenticate the writer (AUTH). Lamport clocks order events; they do not grant permission.</li>
+<li><strong>COV vs CORR.</strong> Complete intake (COV) does not show that later corrections reached dependents (CORR).</li>
+<li><strong>TRANSITION vs NOSILENT.</strong> A transition can satisfy schema and still overwrite an accepted fact; NOSILENT requires a supersession link and that the prior record remain queryable.</li>
+</ul>
+<p><code>AUTH</code> uses the three-factor authority evidence of Definition 9, <code>Act(x) = 1</code> iff <code>S(x) = H(x) = U(x) = 1</code>, from the L²_C authority-detection rule in Coleman (2026b, §7.2): authenticated source authority, hierarchy validity, and authorized user intent. The continuation adds a third value: any <code>0</code> makes <code>Act = 0</code>; otherwise any <code>UNKNOWN</code> makes <code>Act = UNKNOWN</code>. This is the evidence algebra of deep dive 02 applied to authority, and it is why &quot;coverage, stickiness, a found receipt, causal order, or model agreement never sets <code>S(x) = 1</code>.&quot;</p>
+<p>The name &quot;ledger&quot; confers none of these properties (§7.2). An append-only store can faithfully preserve an unauthorized write; immutability is integrity of history, not legitimacy of content. Trace L — a retrieved instruction that rewrites the authority table — fails N and AUTH while every append-only guarantee holds.</p>
+<h2>4.4 <code>A_gen</code>: citation membership is necessary and insufficient</h2>
+<p><code>A_gen(k) := ∀q, Lineage ∧ ActiveEvidence ∧ Fidelity ∧ StatusType ∧ Scope ∧ AttributionCompleteness</code>.</p>
+<p>Coleman (2026a) stated generation–index consistency as &quot;claims cite indices that were actually activated.&quot; That is the pointer discipline of Vinyals et al. (2015) applied to citations, and it prevents one failure: citing an inactive identifier. It does not prevent the more serious failure of attaching a real identifier to a sentence the source does not support. The attribution literature measures exactly that gap. AIS (Rashkin et al., 2023) defines attribution as whether a generated statement is supported by an identified source and builds human annotation protocols for it. ALCE (Gao et al., 2023) evaluates citation recall and precision separately from fluency and correctness. Wallat et al. (2024) show that citation correctness and causal faithfulness diverge: a cited document can support an answer without being the document the model relied on.</p>
+<p>The continuation responds by splitting the relation:</p>
+<ul>
+<li><strong>Lineage</strong> — every cited index has a witnessed path, no failed cast.</li>
+<li><strong>ActiveEvidence</strong> — the evidence was visible in a snapshot accessible to the claim.</li>
+<li><strong>Fidelity</strong> — a declared assessor labels the claim and all required ancestors <code>SUPPORTED</code>; none is <code>UNSUPPORTED</code> or unquarantined <code>CONTESTED</code>.</li>
+<li><strong>StatusType</strong> — the claim does not assert a stronger kind than its source (strategy reported as proved, analogy as measurement).</li>
+<li><strong>Scope</strong> — measured claims stay within the tested workflow and validity interval.</li>
+<li><strong>AttributionCompleteness</strong> — every claim class requiring attribution has a supporting citation.</li>
+</ul>
+<p>Trace C is the canonical demonstration: every chunk receipted, order valid, every citation active, and the conclusion says a dose was doubled when the source says halved. <code>Fidelity = F</code>, <code>A_gen = F</code>. Even with Fidelity, the paper keeps one limit explicit: <code>ActiveEvidence</code> certifies the exposed trace, not internal causal reliance — the gap Wallat et al. identify cannot be closed by adding citation IDs.</p>
+<p><code>StatusType</code> and <code>Scope</code> are unusual in generation checks and deserve emphasis. Many harmful outputs are not false; they are overstated. A strategy reported as a proof, or a result measured on one workflow reported as general, passes a support check on its content and fails on its kind. Falsifiers SEM-003 and SCOPE overclaim (§11.9) target these.</p>
+<h2>4.5 <code>A_cont</code>: continuity is preserved obligations, not fluent prose</h2>
+<p><code>A_cont(k)</code> conjoins Projection, Obligation, Handoff, CorrectionContinuity, Directional, and NoAuthorityInflation.</p>
+<p>Coleman (2026a, §3.3) measured continuity with a score <code>Cont(y, C) ∈ [0,1]</code>. The continuation turns that score into finite obligations that must survive a specific transformation — compression, handoff, resume. The continuity state <code>C_k = (facts, discourse, goals, corrections)</code> must be a declared projection of the committed ledger view; every open obligation must remain open or carry an authorized satisfaction or waiver; every route change, handoff, resume, and compression must emit a checkpoint; active corrections must be carried; required directions of relevance (deep dive 07) must remain covered; and the continuity expert must not have acquired commit authority.</p>
+<p>The motivating literature is agent memory. MemGPT (Packer et al., 2023) pages context in and out of a bounded window; Generative Agents (Park et al., 2023) summarize memory streams into reflections. Both compress, and compression is where obligations get lost. Trace N is the canonical case: after compression, the ledger still holds an open obligation to verify a source version, but the summary omits it. Routing, ledger, and generation pass; <code>Obligation = F</code>, <code>Handoff = F</code>. &quot;A beautifully written continuation can fail Projection; an awkward one can pass.&quot;</p>
+<p>NoAuthorityInflation enforces Coleman (2026a)&#39;s capability isolation table (Definition 3): the continuity expert may emit text and propose summaries, but owns no factual authority and may not mutate the ledger. A continuity summary can be internally consistent and wrong, and &quot;projection consistency is not factual support, and support is not user authority.&quot;</p>
+<h2>4.6 Role-to-predicate matrix</h2>
+<p>§7.5 assigns each component the predicates that test it and the inference it may not make. The matrix is a compact statement of capability isolation as testable obligations: the router may not infer authority, the retriever may not infer support, the tool gateway may not infer success from selection, the ledger may not infer truth from append order, the generator may not infer support from IDs, the continuity expert may not infer commit authority, and the release controller may not infer promotion from coverage. Each row names a typical first failure, which gives evaluators a concrete starting point for fault injection.</p>
+<h2>4.7 What this layer establishes</h2>
+<p>The four families operationalize Coleman (2026a)&#39;s four consistency relations as conjunctions of independently failing clauses. The clause boundaries are drawn exactly where the cited literature reports conflation in practice: gate weight vs permission, order vs authority, citation vs support, summary vs commitment. Each family can fail while the others pass, and the worked traces exhibit each such failure.</p>
+<hr>
+<h1>05 — Correction, Causal Order, and Freshness</h1>
+<p><em>Backs manuscript §§3.6, 5.7–5.8, 6.7, 6.9, 6.11, 8.1–8.2, Appendix B.4–B.5, Traces E, F, G, H.</em></p>
+<h2>5.1 Why corrections are the hard case</h2>
+<p>A system that never changes its mind is easy to certify. Real systems receive corrections: a source is revised, a policy revoked, a user retracts an instruction, a tool is deprecated. Each correction makes some earlier certificates obsolete, and the difficulty is knowing which. Too narrow an invalidation lets stale conclusions survive; too broad an invalidation discards everything and destroys utility. The manuscript&#39;s answer is to treat a correction as a scoped graph operation with explicit authority, and to compute its consequences by reachability.</p>
+<h2>5.2 The correction object</h2>
+<p>Definition 15: <code>c = (target, issuer, authority_evidence, scope, applicability, lineage, nonce, tag, timestamp)</code>. Each field has one job.</p>
+<ul>
+<li><strong>target</strong> is the seed in the dependency graph.</li>
+<li><strong>issuer</strong> and <strong>authority_evidence</strong> determine <code>Authorized(c)</code>, which requires authenticated authority over the target and scope.</li>
+<li><strong>scope</strong> and <strong>applicability</strong> prevent a correction to one tenant, workflow, or interval from silently rewriting another (mutation M15).</li>
+<li><strong>nonce</strong> and <strong>tag</strong> support integrity and replay detection.</li>
+</ul>
+<p>The manuscript states that &quot;cryptography does not make the issuer correct.&quot; A validly signed correction from an authorized issuer can still be wrong; the protocol ensures only that it is attributable and not replayed. And <code>Authorized(c)</code> &quot;is independent of whether many agents repeat it&quot; (§8.1): repetition is not authority. That rule is a direct response to conformity findings in multi-agent settings (Weng, Chen, and Wang, 2025) — models can converge on a group answer whether or not it is correct.</p>
+<h2>5.3 Happened-before rather than timestamps</h2>
+<p>Lamport (1978) defined happened-before as the smallest relation containing program order and message send/receive, closed under transitivity, and showed that physical clocks in a distributed system cannot by themselves recover it. The manuscript&#39;s Definition 14 specializes the relation to the edges that matter for certification — intake/receipt, proposal/commit, correction/dependency — and requires its transitive closure to be acyclic.</p>
+<p>Three outcomes are distinguished. A cycle in complete relevant evidence is <code>ORDER = False</code>: the trace claims something impossible. Missing required edges are <code>UNKNOWN</code>: the order cannot be determined. An absent ordering contract is <code>NO_VERDICT</code>. This three-way split matters because the repair differs: a cycle indicates corrupted or forged records, missing edges indicate incomplete instrumentation, and an absent contract indicates a design gap.</p>
+<h2>5.4 The stale-concurrent-approval example</h2>
+<p>§6.11 gives the example that motivates condition K. Approval <code>a</code> authorizes <code>tool:t17</code> under registry <code>r7</code>. Correction <code>c</code> revokes it in <code>r8</code>. Operation <code>o</code> depends on <code>a</code> but not on <code>c</code>. Vector clocks <code>VC(a) = (1,0,0)</code>, <code>VC(c) = (0,1,0)</code>, <code>VC(o) = (1,0,1)</code>.</p>
+<p>Read componentwise: <code>VC(a) ≤ VC(o)</code> in every coordinate and differs, so <code>a → o</code>. <code>VC(c)</code> and <code>VC(o)</code> are incomparable — <code>c</code> has a 1 in the second coordinate where <code>o</code> has 0, and <code>o</code> has a 1 in the third where <code>c</code> has 0 — so <code>c</code> and <code>o</code> are concurrent. The operation&#39;s causal past contains the approval and not the revocation.</p>
+<p>The monitor&#39;s verdict depends on what it knows about the correction frontier. Before the frontier is known, current authorization is <code>U</code>: the approval might still be valid. After a complete history shows that current policy requires <code>r8</code> validity and <code>r8</code> revokes the tool, it is <code>F</code>. In neither case is it <code>T</code>, even though the signature on <code>a</code> verifies. The lesson the manuscript draws — &quot;signed and fresh are separate&quot; — is the precise distinction between integrity of an artifact and its currency. Trace E develops the same example at the tool-call boundary.</p>
+<h2>5.5 Condition K in six parts</h2>
+<p>Condition K (§5.7) is the formal summary of what freshness requires:</p>
+<ol>
+<li>The contract declares operation/transaction boundaries and the required real-time freshness property. Linearizability applies to single-object operations; strict serializability can supply real-time transaction order for multi-operation transactions. Ordinary serializability alone is insufficient for that order and is not equivalent to linearizability (Herlihy and Wing, 1990, §3.3). Individually linearizable field reads do not ensure a joint snapshot: use a joint atomic snapshot, a justified strictly serializable transaction, or a validated version protocol across all relevant fields. Policy-dependent effects require an appropriate atomic admission or revalidation boundary.</li>
+<li>Every causally preceding correction is included — and concurrent corrections are not fabricated into dependencies. Overstating dependencies is also an error: it can invalidate certificates that were never affected.</li>
+<li>Versions remain valid at effect boundaries or are revalidated. Time-of-check/time-of-use gaps are the classic violation.</li>
+<li>Accepted corrections transitively invalidate dependents before promotion.</li>
+<li>Conflicting concurrent operations are ordered or explicitly resolved.</li>
+<li>Replayed approvals and nonces do not create fresh authority (mutation M11).</li>
+</ol>
+<p>The manuscript also separates four retrieval outcomes that are routinely conflated: <code>NOT_YET</code> (causally invisible), <code>ABSENT</code> (legitimately nonexistent), <code>LOST</code> (failed retrieval), and <code>FOUND</code>. &quot;Causal invisibility is not nonexistence, failed retrieval is not a legitimate negative, and retrieval is not permission.&quot;</p>
+<h2>5.6 Affected closure</h2>
+<p>Given seeds <code>Z</code> — failing or corrected nodes — the manuscript computes <code>Aff = Reach_G(Z)</code>, the set of all nodes reachable from the seeds in the dependency graph, across indices, scales, claims, ledger projections, and pending actions (§5.8). Every node in <code>Aff</code> is marked stale or quarantined with the appropriate status, history is preserved, evidence outside <code>Aff</code> is retained if N holds and its freshness is valid, repairs are made along affected edges, and the <em>entire</em> closure is rechecked — not only the seed.</p>
+<p>Rechecking the whole closure is the critical step. A common incremental-repair bug is to fix the seed and assume downstream results update automatically. If a summary was generated from a claim that was generated from a corrected document, fixing the document does not fix the summary; the summary must be regenerated or quarantined. Mutation M14 (one affected descendant omitted) targets exactly this.</p>
+<p>Computing <code>Aff</code> is linear in the graph: breadth- or depth-first search visits each node and edge once. Appendix B.4 gives the pseudocode, and Proposition 10&#39;s bound includes one shared traversal for the union of closures.</p>
+<h2>5.7 Proposition 7: what stays valid</h2>
+<p>Proposition 7 states the complementary guarantee. If output set <code>O</code> satisfies <code>Deps(O) ∩ Aff = ∅</code>, N holds, evidence versions for <code>O</code> are stable, and the dependency graph is complete for the release scope, then a correction confined to <code>Z</code> and its outgoing dependencies does not change the predicates certified for <code>O</code>.</p>
+<p>The proof is reachability plus isolation: no dependency path from <code>Z</code> reaches <code>O</code>&#39;s dependencies, N excludes unmodeled influence, and stable versions keep inputs fixed. Each hypothesis has a practical failure. An incomplete dependency graph misses an edge — for example a shared cache or a hidden context window (mutation M31). A failure of N allows a correction to influence <code>O</code> through a side channel. Unstable versions mean <code>O</code>&#39;s evidence changed for an unrelated reason. When any is uncertain, unaffectedness is <code>UNKNOWN</code>, and partial release is not certified.</p>
+<p>The manuscript adds a limit that graph semantics cannot overcome: &quot;previously emitted unretractable copies cannot be recalled by graph invalidation.&quot; Invalidation governs future promotion. It does not retrieve an email already sent.</p>
+<h2>5.8 Trace G and Trace F</h2>
+<p>Trace G applies both propositions. A source correction moves <code>d4</code> from version 2 to 3. Claim <code>q4</code>, summary <code>s4</code>, and pending tool action <code>x4</code> depend on <code>d4</code>; extraction <code>q1</code> depends only on <code>d1</code>. With dependency enumeration and N independently established, <code>Aff = {d4, q4, s4, x4}</code>. Those are held. <code>q1</code> may be released as <code>HELD_PARTIAL</code> with an explicit exclusion notice, after its own authority and support checks pass.</p>
+<p>Trace F applies closure to concurrency. Agent A commits a valid plan; agent B uses a revoked memory item; agent C drops an unrelated open obligation. B and C are causally incomparable. The frontier contains both, repair computes two closures, and A may be released only if its dependencies intersect neither.</p>
+<h2>5.9 Correction storms and the round cap</h2>
+<p>Trace H is the adversarial case for closure: two authorized registries alternately supersede conflicting values. Each correction correctly invalidates the other&#39;s dependents, and the system can oscillate indefinitely. The manuscript&#39;s reconciliation loop (Appendix B.5) has a caller-supplied <code>max_rounds</code>; exhausting it returns <code>NO_VERDICT(&quot;CORRECTION_STORM_OR_ROUND_CAP&quot;)</code>, or <code>REFUSED</code> if policy prohibits unresolved contested output, or <code>AWAITING_HUMAN</code> where the contract names an adjudicator. &quot;No arithmetic average of versions chooses a winner.&quot; The cap bounds iterations. Total termination of the decision requires every repair/check/I/O call to terminate or a supervisor that can return a deadline outcome independently of a blocked call. A timeout does not establish cancellation or rollback; unconfirmed effects remain held. A timeout is an execution status, not evidence that a registry is wrong; the cap does not decide which registry is right. That decision is an authority question outside the loop.</p>
+<h2>5.10 Freshness as part of certificate identity</h2>
+<p>The freshness table in §8.2 lists, for each predicate, the evidence that makes a certificate current and the event that invalidates it — a version bump for COV, a rewrite without supersession for ORDER, a new applicable correction for CORR, deregistration or policy revocation for ROUTE_OK, assessor drift for SUPPORT/FID. The table operationalizes Proposition 9: the certificate&#39;s identity includes the versions of everything it relied on, so a change in any of them is a change in what the certificate is about. &quot;A preserved artifact can be obsolete; custody is not freshness.&quot;</p>
+<h2>5.11 What this layer establishes</h2>
+<p>Corrections are handled as authorized, scoped seeds whose consequences are the reachable closure in an explicit dependency graph. Happened-before, not timestamps, determines what a step could have seen; declared real-time snapshot/effect semantics constrain &quot;current policy&quot;; one traversal computes invalidation closure on the supplied graph in linear time; completeness and isolation remain explicit assumptions of partial preservation. The stale-approval and storm examples show both why these conditions are needed and where their guarantees stop.</p>
+<hr>
+<h1>06 — Custody, Authority, and Release</h1>
+<p><em>Backs manuscript §§2.2, 3.3 (Definition 9), 5.10, 6.6–6.8, 7.2, 8.3–8.5, 10.4, Traces J, L, M.</em></p>
+<h2>6.1 Three things that are easy to confuse</h2>
+<p>A system can <em>hold</em> an object, be <em>entitled to act</em> on it, and <em>release</em> conclusions drawn from it. These are three separate properties. Coleman (2026b, §6.3) states the first separation as &quot;held = relevant + retained ≠ truth&quot;: keeping something for evaluation is not endorsing it. The L²_C authority rule (Coleman 2026b, §7.2) states the second: detection of source, authority, intent, and harm precedes incorporation, and untrusted text may be read as content without becoming an instruction. This deep dive explains how the continuation turns those principles into a release contract.</p>
+<h2>6.2 Custody is not truth</h2>
+<p>In Coleman (2026b), the HELD predicate requires an object to be typed, grounded, evidence-exposed, correction-preserved, and status-visible. Every clause concerns how the object is kept, none whether it is true. The continuation preserves that property: a grain record (§5.2) carries a content hash, status, authority stamp, dependencies, and governing acknowledgments, and the manuscript states that the hash &quot;is not a read receipt, semantic support, freshness, or permission.&quot; A perfectly custodied false claim is still false. Custody is what makes later correction possible — you cannot invalidate what you did not keep — which is why NOSILENT requires superseded records to remain queryable.</p>
+<h2>6.3 Authority: <code>Act = S · H · U</code> and <code>Act = 0 ⇏ Stop</code></h2>
+<p>Definition 9 adopts the three-factor authority gate: authenticated source authority <code>S</code>, hierarchy validity <code>H</code>, authorized user intent <code>U</code>. All three must be 1 for <code>Act = 1</code>. Two consequences are built into the definition.</p>
+<p><strong><code>S = 0 ⇒ Act = 0</code>.</strong> Content from a source without authority cannot authorize an action no matter how it is phrased. This is a proposed structural constraint against instruction injection, whose protection depends on complete mediation and enforcement: Trace L&#39;s document saying &quot;make router an approver&quot; has a valid content receipt and no authority. The manuscript&#39;s &quot;found content is not an instruction&quot; example states the verdict: <code>F</code> if evidence establishes no authority, <code>U</code> if authority evidence is incomplete, never <code>T</code> from retrieval alone.</p>
+<p><strong><code>Act = 0 ⇏ Stop</code>.</strong> Denying an action is not the same as halting the system. A privileged tool call can be refused while an informational response explaining the refusal is still produced. Coleman (2026b) states this as detection without resistance: L²_C &quot;does not resist instruction-shaped content,&quot; it declines to incorporate unauthorized instructions and proceeds toward an authorized outcome. The continuation uses the rule to justify partial release (§6.6 below) and is explicit that it &quot;does not override a separate policy requiring complete suppression.&quot;</p>
+<h2>6.4 Selection, gate verdict, execution, effect</h2>
+<p>AIce&#39;s contribution adds a four-way distinction that the manuscript adopts in §§6.8, 7.2, and 10.4: <code>selected_action</code>, <code>gate_verdict</code>, <code>executed_action</code>, <code>observed_effect</code>. Each can diverge from the others.</p>
+<ul>
+<li>A gate can reject a selection that an advisory executor runs anyway. AIce&#39;s shipped simulator was advisory in exactly this way.</li>
+<li>An enforcing wrapper can block correctly and still reject legitimate work — AIce&#39;s E2 false stop.</li>
+<li>A blocked action can still have produced partial logs or externally visible effects before the block.</li>
+</ul>
+<p>The manuscript draws the consequence: &quot;a correct verifier can be attached to a broken executor.&quot; Certificates about detection say nothing about enforcement unless enforcement is separately recorded and checked. Mutation M27 (gate rejects but tool executes) is classified as <code>EXECUTION_ERROR</code>, distinct from detection — a distinction formalized in deep dive 08.</p>
+<h2>6.5 Structural readiness and full release</h2>
+<p>§5.10 defines two levels of promotion.</p>
+<p><code>STRUCTURAL_READY_k</code> is the conjunction of COV, ORDER, CORR, ROUTE_OK, LEDGER_OK, GEN_OK, <code>A_cont</code>, and STICKY where required, achieved directly or after capped reconciliation. It certifies that the structure is intact: evidence received, order valid, corrections propagated, lineage complete.</p>
+<p><code>RELEASE_FULL</code> additionally requires CROSS_OK, CROSS_SCALE_OK, SCOPE where measured claims occur, POLICY_OK, AUTH, SUPPORT, FID, and NONVACUOUS. These checks use evidence independent of ingestion receipts, and SUPPORT/FID use a declared external assessor.</p>
+<p>The split exists because structural integrity is necessary and may be cheaper to check under the restricted cost model, while semantic support can be expensive and depends on an assessor whose reliability must itself be established. Reporting structural readiness as if it were release would recreate the coverage-equals-fidelity error at the level of the whole certificate. The Riemann-probe packet contributed this split and the rule that four-valued evidence maps to PASS-only bits, with missing evidence blocking full promotion but not authorized unaffected partial output.</p>
+<h2>6.6 Five outcomes</h2>
+<p><code>INDEX-ALIGN-CERT</code> returns one of five outcomes (§8.3):</p>
+<table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>Condition</th>
+<th>Typical trace</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CERTIFIED</td>
+<td>all full-release conjuncts pass, independent release authority, non-vacuous</td>
+<td>A</td>
+</tr>
+<tr>
+<td>HELD_PARTIAL</td>
+<td>only authorized unaffected content emitted; held dependencies named</td>
+<td>G, M</td>
+</tr>
+<tr>
+<td>REFUSED</td>
+<td>observed failure prohibits the requested release</td>
+<td>B, C, E</td>
+</tr>
+<tr>
+<td>AWAITING_HUMAN</td>
+<td>contract names an authorized adjudicator for an exact question</td>
+<td>H (with adjudicator)</td>
+</tr>
+<tr>
+<td>NO_VERDICT</td>
+<td>missing thresholds, incomplete evidence, unavailable assessor, exhausted reconciliation, invalid execution</td>
+<td>I, H (no adjudicator)</td>
+</tr>
+</tbody></table>
+<p>The outcome set is richer than pass/fail because control decisions are richer than truth values. The same predicate trace can yield different outcomes under different authorized scopes: &quot;a semantic pass in a sandbox can coexist with refusal to publish because AUTH is absent.&quot; <code>AWAITING_HUMAN</code> names a role and an exact question, not a generic request for oversight.</p>
+<h2>6.7 The partial-release rule</h2>
+<p>For candidate output <code>o</code>, partial emission requires <code>Deps(o) ∩ Aff = ∅</code>, that <code>o</code>&#39;s own route, authority, policy, support, scope, and continuity checks pass, that dependency enumeration and N pass for its scope, and that the output is labeled partial and names excluded obligations (§8.4). Appendix A.1 adds that <code>HELD_PARTIAL</code> &quot;cannot be inferred solely from Aff disjointness.&quot;</p>
+<p>Trace M shows the rule&#39;s purpose. A report has independent sections X and Y; Y&#39;s support assessor is unavailable. Full promotion is blocked with <code>SUPPORT(Y) = U</code>. X, independently supported and isolated from Y, may be emitted as <code>HELD_PARTIAL</code>. Y is not labeled false. Without partial release, a conjunctive rule would discard X because of an unrelated unknown — exactly the utility loss that makes conservative certification unattractive in practice. With it, conservatism is confined to the affected region.</p>
+<p>The Grok Bot packet contributed the corresponding operator-facing protocol: labeled partial answers that name uncovered chunks, and <code>NO_VERDICT</code> where thresholds are missing.</p>
+<h2>6.8 Independent verification</h2>
+<p>§8.5 applies the trust-boundary argument of deep dive 01 to the release decision. PROV-002 requires a verifier outside the process capable of forging receipts. A challenge generated and checked by the same process is an honest-workflow control, useful against accidents and useless against a compromised process. An in-process HMAC does not protect against code holding the same key. &quot;The release decision itself is verifier output, not evidence of its own correctness&quot; (§10.1). Independence also has a social dimension: model agreement is not independence, because models share training data and rubric blind spots (deep dive 08).</p>
+<h2>6.9 <code>h &lt; 1</code> and private facts</h2>
+<p>Coleman (2026b, §7.3) treats <code>h &lt; 1</code> as an evaluator non-sovereignty boundary: the evaluating system remains bounded, and claimed sovereignty overreach is telemetry. The continuation keeps it as a stipulated design boundary, not a measured score, and adds the rule that private personal facts are excluded from synthetic predicates and cannot raise or lower a verdict. Excluding a class of inputs from the decision is a structural privacy property of the certificate; it is not a proof that the surrounding system preserves privacy.</p>
+<h2>6.10 What this layer establishes</h2>
+<p>Holding, authorizing, and releasing are separated into distinct evidence channels with distinct checks. Authority is a conjunction of three externally evidenced factors that content cannot supply. Detection is separated from enforcement and enforcement from effect. Release is graded into five outcomes so that a blocked full release does not suppress authorized, isolated, labeled partial output. Together these turn Coleman (2026b)&#39;s custody and authority principles into a release contract whose every clause names its own evidence.</p>
+<hr>
+<h1>07 — Failure Localization and the Worked Traces</h1>
+<p><em>Backs manuscript §§4.7–4.8, 6.3–6.5, 7.4, 9.1–9.15, 12.2, Definitions 17, 24–26.</em></p>
+<h2>7.1 Why localization is the practical payoff</h2>
+<p>An aggregate alignment score without component records need not identify a failure location. A scalar representation accompanied by the same component records can retain that information. The boolean trace <code>𝔅(T) = (b_0, …, b_M)</code>, with sub-conjunct outcomes and witness references, can. Coleman (2026a) motivated the index abstraction partly through debuggability: separating roles makes failures attributable. The continuation makes that attribution a computable function of the trace.</p>
+<h2>7.2 FIRST_FAIL and FIRST_NONPASS</h2>
+<p>Definition 24 declares a partition-depth order <code>π=(k_0,…,k_M)</code> and uses <code>FIRST_FAIL(T;π) := min{i : A(k_i) = False}</code>, recording both order position and partition depth. In the finest-first traces, <code>i=j</code> and <code>k_i=M-j</code>. Proposition 3: on a finite total scale order, if the failed set is nonempty, the minimum exists and is unique; with a declared sub-conjunct order, the reported failing predicate is unique too. The proof is the well-ordering of finite totally ordered sets.</p>
+<p>The manuscript reports a second location, <code>FIRST_NONPASS</code>, the least scale with an <code>UNKNOWN</code> or <code>NO_VERDICT</code> outcome preceded only by passes. The two are reported separately because they mean different things. If scale 2 is <code>UNKNOWN</code> and scale 4 is <code>FAIL</code>, the observed failure is at 4, but the earliest point where certification became impossible is 2, and the real defect may be there. Overwriting either location with the other would lose information.</p>
+<p>The manuscript also limits the claim: <code>FIRST_FAIL</code> is &quot;the earliest known failed declared lift, not a metaphysical origin.&quot; Several defects can produce the same failed predicate, and the true cause may lie outside the instrumented trace. Trace N makes this concrete: the omission surfaces at the handoff scale even if the compressor that caused it is upstream and unrepresented.</p>
+<h2>7.3 Concurrent failures need a frontier, not a minimum</h2>
+<p>When the scale structure is a DAG with causal order <code>≺</code> rather than a total order, two failures can be incomparable. Choosing one as &quot;first&quot; would encode an arbitrary scheduling artifact as a diagnosis. Definition 26 defines <code>Frontier(F) = {x ∈ F : no y ∈ F has y ≺ x}</code>, the set of minimal failures. Proposition 4: in a finite acyclic order, every nonempty <code>F</code> has at least one minimal element, and every failure has a minimal failed ancestor. The proof is descent along strict predecessors: acyclicity forbids repetition, finiteness forces termination. Return exactly this minimal set. Adding any failure incomparable with merely one frontier member can add a nonminimal descendant: with <code>a→c</code> and independent <code>b</code>, the frontier is <code>{a,b}</code>, not <code>{a,b,c}</code>.</p>
+<p>Trace F returns <code>Frontier(F) = {B.A_ledger.CORR, C.A_cont.Obligation}</code>. A display may list B first, but the certificate preserves their incomparability. If order edges are missing, the result is <code>UNKNOWN_ORDER</code>, consistent with the evidence semantics of deep dive 02.</p>
+<h2>7.4 Computability (Proposition 5)</h2>
+<p>If each checker terminates on its finite slice, reachability is over a finite graph, and thresholds are present, the trace, frontier, and affected closure are computable in finite time. The proposition is deliberately weak: it is a termination guarantee, not a cost bound, and it excludes semantic discovery. Its practical point is the converse — when a checker does not terminate (an LLM assessor times out), that is an execution status, not a semantic failure. Deep dive 08 develops the execution taxonomy.</p>
+<h2>7.5 Two-ends support and directional coverage</h2>
+<p>Two predicates detect a failure that counting receipts misses: concentration.</p>
+<p><code>TWO_ENDS(q)</code> (Definition 25) requires that no admissible window shorter than <code>ε|S|</code> contain more than a <code>θ_2E</code> share of a claim&#39;s declared support. A claim that is &quot;supported by&quot; a 300-page source but draws all its support from one paragraph may be correct, but it has not engaged the source as a whole; where the contract requires distributed evidence, that should be visible. The vocabulary is borrowed from the two-ends condition in the restriction literature (Wang and Wu, 2024), where it excludes configurations whose mass concentrates in a short piece of a tube; here it is a caller-parameterized audit check, not a theorem.</p>
+<p>Directional coverage (Definition 17) requires that each declared direction of relevance — evidence class, obligation, tenant partition — retain a distinguishable lineage at each scale. It is the systems analog of the light-rule posture in Coleman (2026b, §3), contributed through the L seat: every required direction through the custody center remains represented. The manuscript bounds it twice: directions must be declared (no claim to capture all semantic directions), and coverage overlap does not imply authority. High coverage in one class cannot repair an omitted class.</p>
+<h2>7.6 The position-effect motivation</h2>
+<p>Liu et al. (2024) showed that language models&#39; use of long contexts depends on where relevant information sits, with degraded performance when it is in the middle. That result motivates Trace D, in which beginning and end chunks have challenged quotations and the middle has only a file hash. The manuscript&#39;s verdict is <code>COV_middle = U</code>, not <code>F</code>: the certificate reports missing evidence rather than asserting that the model omitted the middle. The position-effect literature motivates stratifying evaluations by location; it does not license assuming every model fails there.</p>
+<h2>7.7 The diagnostic ladder</h2>
+<p>The Grok Bot packet contributed a ladder <code>chunk → section → source → cross-source → handoff</code>, adopted in §7.4 as a preregistered schedule per task. Each rung has its own obligation universe and transfer witness; passing a rung does not substitute for a missing later rung; skipped rungs must be justified as inapplicable. The ladder is the concrete instance of the declared scale tree for document-grounded tasks, and it makes the first failed lift interpretable: a failure at &quot;section&quot; means within-source aggregation failed, a failure at &quot;cross-source&quot; means synthesis across sources failed, and so on.</p>
+<h2>7.8 The fourteen traces as a coverage argument</h2>
+<p>The worked traces in §9 are hand-constructed illustrations of selected distinctions and intended verdicts. They are not a complete independence argument or an executed coverage test. Their partial map is:</p>
+<table>
+<thead>
+<tr>
+<th>Separation demonstrated</th>
+<th>Trace</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Clean conditional lift with independent denominator</td>
+<td>A</td>
+</tr>
+<tr>
+<td>Registered ≠ permitted</td>
+<td>B</td>
+</tr>
+<tr>
+<td>Coverage ≠ fidelity</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Missing evidence ≠ observed failure</td>
+<td>D</td>
+</tr>
+<tr>
+<td>Signed ≠ fresh</td>
+<td>E</td>
+</tr>
+<tr>
+<td>Concurrent failures → frontier</td>
+<td>F</td>
+</tr>
+<tr>
+<td>Scoped invalidation and partial release</td>
+<td>G</td>
+</tr>
+<tr>
+<td>Iteration cap ≠ total termination or correctness</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Missing threshold → NO_VERDICT</td>
+<td>I</td>
+</tr>
+<tr>
+<td>Detection ≠ process exit</td>
+<td>J</td>
+</tr>
+<tr>
+<td>Local passes need cross-operation obligations</td>
+<td>K</td>
+</tr>
+<tr>
+<td>Immutable history ≠ isolation</td>
+<td>L</td>
+</tr>
+<tr>
+<td>Partial release under unrelated unknown</td>
+<td>M</td>
+</tr>
+<tr>
+<td>Fluent continuation ≠ preserved commitments</td>
+<td>N</td>
+</tr>
+</tbody></table>
+<p>The hand-constructed traces illustrate failures in each predicate family (route in B, ledger in E/F/L, generation in C, continuity in N) and several outcomes (REFUSED in B/C/E, HELD_PARTIAL in G/M, NO_VERDICT in H/I, and a possible AWAITING_HUMAN branch in H when an adjudicator is declared). K illustrates an omitted shared obligation/refinement premise, L outside interference, and E freshness failure. This is a partial coverage map, not an exhaustive pairwise-separation proof. Additional distinctions, including vacuity, status inflation and evaluator independence, require explicit fixtures and executed results. The traces and 32 mutation designs are not test executions.</p>
+<h2>7.9 Trace A as the positive control</h2>
+<p>A localization scheme is only meaningful if it also certifies clean cases. Trace A fixes policy, registry, authority, snapshot, and <code>min_coverage = 1.0</code>; an independent manifest lists exactly five obligations; every finest induction-level-0 predicate passes on explicit evidence; the induction-level-1 lift has R/C/N/K witnesses. <code>STRUCTURAL_READY = T</code>, and with the full-release checks the certificate is <code>CERTIFIED</code>. Trace I then reuses Trace A&#39;s records with <code>min_coverage</code> omitted and obtains <code>NO_VERDICT</code> — a minimal pair isolating the effect of a missing contract.</p>
+<h2>7.10 What this layer establishes</h2>
+<p>Localization is exact where order is total (unique first failure), honest where order is partial (a frontier set), and bounded in its claims (earliest known failed lift, not root cause). Declared concentration and direction checks can distinguish support distributions that identical totals conceal; their usefulness depends on the chosen windows and thresholds. The worked traces illustrate selected separations. Exhaustive fixture coverage and empirical detection remain evaluation obligations.</p>
+<hr>
+<h1>08 — Evaluation, Falsification, and Cost</h1>
+<p><em>Backs manuscript §§6.10, 10.1–10.4, 11.1–11.10, Appendix D, Trace J.</em></p>
+<h2>8.1 What a falsifiable certificate design looks like</h2>
+<p>A certification scheme is scientifically useful only if it can be shown to be wrong. The manuscript states its falsifiers as fixtures: inputs for which a wrong design passes and the correct design does not. A fixture falsifies a <em>named design or implementation conformance condition</em>. That scoping is precise rather than defensive — a fixture about coverage and fidelity tests whether the release rule conflates them; it cannot test a theorem in geometry or number theory, because those are not inputs to the checker.</p>
+<h2>8.2 The eight core fixtures</h2>
+<p>From the Riemann-probe packet, §11.9 lists eight fixtures, each targeting one separation:</p>
+<ol>
+<li><strong>COV-pass/FID-fail</strong> — all chunks receipted, conclusion unsupported. A design that releases on coverage alone passes it.</li>
+<li><strong>Route substitution</strong> — registered but unauthorized tool or expert. A design that ignores <code>Π</code> passes.</li>
+<li><strong>Stale correction handoff</strong> — child uses pre-correction view. A design that does not invalidate <code>Aff</code> passes.</li>
+<li><strong>SEM-003 status inflation</strong> — strategy labeled proved. A design without <code>StatusType</code> passes.</li>
+<li><strong>SCOPE overclaim</strong> — measured claim generalized. A design without tested-workflow scope passes.</li>
+<li><strong>PROV-002 hash-only reread</strong> — hash presented as reading. A design without independent content-bound verification passes.</li>
+<li><strong>ACT conflation</strong> — covered but unauthorized instruction. A design in which coverage grants <code>Act</code> passes.</li>
+<li><strong>Index echo</strong> — cited identifier absent from visible activations. A design without generation–index lineage passes.</li>
+</ol>
+<p>Appendix D extends these to thirty-two mutations (M01–M32) spanning registry rollback, wrong quoted spans, post-rationalized citations, omitted callbacks, replayed nonces, cross-registry acknowledgments, authority pollution, router self-commit, generator self-certification, empty universes, missing thresholds and assessors, compression-dropped goals, gate bypass, harness crashes, correction storms, hidden caches, and silent rubric edits. Each row states the clean expectation, the fault expectation, and what non-detection would warn about.</p>
+<h2>8.3 Detection requires a baseline and an attributable failure</h2>
+<p>The most consequential methodological rule in the evaluation section is that &quot;a nonzero exit status alone never counts as detection&quot; (§11.6). It comes from a concrete hazard reported by the 10-agent team&#39;s review of an open-addressing probe: same-author mutation scripts that count any nonzero exit as a &quot;killed&quot; mutant. An import error, an unrelated assertion, or a timeout then counts as successful detection, inflating the kill rate with infrastructure failures.</p>
+<p>The manuscript&#39;s taxonomy separates five outcomes:</p>
+<ul>
+<li><strong>CLEAN_PASS</strong> — the unmodified baseline passes named checks under the same configuration. Without it, no comparison is valid.</li>
+<li><strong>DETECTED</strong> — the variant runs far enough to evaluate the intended property and a predeclared named check fails for the intended reason.</li>
+<li><strong>UNDETECTED</strong> — a valid run completes without relevant detection.</li>
+<li><strong>HARNESS_ERROR</strong> — the intended check could not be evaluated: import failure, malformed harness, unrelated exception, timeout.</li>
+<li><strong>EXECUTION_ERROR</strong> — enforcement or environment fails even though detection is valid.</li>
+</ul>
+<p>Trace J demonstrates all of them on one configuration. The team notes used <code>HARNESS_ERROR</code> and earlier text used <code>EXECUTION_ERROR</code> for overlapping cases; the manuscript harmonizes them by putting them on different axes — evaluation infrastructure versus enforcement — so a single run can be <code>DETECTED</code> on the detection axis and <code>EXECUTION_ERROR</code> on the execution axis.</p>
+<h2>8.4 Labels must be independent of the monitor</h2>
+<p>§11.2 requires that ground truth come from independently constructed specifications, hand-audited synthetic traces, or injected faults with known mechanisms: &quot;the monitor&#39;s own output cannot supply its labels.&quot; This is the evaluation analogue of the independent-verifier rule. Three bodies of work motivate the specific protocol.</p>
+<p><strong>Human annotation discipline.</strong> AIS (Rashkin et al., 2023) and FABLES (Kim et al., 2024) build attribution and faithfulness labels through structured human annotation, and FABLES specifically annotates omissions in long summaries. The manuscript adopts claim-level sampling and omission checks from that discipline.</p>
+<p><strong>Independence of judges.</strong> Sycophancy research (Sharma et al., 2024) shows models adjusting answers toward perceived user preferences, and BenchForm (Weng, Chen, and Wang, 2025) shows conformity to group answers. The protocol therefore collects human ratings independently before discussion and treats agreement between model assessors as non-independent evidence: separate answers from models with shared training data and rubrics are correlated.</p>
+<p><strong>Criteria drift.</strong> EvalGen (Shankar et al., 2024) found that users refine their evaluation criteria while grading outputs. The protocol does not deny drift; it versions it. Exploratory rubric development creates a new specification epoch; confirmatory runs use a frozen manifest (§7.6, §11.8).</p>
+<h2>8.5 Six research questions</h2>
+<p>The manuscript frames six questions, each paired with a measurable outcome: sound booleanization (inter-rater and oracle agreement under fixed specs), localization (does first failure predict the repair site better than scalar telemetry?), composition (do R/C/N/K witnesses prevent false global acceptance?), partial release (is useful unaffected output retained without contaminated promotion?), cost and utility (latency, tokens, dollars, human minutes, false blocks, missed coverage), and drift (how often do criteria, registries, sources, and assessors change enough to invalidate certificates?). They are posed as questions; their answers are what the protocol is designed to measure.</p>
+<h2>8.6 Metrics that do not hide unknowns</h2>
+<p>Detection metrics are standard — TPR, FPR, precision on valid evaluable episodes, with <code>n/a</code> for empty denominators — with one modification: <code>U</code> is reported separately and is never encoded as detection or non-detection. Where policy holds on <code>U</code>, the protocol measures that control choice by its false-block and missed-violation consequences &quot;without changing the epistemic label.&quot;</p>
+<p>Trace-level metrics include global-violation recall, R/C/N/K failure recall by category, false global acceptance, false-block rate, detection latency, correction propagation completeness, stale-approval acceptance, and lineage completeness. The manuscript names the two degenerate designs these metrics must expose: a certificate that refuses everything has zero false acceptance and no utility; one that accepts everything has high completion and no safety value.</p>
+<p>Evidence metrics include <code>EvidenceCoverage</code> with a vacuity flag, unknown rate by reason, threshold-supplied rate, content-bound vs hash-only coverage, fresh-snapshot coverage, asynchronous side-effect coverage, refinement-witness coverage, and correction-frontier completeness.</p>
+<h2>8.7 Baselines and ablations</h2>
+<p>The proposed protocol compares the certificate against scalar weighted deficit (Coleman 2026a&#39;s <code>Δ_t</code>), raw model self-assessment, citation-membership only, receipt-coverage only, a global end-of-trace judge, per-call local checks without composition conditions, and human review alone. It also requires a scalar encoding of exactly the same noncompensatory policy, such as a positive-weight nonnegative deficit released only at zero. This separates policy effects from representation effects; scalar does not itself mean compensatory. Capability, context, tool access, token budget, and human time are matched. Ablations remove typed lineage, content-bound receipts, noninterference checks, correction closure, cross-scale receipts, independent assessors, non-vacuity, and partial-release logic, one at a time and jointly — joint ablations matter because C interacts with N and K with correction propagation.</p>
+<p>RAGChecker (Ru et al., 2024) is the closest existing diagnostic framework: it separates retriever and generator metrics to locate defects. The index-alignment protocol shares that modular aim and differs by making each relation a non-compensatory release conjunct with a witness path.</p>
+<h2>8.8 Cost of verification</h2>
+<p>Proposition 10 bounds verification of a supplied restricted certificate at <code>O(n + |E| + cB + r + w)</code>: one pass over records, one shared graph traversal, at most one support-oracle call of cost <code>B</code> per claim, plus receipts and windows. The proof charges each item once; the restrictions are stated so that repeated per-claim or per-seed traversals, if an implementation needs them, are charged separately rather than hidden.</p>
+<p>The bound is about verification, and §10.4 separates four costs that are often conflated: search (finding routes, evidence, repairs), verification (checking the witness), enforcement (blocking execution), and observed effect (what happened). Cheap verification does not imply cheap search. The P-NP seat&#39;s non-claims D1–D9 make the boundary explicit: no reduction is given in either direction, no hardness or membership claim is made for general index alignment, and polynomial verification of a supplied witness does not classify the search problem.</p>
+<p>Cer-Eval (Wang et al., 2025) and Derailer-Rerailer (Wan et al., 2025) motivate selective, staged verification to reduce cost; VeriLA (Sung, Kim, and Zhang, 2025) motivates explicit, human-centered agent failure criteria. The protocol adopts the cost-reporting discipline and requires that any selection policy itself be evaluated for missed violations. The Grok Bot packet&#39;s rule that verification spending should be incurred where it can change the answer is the operational form.</p>
+<h2>8.9 Existing construction evidence</h2>
+<p>§11.10 reports what neighboring artifacts already show. AIce&#39;s opto probe at revision <code>e623a10</code> reports 110 synthetic runs with zero mismatches against frozen expectations and 539 tests, with documented limitations including handoff RPL = 0, live <code>L_N = .75</code> versus compressed 1, order-unaware replay, and in-process registry forgery. The open-addressing probe reports 7 of 8 confirmatory predictions held, with P3 failed. These are source-reported numbers for neighboring constructions; their methodological value — failed predictions kept visible, exploratory sweeps separated from confirmatory ones — carries over directly. The <code>thinkingmachines.txt</code> transcript documents Benevolence Drift Case 01, an evasive first response that became an explicit &quot;Yes&quot; after a forced binary prompt; Case 02 has no forced-binary follow-up in the supplied material.</p>
+<h2>8.10 What this layer establishes</h2>
+<p>The evaluation design specifies how to break the construction: fixtures for each separation, a mutation inventory, independent labels, an execution taxonomy that cannot count crashes as detections, metrics that keep unknowns visible, baselines that include the scalar deficit the paper replaces, ablations, and a cost model that separates verification from search and enforcement. Each element is traceable to a specific hazard reported in the cited literature or in the team&#39;s own probes.</p>
+<hr>
+<h1>09 — Related Work and Annotated Bibliography</h1>
+<p><em>Backs manuscript §§2, 12 and the References section. The initial package reported a metadata/URL check in <code>audit/reference-verification.md</code>. The subsequent independent review distinguishes source identity from claim support and leaves StateLedger unresolved. A resolving link or matching title is not full-text validation or empirical replication.</em></p>
+<h2>9.1 How the literature is used</h2>
+<p>The manuscript draws on five bodies of work, and uses each for a different purpose. Sparse-computation and agent papers supply the <em>objects</em> — the indices the certificate inspects. Attribution and evaluation papers supply the <em>failure modes</em> the predicates are built to separate. Formal-methods papers supply the <em>proof techniques</em> for composition. Kakeya geometry supplies an <em>order of work</em>. Governance work supplies the <em>boundary</em> of what a technical certificate can settle. Keeping those roles distinct is itself part of the argument: no cited work is used as evidence for something it does not study.</p>
+<h2>9.2 Sparse experts and routing</h2>
+<p><strong>Shazeer et al. (2017), <em>Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer</em>, ICLR; arXiv:1701.06538.</strong> Introduces noisy top-k gating over thousands of experts with a load-balancing loss. Source of the gated routing decision <code>R_t = TopK(softmax(W_r x))</code> used in Coleman (2026a). Its gate is a learned affinity, which is why the manuscript treats gate weight as telemetry.</p>
+<p><strong>Lepikhin et al. (2020), <em>GShard</em>, arXiv:2006.16668.</strong> Top-2 routing with expert capacity and automatic sharding. Motivates the <code>Budget</code> clause: capacity is a declared, checkable constraint.</p>
+<p><strong>Fedus, Zoph, and Shazeer (2022), <em>Switch Transformers</em>, JMLR; arXiv:2101.03961.</strong> Top-1 routing and simplified load balancing; <code>K_t = 1</code> case.</p>
+<p><strong>Jiang et al. (2024), <em>Mixtral of Experts</em>, arXiv:2401.04088.</strong> Top-2 among eight experts per layer; the concrete MoE configuration in Coleman (2026a).</p>
+<p><strong>Cai, W. et al. (2024), <em>A Survey on Mixture of Experts in Large Language Models</em>, arXiv:2407.06204.</strong> Survey of gating variants; cited for the breadth of routing designs <code>A_route</code> must accommodate.</p>
+<p><strong>Yue et al. (2024), <em>Ada-K Routing</em>, arXiv:2410.10456.</strong> Dynamic per-token expert counts; motivates treating <code>K</code> as a declared budget rather than a constant.</p>
+<p><strong>Cai, R. et al. (2024), <em>Read-ME</em>, arXiv:2410.19123.</strong> Decouples the router from the backbone; cited in Coleman (2026a) as inspiration for router/authority separation.</p>
+<h2>9.3 Pointers, retrieval, and indexing</h2>
+<p><strong>Vinyals, Fortunato, and Jaitly (2015), <em>Pointer Networks</em>, NeurIPS; arXiv:1506.03134.</strong> Outputs are indices into the input. The generation predicate&#39;s <code>Lineage</code> clause generalizes this guarantee across stores.</p>
+<p><strong>Lewis et al. (2020), <em>Retrieval-Augmented Generation</em>, NeurIPS; arXiv:2005.11401.</strong> Generation conditioned on retrieved passages; the baseline setting for <code>A_gen</code>.</p>
+<p><strong>Kim and Diaz (2025), <em>LTRR: Learning To Rank Retrievers for LLMs</em>, arXiv:2506.13743.</strong> Routing among retrievers; retriever choice is itself an index.</p>
+<p><strong>Wu, M. et al. (2026), <em>Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval</em>, arXiv:2601.16462.</strong> The current primary version names the method <strong>KAIR</strong>, not GraphAnchor. Its evolving keyword/relation index uses RDF triples and motivates versioned index identity. The source supports this indexing mechanism, not the present certificate&#39;s efficacy.</p>
+<p><strong>Liang et al. (2024), <em>Empowering Large Language Models to Set up a Knowledge Retrieval Indexer via Self-Learning</em>, arXiv:2405.16933.</strong> Referred to as PG-RAG. A model-built indexer means the index structure itself is a generated artifact whose provenance must be tracked.</p>
+<h2>9.4 Tools, agents, and memory</h2>
+<p><strong>Schick et al. (2023), <em>Toolformer</em>, arXiv:2302.04761</strong> and <strong>Yao et al. (2023), <em>ReAct</em>, ICLR; arXiv:2210.03629.</strong> Expose tool calls and action–observation steps as discrete events, the raw material of the event trace.</p>
+<p><strong>Wu, Q. et al. (2023), <em>AutoGen</em>, arXiv:2308.08155; Hong et al. (2023), <em>MetaGPT</em>, arXiv:2308.00352; Fourney et al. (2024), <em>Magentic-One</em>, arXiv:2411.04468.</strong> Multi-agent orchestration; Magentic-One&#39;s orchestrator maintains task and progress ledgers. These systems produce agent indices and handoffs that <code>A_route</code> and <code>A_cont</code> inspect.</p>
+<p><strong>Packer et al. (2023), <em>MemGPT</em>, arXiv:2310.08560; Park et al. (2023), <em>Generative Agents</em>, arXiv:2304.03442.</strong> Bounded-context memory management and memory-stream summarization. Compression is where obligations can be lost, motivating <code>A_cont.Obligation</code> and Trace N.</p>
+<p><strong>Xiao et al. (2026), <em>TARL: Transaction-Aware Reliable Ledgers for Executable Memory Management in Long-Term Agents</em>, arXiv:2608.03699.</strong> Transactional agent memory; source of the proposal/commit separation in Coleman (2026a)&#39;s ledger.</p>
+<p><strong>Yang, Liu, Wu, and Wang (2026), <em>StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems</em>, claimed NeurIPS 2026 poster. UNRESOLVED.</strong> The given page was inaccessible and no confirming primary record was recovered in the independent review. This is not proof of nonexistence; the citation remains unverified and is not used to support a substantive claim until a stable primary record is supplied.</p>
+<h2>9.5 Attribution, faithfulness, and evaluation</h2>
+<p><strong>Rashkin et al. (2023), <em>Measuring Attribution in Natural Language Generation Models</em>, Computational Linguistics 49(4).</strong> Defines Attributable to Identified Sources (AIS). The conceptual basis for separating <code>Fidelity</code> from <code>Lineage</code>.</p>
+<p><strong>Gao et al. (2023), <em>Enabling Large Language Models to Generate Text with Citations</em> (ALCE), EMNLP; arXiv:2305.14627.</strong> Citation recall/precision measured separately from correctness.</p>
+<p><strong>Wallat, Heuss, de Rijke, and Anand (2024), <em>Correctness is not Faithfulness in RAG Attributions</em>, arXiv:2412.18004.</strong> A correct citation need not be the one causally used. Grounds the manuscript&#39;s limit on <code>ActiveEvidence</code>.</p>
+<p><strong>Liu et al. (2024), <em>Lost in the Middle</em>, TACL.</strong> Position-dependent use of long contexts; motivates location-stratified coverage tests (Trace D).</p>
+<p><strong>Kim, Y. et al. (2024), <em>FABLES</em>, COLM; arXiv:2404.01261.</strong> Book-length faithfulness and omission annotation; motivates omission checks and claim-level sampling.</p>
+<p><strong>Ru et al. (2024), <em>RAGChecker</em>, NeurIPS; arXiv:2408.08067.</strong> Module-level RAG diagnosis; nearest diagnostic neighbor.</p>
+<p><strong>Sung, Kim, and Zhang (2025), <em>VeriLA</em>, arXiv:2503.12651.</strong> Human-centered, criteria-based agent failure verification.</p>
+<p><strong>Wan et al. (2025), <em>Derailer-Rerailer</em>, Findings of ACL.</strong> Adaptive verification for reasoning; motivates staged checks.</p>
+<p><strong>Wang, G. et al. (2025), <em>Cer-Eval</em>, arXiv:2505.03814.</strong> Certifiable, cost-efficient evaluation; motivates cost-aware selective verification.</p>
+<p><strong>Sharma et al. (2024), <em>Towards Understanding Sycophancy in Language Models</em>, ICLR; arXiv:2310.13548</strong> and <strong>Weng, Chen, and Wang (2025), <em>Do as We Do, Not as You Think: The Conformity of Large Language Models</em>, ICLR; arXiv:2501.13381.</strong> Preference-tracking and conformity; ground the rule that model agreement is not independent evidence.</p>
+<p><strong>Shankar et al. (2024), <em>Who Validates the Validators?</em> (EvalGen), UIST; arXiv:2404.12272.</strong> Criteria drift during grading; grounds criteria versioning.</p>
+<p><strong>Grill (2024), <em>Constructing Capabilities: The Politics of Testing Infrastructures for Generative AI</em>, FAccT; doi:10.1145/3630106.3659009.</strong> Testing infrastructure as sociotechnical and political; grounds the governance boundary in §12.4.</p>
+<h2>9.6 Formal methods for composition</h2>
+<p><strong>Lamport (1978), <em>Time, Clocks, and the Ordering of Events in a Distributed System</em>, CACM 21(7); doi:10.1145/359545.359563.</strong> Happened-before; Definition 14.</p>
+<p><strong>Goguen and Meseguer (1982), <em>Security Policies and Security Models</em>, IEEE S&P; doi:10.1109/SP.1982.10014.</strong> Noninterference; condition N.</p>
+<p><strong>Herlihy and Wing (1990), <em>Linearizability</em>, ACM TOPLAS 12(3); doi:10.1145/78969.78972.</strong> Operation-level real-time semantics and its distinction from serializability/strict serializability; condition K must state the appropriate boundary explicitly.</p>
+<p><strong>Abadi and Lamport (1991), <em>The Existence of Refinement Mappings</em>, TCS 82(2); doi:10.1016/0304-3975(91)90224-P.</strong> Refinement mappings; condition R.</p>
+<p><strong>Bauer, Leucker, and Schallhart (2011), <em>Runtime Verification for LTL and TLTL</em>, ACM TOSEM 20(4); doi:10.1145/2000799.2000800.</strong> Three-valued finite-trace monitor semantics; the <code>U</code> verdict.</p>
+<p><strong>Farach-Colton, Krapivin, and Kuszmaul (2024/2025), <em>Optimal Bounds for Open Addressing Without Reordering</em>, FOCS 2024; arXiv:2501.02305.</strong> Expected-probe bounds in hash tables; used only as a methodological neighbor through the open-addressing probe.</p>
+<h2>9.7 Geometry as an order of work</h2>
+<p><strong>Wang and Zahl (2025), <em>Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions</em>, arXiv:2502.17655</strong> and <strong>Guth, Wang, and Zahl (2026), <em>A streamlined proof of the Kakeya set conjecture in ℝ³</em>, arXiv:2601.14411.</strong> Full dimension of Kakeya sets in <code>ℝ³</code>. Coleman (2026b) reads the proof&#39;s architecture — sticky case, non-sticky two-scale grains, slab/plank factoring, residual — as an order for custody organization. The manuscript borrows that order and no inequality.</p>
+<p><strong>Wang and Wu (2024), <em>Restriction estimates using decoupling theorems and two-ends Furstenberg inequalities</em>, arXiv:2411.08871.</strong> Source of the two-ends vocabulary behind <code>TWO_ENDS</code>.</p>
+<p>The authors of these geometric works are not affiliated with this research.</p>
+<h2>9.8 The author&#39;s former papers</h2>
+<p><strong>Coleman (2026a), <em>Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity</em>.</strong> Defines index alignment through four consistency relations, the alignment deficit <code>Δ_t</code>, capability isolation, and sparse Mixture-of-Agents. The continuation converts each relation into a predicate family and requires a noncompensatory release policy. Scalar encodings can implement the same policy. The historical source is preserved with a linked <a href="../sources/ERRATA.md">errata record</a>.</p>
+<p><strong>Coleman (2026b), <em>Kakeya Grain at the Slab: Induction on Scales, Continuous Direction, and Prime-Carrying Custody under Love-Squared Coherence</em>.</strong> Supplies the sticky-first order of work, HELD custody, the <code>Act = S·H·U</code> authority gate with <code>Act = 0 ⇏ Stop</code>, the <code>h &lt; 1</code> evaluator boundary, non-compensatory grain vectors, and the object firewall between geometry and other programs.</p>
+<h2>9.9 Position of this work</h2>
+<p>The proposed contribution is the particular integration of four predicate families, witness paths, correction handling and partial-release decisions for exposed sparse-system indices. Noncompensatory release can be encoded as conjunction or an equivalent scalar rule. The construction applies established refinement, noninterference and monitoring ideas under stated assumptions; it does not establish a deployed checker or empirical advantage. Its geometric vocabulary supplies an organizational analogy. Positioning against proof-carrying code and agent-action certificates is necessary before making broader novelty claims.</p>
+<h2>9.10 Certificate and enforcement comparisons</h2>
+<p><strong>Necula (1997), <em>Proof-Carrying Code</em>, POPL; doi:10.1145/263699.263712.</strong> Foundational consumer-side checking of supplied safety evidence. Compare the policy language, trusted checker and implementation assumptions; the presence of a certificate does not validate those assumptions.</p>
+<p><strong>Chaki, Gurfinkel, Wallnau, and Weinstock (2009), <em>Assurance Cases for Proofs as Evidence</em>.</strong> <a href="https://ntrs.nasa.gov/citations/20150004720">NASA primary record</a>. Connects mathematical proof to actual system behavior through explicit assurance arguments about assumptions, models and implementations.</p>
+<p><strong>Saltzer and Schroeder (1975), <em>The Protection of Information in Computer Systems</em>.</strong> <a href="https://cgi.cse.unsw.edu.au/~cs9242/20/papers/Saltzer_Schroeder_75.pdf">Primary paper copy</a>. Least privilege, separation of privilege, fail-safe defaults and complete mediation are relevant prior foundations for the proposed authority boundary.</p>
+<p><strong>Kadyrbek and Mansurova (2026), <em>Proof carrying agent actions enable verifiable licensing of language model tool use</em>, Scientific Reports; doi:10.1038/s41598-026-74900-x.</strong> A close comparison for planner-independent action-certificate checking. The publisher reports a small certificate battery and microbenchmark with guarantees relative to trusted tool contracts. A matched stateful guardrail is a useful baseline; these results do not validate INDEX-ALIGN-CERT.</p>
+<p><strong>Liu Yanglet, Wang, and Capponi (2026), <em>No Certificate, No Execution: Certified Traces as a Foundation for Trustworthy AI Agents</em>, arXiv:2605.24462.</strong> A related proposal/certification/execution architecture at trace level. Compare conformance, proof memory, composition and trusted assumptions; this is formal/proposal background, not independent field evidence for the present system.</p>
+<p><strong>Debenedetti et al. (2024), <em>AgentDojo</em>, arXiv:2406.13352.</strong> An independently developed adversarial agent-task environment. It motivates testing useful task completion alongside security failures using held-out tasks and attacks.</p>
+<hr>
+<h1>Claim–Evidence Matrix</h1>
+<p>Each major claim of <em>Boolean Index Alignment</em> (Manuel Coleman, 2026) is mapped to its location in the manuscript, the deep-dive section that develops it, and its cited background. The sources do not establish this construction’s empirical efficacy. &quot;Proof&quot; means a conditional argument is written in the manuscript and annotated in the deep dive, not machine verification or implementation validation; &quot;construction&quot; means the object is defined in this paper; &quot;source&quot; means an external or prior work supports the cited point.</p>
+<p>This is the revised claim wording. The <a href="audit/independent-research-review.md">independent review and 47-claim ledger</a> record the original claims at commit <code>74c910e</code>; <a href="audit/REVISION.md">revision dispositions</a> map those findings to these changes. All proposed LLM evaluations remain unperformed.</p>
+<table class="claim-matrix">
+<thead>
+<tr>
+<th>#</th>
+<th>Claim</th>
+<th>Manuscript</th>
+<th>Deep-dive anchor</th>
+<th>Basis</th>
+<th>Primary citations</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Sparse-system failures are usefully analyzed as mismatches among typed discrete indices</td>
+<td>§1.1, §3.1</td>
+<td>01 §1.1–1.2</td>
+<td>construction + source</td>
+<td>Coleman 2026a; Shazeer 2017; Fedus 2022; Jiang 2024; Lewis 2020; Schick 2023</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Registry liveness and policy permission are distinct predicates</td>
+<td>Def. 1–2, §4.2, Trace B</td>
+<td>01 §1.3; 04 §4.2</td>
+<td>construction</td>
+<td>Coleman 2026a Def. 1(1), Def. 3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Gate weight is telemetry, not permission or quality</td>
+<td>Def. 2, §2.3</td>
+<td>01 §1.4; 04 §4.2</td>
+<td>source</td>
+<td>Shazeer 2017; Lepikhin 2020; Fedus 2022; Cai W. 2024</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Citation lineage generalizes pointer discipline and is necessary but not sufficient for support</td>
+<td>Def. 3, §4.4</td>
+<td>01 §1.5; 04 §4.4</td>
+<td>construction + source</td>
+<td>Vinyals 2015; Rashkin 2023; Gao 2023</td>
+</tr>
+<tr>
+<td>5</td>
+<td>A digest alone proves neither possession nor reading; challenged spans offer sampled content evidence under stated assumptions</td>
+<td>Def. 4, §8.5</td>
+<td>01 §1.6; 06 §6.8</td>
+<td>construction</td>
+<td>— (trust-boundary argument given in full)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Scales are declared audit levels, not model or training scales</td>
+<td>Def. 5, §5 intro</td>
+<td>01 §1.7; 03 §3.1</td>
+<td>construction</td>
+<td>Coleman 2026b §2.4 (order only)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Happened-before, not wall clocks, determines ORDER</td>
+<td>Def. 14</td>
+<td>01 §1.9; 05 §5.3</td>
+<td>source</td>
+<td>Lamport 1978</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Semantic A/C predicates are boolean under a fixed spec; this monitor chooses T/F/U and retains diagnostic reasons</td>
+<td>§4.1, §5.1</td>
+<td>02 §2.1–2.2</td>
+<td>construction + source</td>
+<td>Bauer–Leucker–Schallhart 2011</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Strong Kleene aggregation of sound verdicts is sound (Prop. 1)</td>
+<td>§6.1</td>
+<td>02 §2.3</td>
+<td>proof</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10</td>
+<td>PASS-only release bit; UNKNOWN and NO_VERDICT kept distinct; no hidden defaults</td>
+<td>§4.1, App. A.1, B.1, Trace I</td>
+<td>02 §2.4</td>
+<td>construction</td>
+<td>—</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Release is non-compensatory; conjunction and a positive-weight scalar zero-deficit rule can encode the same policy</td>
+<td>§2.1, §4.9</td>
+<td>02 §2.5</td>
+<td>construction + source</td>
+<td>Coleman 2026a Def. 2; Coleman 2026b §7.5</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Non-vacuity blocks release; empty denominators report n/a (Prop. 6)</td>
+<td>Def. 27, §6.6</td>
+<td>02 §2.7</td>
+<td>proof</td>
+<td>—</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Kakeya induction supplies an order of work, not an implication</td>
+<td>§1.2, §2.2, §2.6</td>
+<td>03 §3.1; 09 §9.7</td>
+<td>source</td>
+<td>Wang–Zahl 2025; Guth–Wang–Zahl 2026; Coleman 2026b</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Sound local certificates lift under R, C, N, K with Q_j corresponding to P_{M-j}</td>
+<td>§5.4–5.7, §6.2</td>
+<td>03 §3.3–3.4</td>
+<td>proof + source</td>
+<td>Abadi–Lamport 1991; Goguen–Meseguer 1982; Herlihy–Wing 1990</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Local passes do not compose without cross-operation obligations</td>
+<td>§6.11, Trace K</td>
+<td>03 §3.7</td>
+<td>proof (counterexample)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Certificates are defeasible when any premise changes (Prop. 9)</td>
+<td>§6.9</td>
+<td>03 §3.5; 05 §5.10</td>
+<td>proof</td>
+<td>—</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Required constraints are retained on a finite DAG under stated hypotheses (Prop. 8)</td>
+<td>§6.8</td>
+<td>03 §3.8</td>
+<td>proof</td>
+<td>AIce STUDY.md §§3–10 (seat contribution)</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Stable-custody nesting uses per-registry acknowledgments, not global version comparison</td>
+<td>§5.2</td>
+<td>03 §3.6</td>
+<td>construction</td>
+<td>Riemann-probe seat packet</td>
+</tr>
+<tr>
+<td>19</td>
+<td>A_route, A_ledger, A_gen, A_cont operationalize the four 2026a consistency relations</td>
+<td>§4.2–4.5, App. E</td>
+<td>04 §4.1–4.5</td>
+<td>construction</td>
+<td>Coleman 2026a Def. 1</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Order is not authority; append-only is not isolation</td>
+<td>§4.3, §5.6, Trace L</td>
+<td>04 §4.3; 06 §6.3</td>
+<td>construction</td>
+<td>Lamport 1978; Goguen–Meseguer 1982</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Coverage is not fidelity</td>
+<td>§4.4, Trace C</td>
+<td>04 §4.4</td>
+<td>construction + source</td>
+<td>Rashkin 2023; Gao 2023; Wallat 2024</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Exposed lineage is not proof of causal reliance</td>
+<td>§12.1</td>
+<td>04 §4.4</td>
+<td>source</td>
+<td>Wallat 2024</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Continuity is preserved obligations across compression and handoff</td>
+<td>§4.5, Trace N</td>
+<td>04 §4.5</td>
+<td>construction + source</td>
+<td>Packer 2023; Park 2023; Coleman 2026a §3.3</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Authority requires S·H·U from channels content cannot supply; Act=0 ⇏ Stop</td>
+<td>Def. 9</td>
+<td>06 §6.3</td>
+<td>construction + source</td>
+<td>Coleman 2026b §7.2</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Signed is not fresh; stale approvals yield U or F, never T</td>
+<td>§6.11, Trace E</td>
+<td>05 §5.4</td>
+<td>proof (worked)</td>
+<td>Lamport 1978</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Correction invalidation is reachability over the dependency graph; whole closure is rechecked</td>
+<td>§5.8, §8.1, App. B.4</td>
+<td>05 §5.6</td>
+<td>construction</td>
+<td>—</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Unaffected outputs keep their certificates under isolation (Prop. 7)</td>
+<td>§6.7, Trace G</td>
+<td>05 §5.7</td>
+<td>proof</td>
+<td>Goguen–Meseguer 1982</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Round caps bound iterations; total termination additionally requires terminating subcalls or a decision deadline</td>
+<td>§5.8, Trace H, App. B.5</td>
+<td>05 §5.9</td>
+<td>construction</td>
+<td>—</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Repetition by many agents is not authority</td>
+<td>§8.1</td>
+<td>05 §5.2</td>
+<td>source</td>
+<td>Weng–Chen–Wang 2025</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Custody is not truth</td>
+<td>§1.4, §5.2</td>
+<td>06 §6.2</td>
+<td>source</td>
+<td>Coleman 2026b §6.2–6.3</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Selection, gate, execution, and effect must be recorded separately</td>
+<td>§6.8, §7.2, §10.4</td>
+<td>06 §6.4</td>
+<td>source</td>
+<td>AIce SCORECARD.md; PEAICE-AICE-OPTO-PROBE-001</td>
+</tr>
+<tr>
+<td>32</td>
+<td>STRUCTURAL_READY is distinct from RELEASE_FULL</td>
+<td>§5.10</td>
+<td>06 §6.5</td>
+<td>construction</td>
+<td>Riemann-probe seat packet</td>
+</tr>
+<tr>
+<td>33</td>
+<td>Five outcomes; authorized unaffected partial output survives blocked full release</td>
+<td>§8.3–8.4, Trace M</td>
+<td>06 §6.6–6.7</td>
+<td>construction</td>
+<td>Grok Bot seat packet; L seat</td>
+</tr>
+<tr>
+<td>34</td>
+<td>First failure is unique within the declared total order, which records order position and partition depth (Prop. 3)</td>
+<td>§6.3</td>
+<td>07 §7.2</td>
+<td>proof</td>
+<td>—</td>
+</tr>
+<tr>
+<td>35</td>
+<td>The concurrent frontier is exactly the set of minimal failed DAG nodes (Prop. 4)</td>
+<td>§6.4, Trace F</td>
+<td>07 §7.3</td>
+<td>proof</td>
+<td>—</td>
+</tr>
+<tr>
+<td>36</td>
+<td>Localization is finitely computable under terminating checkers (Prop. 5)</td>
+<td>§6.5</td>
+<td>07 §7.4</td>
+<td>proof</td>
+<td>—</td>
+</tr>
+<tr>
+<td>37</td>
+<td>Declared proper-window and directional checks distinguish selected support distributions; useful detection needs validation</td>
+<td>Def. 6, 17, 25</td>
+<td>01 §1.8; 07 §7.5</td>
+<td>construction + source</td>
+<td>Wang–Wu 2024 (vocabulary); Coleman 2026b §3</td>
+</tr>
+<tr>
+<td>38</td>
+<td>Position effects motivate location-stratified coverage</td>
+<td>§12.2, Trace D</td>
+<td>07 §7.6</td>
+<td>source</td>
+<td>Liu 2024</td>
+</tr>
+<tr>
+<td>39</td>
+<td>Fourteen hand-constructed traces illustrate selected separations; coverage is not exhaustive or executed</td>
+<td>§9</td>
+<td>07 §7.8</td>
+<td>construction</td>
+<td>—</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Restricted certificate verification is O(n + #edges + cB + r + w) (Prop. 10)</td>
+<td>§6.10, §10.2</td>
+<td>08 §8.8</td>
+<td>proof</td>
+<td>—</td>
+</tr>
+<tr>
+<td>41</td>
+<td>Verification cost does not classify search; D1–D9</td>
+<td>§10.3–10.4</td>
+<td>08 §8.8</td>
+<td>construction</td>
+<td>P-NP seat packet</td>
+</tr>
+<tr>
+<td>42</td>
+<td>Detection requires clean baseline and attributable named failure; nonzero exit is not detection</td>
+<td>§11.6, Trace J</td>
+<td>08 §8.3</td>
+<td>construction</td>
+<td>10-agent team notes</td>
+</tr>
+<tr>
+<td>43</td>
+<td>Labels must be independent; model agreement is not independence</td>
+<td>§11.2, §12.3</td>
+<td>08 §8.4</td>
+<td>source</td>
+<td>Sharma 2024; Weng 2025; Rashkin 2023; Kim Y. 2024</td>
+</tr>
+<tr>
+<td>44</td>
+<td>Criteria must be versioned as epochs</td>
+<td>§7.6, §12.4</td>
+<td>08 §8.4</td>
+<td>source</td>
+<td>Shankar 2024</td>
+</tr>
+<tr>
+<td>45</td>
+<td>Evaluation includes compensatory and equivalent non-compensatory scalar policies, self-assessment, citation, coverage, global/local and human baselines</td>
+<td>§11.7</td>
+<td>08 §8.7</td>
+<td>construction</td>
+<td>Ru 2024; Coleman 2026a</td>
+</tr>
+<tr>
+<td>46</td>
+<td>Cost of verification must be reported on all axes</td>
+<td>§11.8</td>
+<td>08 §8.8</td>
+<td>source</td>
+<td>Wang G. 2025; Wan 2025; Sung 2025</td>
+</tr>
+<tr>
+<td>47</td>
+<td>Certificates cannot settle who owns the specification</td>
+<td>§12.4</td>
+<td>09 §9.5; 02 §2.9</td>
+<td>source</td>
+<td>Grill 2024</td>
+</tr>
+</tbody></table>
+<h2>Seat contributions reported in the original package</h2>
+<p>These paths are historical attribution, not included source files or independently verified inputs to this revision. The review did not recover the local seat packets or the 26-repository inventory. Public links are separate source pointers; reported synthetic results were not rerun.</p>
+<table>
+<thead>
+<tr>
+<th>Seat</th>
+<th>Material</th>
+<th>Local path</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Kakeyalogic</td>
+<td>COV/ORDER/CORR/STICKY, threshold rule, geometric boundary</td>
+<td><code>/workspace/peaice/team-formalization-2026-11-05/kakeyalogic-boolean-index-r2-2026-11-05.md</code></td>
+</tr>
+<tr>
+<td>L</td>
+<td>S/H/U authority, Act=0 ⇏ Stop, release boolean outcomes</td>
+<td><code>/workspace/peaice/team-formalization-2026-11-05/l-seat-boolean-index-2026-11-05.md</code></td>
+</tr>
+<tr>
+<td>P-NP</td>
+<td>INDEX-ALIGN-CERT, verification bound, D1–D9</td>
+<td><code>/workspace/peaice/team-formalization-2026-11-05/pnp-boolean-index-2026-11-05.md</code></td>
+</tr>
+<tr>
+<td>Riemann probe</td>
+<td>grains/slabs, governing acknowledgments, Aff repair, STRUCTURAL_READY vs RELEASE_FULL, eight fixtures</td>
+<td><code>/workspace/peaice/team-formalization-2026-11-05/riemann-boolean-index-2026-11-05.md</code></td>
+</tr>
+<tr>
+<td>AIce</td>
+<td>DAG retention, selection/gate/execution/effect, synthetic receipts</td>
+<td><code>https://github.com/Manny536/AIce</code> (STUDY.md, SCORECARD.md, docs/PEAICE-AICE-OPTO-PROBE-001.md)</td>
+</tr>
+<tr>
+<td>Grok Bot</td>
+<td>diagnostic ladder, PARTIAL protocol, independent provenance, cost discipline</td>
+<td><code>/workspace/peaice/team-formalization-2026-11-05/index-alignment-grokbot-packet.md</code></td>
+</tr>
+<tr>
+<td>10-agent team</td>
+<td>R/C/N/K composition, semantic/monitor split, execution taxonomy, circularity check</td>
+<td><code>/workspace/index_alignment_team_notes.md</code></td>
+</tr>
+<tr>
+<td>Public Git handoff</td>
+<td>public-repository provenance (26 commit-pinned snapshots)</td>
+<td><code>/workspace/peaice/team-formalization-2026-11-05/github-inventory-manny365-2026-11-05.md</code></td>
+</tr>
+</tbody></table>
+</body></html>

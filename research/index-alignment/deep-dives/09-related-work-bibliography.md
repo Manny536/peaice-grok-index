@@ -1,6 +1,6 @@
 # 09 — Related Work and Annotated Bibliography
 
-*Backs manuscript §§2, 12 and the References section. Every external entry below was checked on November 5, 2026 against its arXiv API record, ACL Anthology page, NeurIPS virtual page, or DOI resolver; the check record is in `audit/reference-verification.md`.*
+*Backs manuscript §§2, 12 and the References section. The initial package reported a metadata/URL check in `audit/reference-verification.md`. The subsequent independent review distinguishes source identity from claim support and leaves StateLedger unresolved. A resolving link or matching title is not full-text validation or empirical replication.*
 
 ## 9.1 How the literature is used
 
@@ -30,7 +30,7 @@ The manuscript draws on five bodies of work, and uses each for a different purpo
 
 **Kim and Diaz (2025), *LTRR: Learning To Rank Retrievers for LLMs*, arXiv:2506.13743.** Routing among retrievers; retriever choice is itself an index.
 
-**Wu, M. et al. (2026), *Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval*, arXiv:2601.16462.** Referred to as GraphAnchor in the manuscript text. Evolving indices during retrieval motivate versioned index identity.
+**Wu, M. et al. (2026), *Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval*, arXiv:2601.16462.** The current primary version names the method **KAIR**, not GraphAnchor. Its evolving keyword/relation index uses RDF triples and motivates versioned index identity. The source supports this indexing mechanism, not the present certificate's efficacy.
 
 **Liang et al. (2024), *Empowering Large Language Models to Set up a Knowledge Retrieval Indexer via Self-Learning*, arXiv:2405.16933.** Referred to as PG-RAG. A model-built indexer means the index structure itself is a generated artifact whose provenance must be tracked.
 
@@ -44,7 +44,7 @@ The manuscript draws on five bodies of work, and uses each for a different purpo
 
 **Xiao et al. (2026), *TARL: Transaction-Aware Reliable Ledgers for Executable Memory Management in Long-Term Agents*, arXiv:2608.03699.** Transactional agent memory; source of the proposal/commit separation in Coleman (2026a)'s ledger.
 
-**Yang, Liu, Wu, and Wang (2026), *StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems*, NeurIPS 2026 poster.** Path-addressed shared state; motivates typed memory-path indices.
+**Yang, Liu, Wu, and Wang (2026), *StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems*, claimed NeurIPS 2026 poster. UNRESOLVED.** The given page was inaccessible and no confirming primary record was recovered in the independent review. This is not proof of nonexistence; the citation remains unverified and is not used to support a substantive claim until a stable primary record is supplied.
 
 ## 9.5 Attribution, faithfulness, and evaluation
 
@@ -78,7 +78,7 @@ The manuscript draws on five bodies of work, and uses each for a different purpo
 
 **Goguen and Meseguer (1982), *Security Policies and Security Models*, IEEE S&P; doi:10.1109/SP.1982.10014.** Noninterference; condition N.
 
-**Herlihy and Wing (1990), *Linearizability*, ACM TOPLAS 12(3); doi:10.1145/78969.78972.** Snapshot semantics; condition K.
+**Herlihy and Wing (1990), *Linearizability*, ACM TOPLAS 12(3); doi:10.1145/78969.78972.** Operation-level real-time semantics and its distinction from serializability/strict serializability; condition K must state the appropriate boundary explicitly.
 
 **Abadi and Lamport (1991), *The Existence of Refinement Mappings*, TCS 82(2); doi:10.1016/0304-3975(91)90224-P.** Refinement mappings; condition R.
 
@@ -96,10 +96,25 @@ The authors of these geometric works are not affiliated with this research.
 
 ## 9.8 The author's former papers
 
-**Coleman (2026a), *Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity*.** Defines index alignment through four consistency relations, the alignment deficit `Δ_t`, capability isolation, and sparse Mixture-of-Agents. The continuation converts each relation into a predicate family and replaces the compensatory release rule.
+**Coleman (2026a), *Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity*.** Defines index alignment through four consistency relations, the alignment deficit `Δ_t`, capability isolation, and sparse Mixture-of-Agents. The continuation converts each relation into a predicate family and requires a noncompensatory release policy. Scalar encodings can implement the same policy. The historical source is preserved with a linked [errata record](../sources/ERRATA.md).
 
 **Coleman (2026b), *Kakeya Grain at the Slab: Induction on Scales, Continuous Direction, and Prime-Carrying Custody under Love-Squared Coherence*.** Supplies the sticky-first order of work, HELD custody, the `Act = S·H·U` authority gate with `Act = 0 ⇏ Stop`, the `h < 1` evaluator boundary, non-compensatory grain vectors, and the object firewall between geometry and other programs.
 
 ## 9.9 Position of this work
 
-Relative to attribution evaluation, the contribution is to make each necessary relation a non-compensatory conjunct with a witness path and a three-valued evidence status, rather than a metric to be averaged. Relative to agent memory and orchestration systems, it is a checker that can run alongside them without assuming their logs already meet the contract. Relative to formal methods, it is an application of refinement, noninterference, linearizability, and three-valued monitoring to the specific object of index consistency in sparse LLM systems, with conditional composition proved in that setting. Relative to the geometry, it is an organizational borrowing made explicit so it cannot be mistaken for a transfer of results.
+The proposed contribution is the particular integration of four predicate families, witness paths, correction handling and partial-release decisions for exposed sparse-system indices. Noncompensatory release can be encoded as conjunction or an equivalent scalar rule. The construction applies established refinement, noninterference and monitoring ideas under stated assumptions; it does not establish a deployed checker or empirical advantage. Its geometric vocabulary supplies an organizational analogy. Positioning against proof-carrying code and agent-action certificates is necessary before making broader novelty claims.
+
+
+## 9.10 Certificate and enforcement comparisons
+
+**Necula (1997), *Proof-Carrying Code*, POPL; doi:10.1145/263699.263712.** Foundational consumer-side checking of supplied safety evidence. Compare the policy language, trusted checker and implementation assumptions; the presence of a certificate does not validate those assumptions.
+
+**Chaki, Gurfinkel, Wallnau, and Weinstock (2009), *Assurance Cases for Proofs as Evidence*.** [NASA primary record](https://ntrs.nasa.gov/citations/20150004720). Connects mathematical proof to actual system behavior through explicit assurance arguments about assumptions, models and implementations.
+
+**Saltzer and Schroeder (1975), *The Protection of Information in Computer Systems*.** [Primary paper copy](https://cgi.cse.unsw.edu.au/~cs9242/20/papers/Saltzer_Schroeder_75.pdf). Least privilege, separation of privilege, fail-safe defaults and complete mediation are relevant prior foundations for the proposed authority boundary.
+
+**Kadyrbek and Mansurova (2026), *Proof carrying agent actions enable verifiable licensing of language model tool use*, Scientific Reports; doi:10.1038/s41598-026-74900-x.** A close comparison for planner-independent action-certificate checking. The publisher reports a small certificate battery and microbenchmark with guarantees relative to trusted tool contracts. A matched stateful guardrail is a useful baseline; these results do not validate INDEX-ALIGN-CERT.
+
+**Liu Yanglet, Wang, and Capponi (2026), *No Certificate, No Execution: Certified Traces as a Foundation for Trustworthy AI Agents*, arXiv:2605.24462.** A related proposal/certification/execution architecture at trace level. Compare conformance, proof memory, composition and trusted assumptions; this is formal/proposal background, not independent field evidence for the present system.
+
+**Debenedetti et al. (2024), *AgentDojo*, arXiv:2406.13352.** An independently developed adversarial agent-task environment. It motivates testing useful task completion alongside security failures using held-out tasks and attacks.

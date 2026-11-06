@@ -10,29 +10,29 @@ What it does not borrow is any inequality. The geometric arguments establish asy
 
 ## 3.2 The obligation universe
 
-At each scale `k` the manuscript requires an independently specified finite obligation universe `Q_k` (§5.1). An obligation can be local — one activation, one retrieval, one commit — or a *cross-operation invariant* such as a shared budget or a correction frontier. Cross-operation obligations are the entire reason composition is nontrivial; deep dive 03.7 shows what fails without them.
+At each lift level `j` the manuscript requires an independently specified finite obligation universe `Q_j` (§5.1), corresponding to partition `P_{M-j}`. Partition depth `k` increases toward finer chunks; lift index `j` increases toward coarser parents. An obligation can be local — one activation, one retrieval, one commit — or a *cross-operation invariant* such as a shared budget or a correction frontier. Cross-operation obligations are the entire reason composition is nontrivial; deep dive 03.7 shows what fails without them.
 
 For each obligation `q` the paper uses two predicates, authorization `A_q` and compliance `C_q`, because they answer different questions: "an authorized write can violate a schema; a well-formed retrieved instruction can be unauthorized." Keeping them separate prevents a single combined "ok" bit from hiding which question failed.
 
 ## 3.3 The four composition conditions
 
-Proposition 2 lifts sound local certificates to sound global ones under four conditions. Each is necessary for the proof, and each corresponds to a recognizable systems failure when absent.
+Proposition 2 lifts sound local certificates to sound global ones under four conditions. The proof uses all four as sufficient premises. They are not claimed to be a minimal axiom set or universally necessary for every alternative architecture. Their failure permits recognizable counterexamples.
 
-**R — Evidence-preserving refinement.** For each parent obligation `q` there is a child set `D_k(q)` with `(⋀_{r∈D_k(q)} (A_r ∧ C_r)) ⇒ (A_q ∧ C_q)`. This is a refinement mapping in the spirit of Abadi and Lamport (1991): it states how a coarse specification is implemented by finer steps. The manuscript's R is narrower than their existence theorem; it is a certificate-specific implication that must be witnessed. Renaming an index or matching a label does not supply it.
+**R — Evidence-preserving refinement.** For each parent obligation `q` there is a child set `D_j(q)` with `(⋀_{r∈D_j(q)} (A_r ∧ C_r)) ⇒ (A_q ∧ C_q)`. This is a refinement mapping in the spirit of Abadi and Lamport (1991): it states how a coarse specification is implemented by finer steps. The manuscript's R is narrower than their existence theorem; it is a certificate-specific implication that must be witnessed. Renaming an index or matching a label does not supply it.
 
-**C — Complete obligation coverage.** `D_k(q)` accounts for every operation, effect, and cross-operation premise relevant to `q`, and `Q_k` is closed under work generated during the trace — retries, callbacks, dynamically spawned tasks. Without C, the induction proves the parent from an incomplete set of premises.
+**C — Complete obligation coverage.** `D_j(q)` accounts for every operation, effect, and cross-operation premise relevant to `q`, and `Q_j` is closed under work generated during the trace — retries, callbacks, dynamically spawned tasks. Without C, the induction proves the parent from an incomplete set of premises.
 
 **N — Noninterference.** Operations outside the certified set cannot alter state on which authorization, compliance, evidence, or refinement depends. This is the noninterference idea of Goguen and Meseguer (1982) applied to certificate premises: low-integrity content must not influence high-integrity decisions. Concretely, retrieved text cannot rewrite policy, routers cannot commit, generators cannot self-accept.
 
-**K — Correction-aware concurrency and freshness.** Reads come from a stated snapshot with linearizable or serializable semantics (Herlihy and Wing, 1990); every causally preceding correction is included; versions are valid at effect boundaries; accepted corrections invalidate dependents before promotion; concurrent conflicts are resolved; replayed approvals do not create fresh authority.
+**K — Correction-aware concurrency and freshness.** The contract states operation/transaction boundaries and its required real-time freshness guarantee. Single-object operations may use linearizability, but individually linearizable field reads can straddle an update. Cross-field reads require a joint atomic snapshot, a justified strictly serializable transaction, or validated version protocol across all relevant fields, with appropriate effect-boundary validation. Ordinary serializability is not equivalent to either guarantee (Herlihy and Wing, 1990, §3.3). Relevant reads use the specified snapshot semantics; every causally preceding correction is included; versions are valid at effect boundaries; accepted corrections invalidate dependents before promotion; concurrent conflicts are resolved; replayed approvals do not create fresh authority.
 
 ## 3.4 The proof of Proposition 2, annotated
 
-The manuscript's proof is induction over the finite scale index. The annotated version below shows exactly where each hypothesis is consumed.
+The manuscript's proof is induction over the finite lift index `j`, from `Q_0` at partition `P_M` toward `Q_M` at `P_0`. The annotated version below shows exactly where each hypothesis is consumed.
 
 - **Base.** Every `q ∈ Q_0` has sound `T` verdicts. Soundness converts them into `A_q = C_q = 1`.
-- **Step.** Assume all obligations at scale `k−1` are true with certificates. Take `q ∈ Q_k`.
-  - *C* ensures `D_k(q)` contains every relevant premise, so nothing outside the child set needs to be true for `q`.
+- **Step.** Assume all obligations at lift level `j−1` are true with certificates. Take `q ∈ Q_j`.
+  - *C* ensures `D_j(q)` contains every relevant premise, so nothing outside the child set needs to be true for `q`.
   - *N* ensures nothing outside the certified set altered those premises after they were certified, and that composition conferred no authority the children lacked.
   - *K* ensures the child certificates refer to current, correction-closed snapshots, so they are still about the state the parent depends on.
   - The induction hypothesis makes every child predicate true.
@@ -69,8 +69,8 @@ The result is about retention, not semantic sufficiency: it shows required const
 
 ## 3.9 The capped schedule and why a loop is not a proof
 
-§5.9 gives the general schedule: for each scale, establish `Q_k` and versions; if sticky, verify locally with refinement witnesses; otherwise factor the band and repair the affected closure under R/C/N/K; recheck; record residuals; return `STRUCTURAL_READY` only if every level passes. The manuscript is careful that "a finite loop is not by itself an induction proof." The loop is how the proof's premises are gathered; Proposition 2 is what turns gathered premises into a conclusion. `max_rounds` bounds work; it does not certify correctness. Residuals — items no admissible carrier explains, the analogue of Grain Zero in Coleman (2026b) — remain visible in the certificate rather than disappearing.
+§5.9 gives the general schedule: for each scale, establish `Q_j` and versions; if sticky, verify locally with refinement witnesses; otherwise factor the band and repair the affected closure under R/C/N/K; recheck; record residuals; return `STRUCTURAL_READY` only if every level passes. The manuscript is careful that "a finite loop is not by itself an induction proof." The loop is how the proof's premises are gathered; Proposition 2 is what turns gathered premises into a conclusion. `max_rounds` bounds iterations. Total termination additionally requires terminating calls or enforceable per-call timeouts/cancellation, and neither the cap nor a timeout certifies correctness. Residuals — items no admissible carrier explains, the analogue of Grain Zero in Coleman (2026b) — remain visible in the certificate rather than disappearing.
 
 ## 3.10 What this layer establishes
 
-Composition across scales is proved valid under four explicit conditions that correspond to well-understood formal traditions: refinement mapping, closed-world coverage, noninterference, and linearizable freshness. The counterexamples show that each is needed in practice. The sticky/non-sticky distinction then gives an efficient operating discipline: cheap certificates where ancestry is clean, targeted repair where it is not, and visible residuals where neither applies.
+Composition across scales is proved valid under four explicit conditions that correspond to well-understood formal traditions: refinement mapping, closed-world coverage, noninterference, and linearizable freshness. The counterexamples motivate preserving these premises; they do not establish minimality or empirical necessity in every system. The sticky/non-sticky distinction proposes targeted repair and visible residuals. Any efficiency or utility advantage remains to be measured.

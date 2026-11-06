@@ -1,25 +1,59 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Boolean Index Alignment</title></head><body><h1 id="boolean-index-alignment-traceable-induction-on-scales-for-sparse-language-model-systems">Boolean Index Alignment: Traceable Induction on Scales for Sparse Language-Model Systems</h1>
-<p><strong>Author:</strong> Manuel Coleman¹<br />
-¹AgreeYa Solutions (Computacenter), Folsom, CA, USA<br />
-<strong>Correspondence:</strong> manuel.coleman@agreeya.net<br />
-<strong>Date:</strong> 2026-11-05 (America/Los_Angeles)</p>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Boolean Index Alignment — manuscript</title><style>
+@page {
+  size: Letter;
+  margin: 0.82in 0.82in 0.80in 0.82in;
+  @bottom-center { content: counter(page); font-family: "DejaVu Serif", serif; font-size: 9pt; color:#333; }
+  @top-right { content: "Boolean Index Alignment — Manuel Coleman"; font-family: "DejaVu Sans", sans-serif; font-size: 7.5pt; color:#555; }
+}
+@page :first { @top-right { content: none; } }
+html { font-family: "DejaVu Serif", "Liberation Serif", serif; font-size: 11pt; line-height: 1.35; color: #111; }
+body { margin:0; padding:0; }
+h1 { font-family:"DejaVu Sans",sans-serif; font-size:20pt; line-height:1.17; text-align:center; margin:0.12in 0 0.18in; color:#102b46; }
+h2.new-page { break-before: page; }
+h2 { font-family:"DejaVu Sans",sans-serif; font-size:14pt; line-height:1.2; margin:0.22in 0 0.09in; color:#153e60; border-bottom:0.7pt solid #8199ab; padding-bottom:3pt; break-after:avoid; }
+h3 { font-family:"DejaVu Sans",sans-serif; font-size:11.1pt; line-height:1.25; margin:0.16in 0 0.055in; color:#1e4b69; break-after:avoid; }
+p { margin:0 0 0.075in; text-align:justify; orphans:3; widows:3; }
+strong { color:#101d29; }
+ul,ol { margin:0.035in 0 0.085in 0.23in; padding-left:0.12in; }
+li { margin:0 0 0.027in; }
+code { font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:8.8pt; overflow-wrap:anywhere; }
+pre { font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:8.1pt; line-height:1.24; white-space:pre-wrap; overflow-wrap:anywhere; background:#f3f5f7; border-left:2.5pt solid #54768e; padding:7pt 8pt; margin:0.08in 0 0.11in; break-inside:avoid; }
+pre code { font-size:inherit; }
+table { width:100%; border-collapse:collapse; margin:0.08in 0 0.12in; font-family:"DejaVu Sans",sans-serif; font-size:7.7pt; line-height:1.2; }
+th { background:#e5edf2; color:#102b46; font-weight:bold; }
+th,td { border:0.5pt solid #7f8f99; padding:3.4pt 3.8pt; text-align:left; vertical-align:top; overflow-wrap:anywhere; }
+tr { break-inside:avoid; }
+a { color:#164c74; text-decoration:none; overflow-wrap:anywhere; }
+blockquote { margin:0.08in 0.15in; padding-left:0.12in; border-left:2pt solid #777; color:#333; }
+hr { border:0; border-top:0.6pt solid #aaa; margin:0.16in 0; }
+
+h1 { break-before: page; }
+h1:first-child { break-before: auto; }
+thead { display: table-header-group; }
+
+/* Long schema blocks may span pages without leaving a title-only page. */
+pre { break-inside: auto; }
+
+.claim-matrix th:first-child, .claim-matrix td:first-child { white-space: nowrap; min-width: 12pt; }
+</style></head><body><h1>Boolean Index Alignment: Traceable Induction on Scales for Sparse Language-Model Systems</h1>
+<p><strong>Author:</strong> Manuel Coleman¹<br>¹AgreeYa Solutions (Computacenter), Folsom, CA, USA<br><strong>Correspondence:</strong> <a href="mailto:manuel.coleman@agreeya.net">manuel.coleman@agreeya.net</a><br><strong>Date:</strong> 2026-11-05 (America/Los_Angeles)</p>
 <p><strong>Prior-work anchors.</strong> This is a continuation of Coleman (2026a), <em>Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity</em>, and a carefully bounded systems use of the scale analogy in Coleman (2026b), <em>Kakeya Grain at the Slab: Induction on Scales, Continuous Direction, and Prime-Carrying Custody under Love-Squared Coherence</em>.</p>
-<hr />
-<h2 id="abstract">Abstract</h2>
+<hr>
+<h2>Abstract</h2>
 <p>Sparse language-model systems make sequences of discrete choices: expert identifiers, agent identifiers, retrieval locations, tool names, memory paths, and provenance links. Coleman (2026a) called their mutual consistency <strong>index alignment</strong> and separated non-authoritative routers, state ledgers, and generative continuity experts. This paper turns that framework into a finite, inspectable decision construction. At every declared scale we ask four evidence-conditioned questions: are the activated indices live, permitted, and task-admissible (<code>A_route</code>); are the associated commitments authorized, provenance-complete, correctly ordered, and non-silently superseded (<code>A_ledger</code>); do externally dependent generated claims resolve through activated indices and supported claim paths (<code>A_gen</code>); and does the continuation preserve the accepted ledger view, open obligations, and correction scope (<code>A_cont</code>)? Their conjunction is <code>A(k)</code>, with an explicit PASS-only release bit and retained UNKNOWN or NO_VERDICT diagnostics when observations or caller contracts are absent. A finite trace is the vector of these outcomes, and <code>FIRST_FAIL</code> is the least scale at which a required conjunct fails. Under a finite total scale order, finite enumeration, deterministic non-vacuous checking, and a declared sub-conjunct order, the first failed scale and reported failing conjunct are unique and computable; on causal DAGs, concurrent failures are instead returned as a frontier set. This is a property of the construction, not a theorem imported from harmonic analysis.</p>
 <p>The geometric analogy from Coleman (2026b) supplies an organizing discipline rather than an implication: begin with a sticky or single-parent case, isolate a non-sticky band, factor only that band, recurse with a declared cap, and account for the residual. Wang–Zahl and Guth–Wang–Zahl use asymptotic inequalities with losses; they do <strong>not</strong> prove that alignment is boolean. Booleanity here is imposed by caller-supplied thresholds and explicit checkers. We develop typed index lineages, scale trees, correction-invalidation semantics, sticky and non-sticky cases, bounded-refactoring recursion, localization and composition lemmas, and the proposed decision object <code>INDEX-ALIGN-CERT</code>, whose outcomes are <code>{CERTIFIED, HELD_PARTIAL, REFUSED, AWAITING_HUMAN, NO_VERDICT}</code>. Restricted certificate verification is polynomial in the supplied trace, chunks, claims, and edges; this does not classify the search problem or assert NP-hardness. Worked traces cover MoE routing, retrieval-grounded generation, tool and agent handoffs, stale evidence, revoked authority, correction propagation, false coverage, and multiscale partial release. The protocol separates mathematical background, formal construction, synthetic tests, registered observations, and unperformed live evaluation. The fourteen traces and thirty-two mutations are designs only, not test executions. Coverage is not fidelity, order is not authority, custody is not truth, and <code>Act = 0</code> does not entail <code>Stop</code>.</p>
 <p><strong>Keywords:</strong> index alignment; boolean certificates; traceability; induction on scales; sparse routing; mixture of experts; mixture of agents; retrieval-augmented generation; state ledgers; provenance; correction propagation; failure localization; decision procedures</p>
-<hr />
-<h2 id="1-introduction">1. Introduction</h2>
-<h3 id="11-from-a-consistency-framework-to-an-executable-question">1.1 From a consistency framework to an executable question</h3>
+<hr>
+<h2>1. Introduction</h2>
+<h3>1.1 From a consistency framework to an executable question</h3>
 <p>A sparse system can be fluent, preference-aligned, and internally confident while selecting the wrong expert, citing a document it never retrieved, executing a stale tool result, or carrying a corrected fact into an obsolete continuation. Coleman (2026a) organized these failures around discrete <strong>indices</strong> rather than treating every failure as an undifferentiated generation defect. Its central object was the consistency of a routed set <code>R_t</code>, a ledger prefix <code>L_t</code>, generated text <code>y_{1:t}</code>, and continuity state <code>C_t</code>. Its architecture separated a router that proposes activation, a ledger that accepts durable commitments, and a continuity specialist that preserves plans and discourse without acquiring factual authority.</p>
 <p>That separation makes a stronger question possible. Instead of asking only for a scalar alignment deficit, we can ask, at a declared scale, <strong>which exact consistency condition holds?</strong> A scale can be a token-routing layer, a retrieval-to-claim stage, a tool-call boundary, an agent handoff, a session resume, or a document-chunk refinement. The proposed response is not a single opacity-reducing score. It is a finite vector of booleans, each tied to a witness and each capable of failing independently. The trace can therefore answer both “is this trace certified under the declared contract?” and “where, in which relation, did certification first become impossible?”</p>
 <p>This is the precise sense in which <strong>alignment can be treated as a boolean kind of problem</strong>. The adjective does not mean that semantic correctness is effortlessly binary, that a neural hidden state has a canonical truth value, or that all model behavior can be decided by logging identifiers. It means that a designer can declare finite, checkable sufficient conditions for a restricted notion of index consistency, supply their thresholds and evidence, and return an auditable yes, no, or no-verdict. A semantic proposition whose support cannot be checked remains unresolved; the framework forbids laundering that uncertainty into <code>True</code>.</p>
-<h3 id="12-why-induction-on-scales-is-useful-as-an-analogy">1.2 Why induction on scales is useful as an analogy</h3>
+<h3>1.2 Why induction on scales is useful as an analogy</h3>
 <p>Coleman (2026b) emphasizes the reading order sticky, then non-sticky control by induction on scales, then the general theorem-background in three-dimensional Kakeya geometry. In that external literature, slabs, planks, grains, and other carriers factor incidence structure while preserving ancestry across refinements. The full-dimensional Kakeya result in <code>ℝ³</code> is theorem-background associated with Wang–Zahl (2025) and Guth–Wang–Zahl (2026). Those authors are not affiliated with this work and their mathematics proves nothing about language-model systems.</p>
-<p>The systems analogy has three disciplined parts. First, begin with a <strong>sticky</strong> case in which every active fine item has one visible coarse parent, provenance is shared, and local checks are comparatively simple. Second, identify a <strong>non-sticky</strong> band where ancestry, authority, support, or correction propagation differs across children; factor only that band rather than restarting the entire trace. Third, make the general result conditional on termination, explicit round caps, and residual accounting. The analogy changes how we organize an audit; it does not supply the audit's semantic predicates or prove their validity.</p>
-<p>There is also an important disanalogy. External Kakeya arguments use asymptotic inequalities such as <code>≲</code>, with losses and source-specific normalizations. A certificate, by contrast, must eventually compare a measured or declared quantity with a caller-selected threshold. Thus <code>STICKY_k := KT_k ≤ θ_KT ∧ F_k ≤ θ_F</code> is a computational definition, not a quotation of a geometric theorem. No threshold yields <code>NO_VERDICT</code>, never a default pass. Paper grains are not SAVER grains; a geometric scale ratio is not an authority score; and neither “continuous direction” nor “prime velocity” is needed as a mathematical primitive here.</p>
-<h3 id="13-contributions">1.3 Contributions</h3>
+<p>The systems analogy has three disciplined parts. First, begin with a <strong>sticky</strong> case in which every active fine item has one visible coarse parent, provenance is shared, and local checks are comparatively simple. Second, identify a <strong>non-sticky</strong> band where ancestry, authority, support, or correction propagation differs across children; factor only that band rather than restarting the entire trace. Third, make the general result conditional on termination, explicit round caps, and residual accounting. The analogy changes how we organize an audit; it does not supply the audit&#39;s semantic predicates or prove their validity.</p>
+<p>There is also an important disanalogy. External Kakeya arguments use asymptotic inequalities such as <code>≲</code>, with losses and source-specific normalizations. A certificate, by contrast, must eventually compare a measured or declared quantity with a caller-selected threshold. Thus the optional <code>CLUSTER_OK_k := KT_k ≤ θ_KT ∧ F_k(α_k) ≤ θ_F</code> cap used in <code>STICKY_k</code> is a computational definition, not a quotation of a geometric theorem. No threshold yields <code>NO_VERDICT</code>, never a default pass. Paper grains are not SAVER grains; a geometric scale ratio is not an authority score; and neither “continuous direction” nor “prime velocity” is needed as a mathematical primitive here.</p>
+<h3>1.3 Contributions</h3>
 <p>This paper contributes the following.</p>
 <ol>
 <li><strong>Typed boolean alignment.</strong> We define routing, ledger, generation, and continuity predicates over a common typed trace, together with <code>A(k)</code>, per-scale witnesses, and five-valued certificate outcomes.</li>
@@ -30,35 +64,35 @@
 <li><strong>Decision and complexity boundary.</strong> <code>INDEX-ALIGN-CERT</code> has an explicit input, witness, outcome set, and verifier. Polynomial verification of a supplied restricted witness is distinguished from the unclassified task of finding a good routing or correcting a model.</li>
 <li><strong>Worked boolean traces and evaluation protocol.</strong> Fourteen traces expose successes, first failures, concurrent frontiers, partial release, and no-verdict conditions. A future benchmark design specifies mutations, oracle labels, inter-rater requirements, cost accounting, and falsifiers. No new empirical result is reported.</li>
 </ol>
-<h3 id="14-what-is-actually-established">1.4 What is actually established</h3>
-<p>The paper proves finite-list and graph facts about its own definitions. It does not prove that real LLMs satisfy them, that an LLM's hidden computations are captured by exposed indices, or that passing all checks makes an answer true. “Index alignment” remains distinct from preference alignment. A certificate says that a declared relation among recorded indices, evidence, commitments, and continuation passed a declared checker. It does not say that the underlying world model is correct.</p>
+<h3>1.4 What is actually established</h3>
+<p>The paper proves finite-list and graph facts about its own definitions. It does not prove that real LLMs satisfy them, that an LLM&#39;s hidden computations are captured by exposed indices, or that passing all checks makes an answer true. “Index alignment” remains distinct from preference alignment. A certificate says that a declared relation among recorded indices, evidence, commitments, and continuation passed a declared checker. It does not say that the underlying world model is correct.</p>
 <p>The distinction is visible in two separations carried throughout. <strong>Coverage is not fidelity:</strong> every source chunk may have a valid content-bound receipt while the conclusion depends on an unsupported claim. <strong>Order is not authority:</strong> an event log can show that one write happened before another without showing that either writer was authorized. A third separation, inherited from Coleman (2026b), is that custody is not truth: an object can be retained for evaluation while its central hypothesis remains open.</p>
-<h3 id="15-paper-organization">1.5 Paper organization</h3>
+<h3>1.5 Paper organization</h3>
 <p>Section 2 situates the work relative to both former papers and external sparse-computation literature. Section 3 defines indices, events, ledgers, scale trees, claim graphs, and evidence. Section 4 defines the four predicate families and composite alignment. Section 5 gives the induction schema. Section 6 proves localization and related propositions. Section 7 maps the construction to the role architecture. Section 8 defines correction invalidation and release outcomes. Section 9 presents worked traces. Section 10 specifies the decision object and verification bounds. Section 11 gives the evaluation protocol and falsifiers. Section 12 discusses failure modes and deeper research questions. Section 13 states limitations and non-claims, and Section 14 concludes. Appendices supply certificate schemas, pseudocode, notation, mutation inventories, claim-status registers, and a source-to-construction map.</p>
-<hr />
-<h2 id="2-relation-to-the-two-former-papers-and-external-literature">2. Relation to the Two Former Papers and External Literature</h2>
-<h3 id="21-coleman-2026a-what-is-retained-and-what-changes">2.1 Coleman (2026a): what is retained and what changes</h3>
-<p>Coleman (2026a) defines four requirements: routing–capability consistency, routing–ledger consistency, generation–index consistency, and continuity–ledger consistency. It models a sparse routing decision as <code>R_t = {(ι_j,g_j)}</code>, a ledger as append-oriented records with provenance and validity, and a continuity state containing entities, constraints, open goals, and discourse commitments. It then introduces an alignment deficit <code>Δ_t</code> as a weighted sum of four distances. That scalar is useful for optimization and aggregate reporting but insufficient for diagnosis: a weighted average can hide which required relation failed and can permit one strong component to compensate for another.</p>
-<p>This paper preserves the four-way decomposition but replaces the compensatory release rule with a non-compensatory boolean contract. <code>A_route</code>, <code>A_ledger</code>, <code>A_gen</code>, and <code>A_cont</code> correspond respectively to those four requirements. The scalar deficit may still be reported as telemetry, but no positive amount of routing quality can compensate for missing provenance, and no citation coverage can compensate for an unauthorized commit. A failed required conjunct prevents <code>CERTIFIED</code>; depending on scope it can still permit <code>HELD_PARTIAL</code> that names the failure.</p>
-<p>The earlier role taxonomy also becomes operational. A router's non-authoritativeness is tested by the absence of direct ledger commit capability and by the provenance of subsequent proposals. A ledger's authority is tested by transition admissibility, not by the fact that it is called a ledger. A continuity expert's projection is tested against the committed view and correction scope rather than inferred from fluent prose. Capability isolation is therefore not a visual architectural feature; it is an obligation in the boolean predicates.</p>
+<hr>
+<h2>2. Relation to the Two Former Papers and External Literature</h2>
+<h3>2.1 Coleman (2026a): what is retained and what changes</h3>
+<p>Coleman (2026a) defines four requirements: routing–capability consistency, routing–ledger consistency, generation–index consistency, and continuity–ledger consistency. It models a sparse routing decision as <code>R_t = {(ι_j,g_j)}</code>, a ledger as append-oriented records with provenance and validity, and a continuity state containing entities, constraints, open goals, and discourse commitments. It then introduces an alignment deficit <code>Δ_t</code> as a weighted sum of four distances. An aggregate scalar without component records can hide which relation failed. Compensation depends on the aggregation and release threshold; a positive-weight nonnegative deficit released only at zero is equivalent to conjunction.</p>
+<p>This paper preserves the four-way decomposition and explicitly requires a non-compensatory release contract, whether represented as booleans or an equivalent scalar rule. <code>A_route</code>, <code>A_ledger</code>, <code>A_gen</code>, and <code>A_cont</code> correspond respectively to those four requirements. A scalar rule may encode the same contract, and telemetry may summarize it, but no positive amount of routing quality can compensate for missing provenance, and no citation coverage can compensate for an unauthorized commit. A failed required conjunct prevents <code>CERTIFIED</code>; depending on scope it can still permit <code>HELD_PARTIAL</code> that names the failure.</p>
+<p>The earlier role taxonomy also becomes operational. A router&#39;s non-authoritativeness is tested by the absence of direct ledger commit capability and by the provenance of subsequent proposals. A ledger&#39;s authority is tested by transition admissibility, not by the fact that it is called a ledger. A continuity expert&#39;s projection is tested against the committed view and correction scope rather than inferred from fluent prose. Capability isolation is therefore not a visual architectural feature; it is an obligation in the boolean predicates.</p>
 <p>Finally, the illustrative IA-MoA algorithm is refined into a checker that can run alongside an existing system without requiring a new foundation model. The immediate research object is not a claim of better generation. It is whether real traces can be labeled consistently, whether first-failure localization predicts the repair site, and whether partial release reduces unsupported promotion without excessive false refusal.</p>
-<h3 id="22-coleman-2026b-what-the-analogy-licenses">2.2 Coleman (2026b): what the analogy licenses</h3>
+<h3>2.2 Coleman (2026b): what the analogy licenses</h3>
 <p>The Kakeya-grain white paper distinguishes theorem-background, formal typed objects, proposed constructions, and measured observations. Its scale order is sticky/common-center observability, non-sticky sparse multiscale control, slab/plank factoring, residual accounting, and only then the general result. The present paper imports that order as a structural analogy for audit organization. It does not import a mathematical conclusion.</p>
 <p>The analogy suggests four engineering rules. Preserve ancestry when a fine index is regrouped under a coarse parent. Factor a failing band rather than averaging its failure into global telemetry. Record residual items that no admissible carrier explains. Never reverse the inference order by starting with the desired aligned conclusion and treating it as a property of the underlying geometry. These are methodological choices for systems use.</p>
 <p>The Kakeyalogic round-two seat packet makes the boundary exact: boolean/traceable induction on scales is not a consequence of Wang–Zahl or Guth–Wang–Zahl. The mathematical sources prove asymptotic volume bounds with losses; per-scale inequalities are not exact booleans. Thresholds belong to the data owner or evaluation designer. A sticky KNS fan, moreover, is a typed observability object and is not identical to the sticky case in the external Kakeya proof. Our computational sticky case is a third, separately defined object.</p>
 <p>Other terms in Coleman (2026b) stay outside the proof core. <code>HELD</code> motivates retained partial output, not factual endorsement. <code>Act = 0 ⇏ Stop</code> motivates the distinction between blocking promotion and suppressing all output. <code>h &lt; 1</code> remains a documented evaluator-non-sovereignty boundary, not a calibrated score. L²_C authority detection informs the rule that source, authority, intent, and harm must be distinguished before incorporation. SAVER supplies a neighboring non-compensatory design discipline, but paper grains and SAVER grains are different objects. Prime-carrying and Riemann burdens are not translated into routing variables.</p>
-<h3 id="23-sparse-experts-and-routers">2.3 Sparse experts and routers</h3>
+<h3>2.3 Sparse experts and routers</h3>
 <p>Sparsely gated MoE introduced conditional expert activation at controlled compute (Shazeer et al., 2017). GShard used top-2 expert routing and automatic sharding (Lepikhin et al., 2020); Switch Transformers simplified the mechanism to top-1 (Fedus et al., 2022); Mixtral used top-2 among eight experts in MoE layers (Jiang et al., 2024). Surveys and refactorization work explore alternative gates, dynamic budgets, and router decoupling (Cai et al., 2024; Yue et al., 2024; Read-ME, 2024). These systems supply observable expert IDs, gates, and sometimes auxiliary losses.</p>
-<p>Index alignment does not declare an oracle expert from routing entropy alone. A low-entropy or collapsed route can be valid for a narrow task; a balanced route can be wrong. <code>A_route</code> therefore separates registry validity, permission, budget, and declared task admissibility. Learned-router quality remains an empirical question. The certificate's role is to expose which of those checks failed, not to claim that an expert's output is semantically correct because its identifier was permitted.</p>
-<h3 id="24-pointers-retrieval-and-attribution">2.4 Pointers, retrieval, and attribution</h3>
-<p>Pointer Networks make outputs indices into an input set (Vinyals et al., 2015). RAG conditions generation on retrieved evidence (Lewis et al., 2020), while retriever ranking, evolving graph indices, and self-learned indexers further expose retrieval choices (LTRR, 2025; GraphAnchor, 2026; PG-RAG, 2024). Our generation predicate is a multi-store extension of pointer discipline: a cited index must have a typed lineage back to activated evidence, and the claim depending on it must have adequate support. Restricting citations to active IDs prevents one failure—inventing an inactive identifier—but does not prevent fabricating content under a real identifier. <code>A_gen</code> therefore requires both lineage and a support status; support may itself be <code>UNKNOWN</code>.</p>
-<h3 id="25-tools-agents-and-durable-state">2.5 Tools, agents, and durable state</h3>
-<p>Toolformer and ReAct expose API calls and action–observation steps (Schick et al., 2023; Yao et al., 2023). AutoGen, MetaGPT, and Magentic-One provide multi-agent orchestration, with the latter using structured ledgers and specialized workers (Wu et al., 2023; Hong et al., 2023; Fourney et al., 2024). MemGPT, Generative Agents, transactional agent memory, and path-addressed stores expose different memory and state disciplines (Packer et al., 2023; Park et al., 2023; TARL, 2026; StateLedger, 2026). The present construction is compatible with these systems but does not assume that their logs already satisfy its contract. In particular, timestamps and Lamport clocks can support <code>ORDER</code>, while external evidence is required for <code>AUTH</code>.</p>
-<h3 id="26-external-geometry-and-the-object-firewall">2.6 External geometry and the object firewall</h3>
+<p>Index alignment does not declare an oracle expert from routing entropy alone. A low-entropy or collapsed route can be valid for a narrow task; a balanced route can be wrong. <code>A_route</code> therefore separates registry validity, permission, budget, and declared task admissibility. Learned-router quality remains an empirical question. The certificate&#39;s role is to expose which of those checks failed, not to claim that an expert&#39;s output is semantically correct because its identifier was permitted.</p>
+<h3>2.4 Pointers, retrieval, and attribution</h3>
+<p>Pointer Networks make outputs indices into an input set (Vinyals et al., 2015). RAG conditions generation on retrieved evidence (Lewis et al., 2020), while retriever ranking, evolving graph indices, and self-learned indexers further expose retrieval choices (LTRR, 2025; KAIR, 2026; PG-RAG, 2024). Our generation predicate is a multi-store extension of pointer discipline: a cited index must have a typed lineage back to activated evidence, and the claim depending on it must have adequate support. Restricting citations to active IDs prevents one failure—inventing an inactive identifier—but does not prevent fabricating content under a real identifier. <code>A_gen</code> therefore requires both lineage and a support status; support may itself be <code>UNKNOWN</code>.</p>
+<h3>2.5 Tools, agents, and durable state</h3>
+<p>Toolformer and ReAct expose API calls and action–observation steps (Schick et al., 2023; Yao et al., 2023). AutoGen, MetaGPT, and Magentic-One provide multi-agent orchestration, with the latter using structured ledgers and specialized workers (Wu et al., 2023; Hong et al., 2023; Fourney et al., 2024). MemGPT, Generative Agents, and transactional agent memory expose different memory and state disciplines (Packer et al., 2023; Park et al., 2023; TARL, 2026). The previously listed StateLedger citation remains unresolved in the independent reference check and is not used as supporting evidence here. The present construction is compatible with these systems but does not assume that their logs already satisfy its contract. In particular, timestamps and Lamport clocks can support <code>ORDER</code>, while external evidence is required for <code>AUTH</code>.</p>
+<h3>2.6 External geometry and the object firewall</h3>
 <p>Wang–Zahl (2025) and Guth–Wang–Zahl (2026) establish full Minkowski and Hausdorff dimension for Kakeya sets in <code>ℝ³</code>, here used only as theorem-background for the analogy. Slabs, planks, grains, density, and multiplicity remain source-scoped mathematical terms. Wang–Wu (2024) supplies restriction-estimate and two-ends background. None supplies an alignment predicate, a correction rule, or a result about expert selection. We use no geometric formula as evidence for <code>A(k)</code>. The formal work below begins again from finite sets, traces, graphs, and caller-specified predicates.</p>
-<h2 id="3-formal-objects">3. Formal Objects</h2>
+<h2>3. Formal Objects</h2>
 <p>Definitions 1–17 are computational objects introduced here, apart from ordinary finite-set and graph terminology; none is attributed to external geometry. All thresholds are caller-supplied, and absent mandatory inputs produce <code>NO_VERDICT</code>.</p>
-<h3 id="31-typed-index-spaces-and-registry-epochs">3.1 Typed index spaces and registry epochs</h3>
+<h3>3.1 Typed index spaces and registry epochs</h3>
 <p><strong>Definition 1 (Typed index).</strong> Let <code>𝒯_type = {expert, agent, tool, doc, memory, claim, correction, source, obligation}</code> be resource types. A typed index is</p>
 <p><code>ι = (type(ι), name(ι), epoch(ι), version(ι))</code>,</p>
 <p>drawn from a finite disjoint union <code>𝓘 = ⋃_τ 𝓘_τ</code>. The epoch distinguishes a registry state; the version distinguishes the resource contents or interface. An index name without a type is not a well-formed certificate field. Two resources with the same display name but different types or versions are different indices.</p>
@@ -71,21 +105,24 @@
 <p><strong>Definition 3 (Index morphism and lineage).</strong> A typed morphism <code>μ : 𝓘_a → 𝓘_b ∪ {⊥}</code> records a legal cast, such as document to memory path or tool output to ledger subject. A lineage for index <code>c</code> is a path</p>
 <p><code>ι_0 →^{μ_1} ι_1 →^{μ_2} … →^{μ_n} c</code></p>
 <p>with <code>ι_0 ∈ R_{≤t}</code> and every edge accompanied by an event witness. <code>⊥</code> denotes a failed cast. <code>Lin_t(c)</code> is the set of such witnessed paths. If no path exists, <code>c</code> is unaligned with the activation history even when its display name is real in some registry.</p>
-<h3 id="32-sources-chunks-and-content-bound-receipts">3.2 Sources, chunks, and content-bound receipts</h3>
+<h3>3.2 Sources, chunks, and content-bound receipts</h3>
 <p><strong>Definition 4 (Source units and version).</strong> A source <code>S</code> is a finite sequence <code>u_1,…,u_N</code>. Each unit has a content digest, source version, intake event, and source authority record. SHA-256 can bind bytes to an identifier; it does not show that a model read, understood, or was entitled to use the bytes. A <strong>content-bound receipt</strong> is</p>
 <p><code>R(u) = (digest(u), version(u), quoted_span, span_offset, verifier_id, intake_event, vector_clock, scope)</code>.</p>
-<p>The verifier-chosen quoted span binds the receipt to content rather than merely to file presence. Independent verification requires a verifier outside the process capable of forging the receipt. In-process receipts are construction evidence only.</p>
+<p>The verifier-chosen quoted span tests the ability to return sampled content under a declared challenge protocol. Possessing a digest alone does not establish possession or intake of the source bytes. A successful challenge does not establish historical reading, understanding, or causal reliance; challenge predictability, sampling, caching, and verifier independence belong in the threat model. This protocol is one possible content-evidence mechanism, not a universal prerequisite for every certificate. Independent verification requires a verifier outside the process capable of forging the receipt. In-process receipts are construction evidence only.</p>
 <p><strong>Definition 5 (Scale tree).</strong> A scale ladder is <code>𝓛 = (s_0 &gt; s_1 &gt; … &gt; s_M)</code>, with finite <code>M</code>. Each <code>P_k</code> is a partition of the source units or indexed working set into chunks, and <code>P_{k+1}</code> refines <code>P_k</code>: every <code>C ∈ P_{k+1}</code> has a unique <code>parent(C) ∈ P_k</code> with <code>C ⊆ parent(C)</code>. A node may additionally point to routing, ledger, generation, and continuity events in its scope. <code>children(C)</code> and <code>Desc(C)</code> have their usual finite-tree meanings. The root represents ambient context; leaves represent the finest declared units, not unknowable token-level neural semantics.</p>
 <p>No formula for <code>M</code> is imported from geometry. The implementation declares a finite depth appropriate to its source inventory and audit budget. Uniform branching means that within-level child counts agree up to a declared factor; it is not a precondition for the finite localization results.</p>
-<p><strong>Definition 6 (Density observables).</strong> For a selected set <code>Q_k</code> of level-<code>k</code> chunks and an admissible family of coarse windows <code>𝓦_k</code>, let <code>Expected_k(W)</code> be the data owner's expected selected count under a declared allocation model. Define</p>
-<p><code>KT_k = max_{W∈𝓦_k} |{C∈Q_k : C⊆W}| / Expected_k(W)</code>,</p>
-<p>only where the denominator is positive and the window family is specified. For each chunk <code>C</code>, let <code>density_k(V)</code> be supported selected mass in sub-span <code>V</code> under a declared measure. Define</p>
-<p><code>F_k = max_{C∈P_k} max_{V⊆C, density_k(C)&gt;0} density_k(V)/density_k(C)</code>.</p>
-<p>These are <strong>computational analogues</strong> of clustering and concentration observables. They are not the Katz–Tao or Frostman quantities themselves. When denominators, measures, or expected counts are unspecified, <code>KT_k</code> and <code>F_k</code> are <code>UNKNOWN</code>.</p>
-<p><strong>Definition 7 (Boolean stickiness).</strong> Given thresholds <code>θ_KT, θ_F</code>,</p>
-<p><code>STICKY_k(θ) := [KT_k ≤ θ_KT] ∧ [F_k ≤ θ_F]</code>.</p>
-<p><code>STICKY(θ) := ∀k, STICKY_k(θ)</code>. A single-parent special case may additionally require every fine activation to inherit the same registry epoch, authority scope, and correction scope as its coarse parent. Stickiness is a routing and custody condition; it neither grants action authority nor identifies the sticky case of an external Kakeya proof.</p>
-<h3 id="33-ledger-and-authority-objects">3.3 Ledger and authority objects</h3>
+<p><strong>Definition 6 (Density observables).</strong> For a selected set <code>Selected_k</code> of level-<code>k</code> chunks and a declared nonempty family of coarse windows <code>𝓦_k</code>, let <code>Expected_k(W)</code> be the data owner&#39;s expected selected count under a declared allocation model. Define</p>
+<p><code>KT_k = max_{W∈𝓦_k} |{C∈Selected_k : C⊆W}| / Expected_k(W)</code>,</p>
+<p>when every required denominator is positive. For each chunk <code>C</code>, let <code>mass_k(V)</code> be nonnegative supported selected mass in subspan <code>V</code> under a declared measure. Declare <code>0 &lt; α_k &lt; 1</code>, a length convention, and for each applicable positive-mass chunk a nonempty finite family <code>𝓥_k(C,α_k)</code> of contiguous subspans satisfying <code>0 &lt; length(V) ≤ α_k length(C)</code>. Define</p>
+<p><code>F_k(α_k) = max_{C∈P_k, mass_k(C)&gt;0} max_{V∈𝓥_k(C,α_k)} mass_k(V)/mass_k(C)</code>.</p>
+<p>The whole chunk is excluded. With four equal-length units, all contiguous windows of at most two units, and <code>α_k=1/2</code>, masses <code>(1,1,1,1)</code> give <code>F_k=1/2</code>, while <code>(4,0,0,0)</code> gives <code>F_k=1</code>. The earlier unrestricted maximization allowed <code>V=C</code> and was identically 1; it must not be used as a concentration detector. Missing measures, window families, expected counts or a nonempty eligible positive-mass domain yield <code>UNKNOWN</code>; a missing required <code>α_k</code> or decision threshold yields <code>NO_VERDICT</code>. Invalid supplied parameter values are contract errors, never PASS.</p>
+<p>These are <strong>computational analogues</strong> of clustering and concentration observables, not the Katz–Tao or Frostman quantities. Their window choices and thresholds require empirical calibration. The correction makes the statistic nonconstant; it does not establish useful detection on language-model traces.</p>
+<p><strong>Definition 7 (Boolean stickiness).</strong> When clustering caps are required by the contract, define</p>
+<p><code>CLUSTER_OK_k(θ,α_k) := [KT_k ≤ θ_KT] ∧ [F_k(α_k) ≤ θ_F]</code>.</p>
+<p>Custody stickiness uses the nesting and governing-acknowledgment predicates specified in §5.2:</p>
+<p><code>STICKY_k := NEST_OK_k ∧ ANCEST_OK_k ∧ (CLUSTER_OK_k if explicitly required)</code>.</p>
+<p><code>STICKY := ∀k, STICKY_k</code>. Omission of clustering is allowed only when declared inapplicable; missing required caps never default to PASS. Single-parent custody requires the applicable registry, authority and correction scope to be inherited or validly superseded. Stickiness neither grants action authority nor identifies the sticky case of an external Kakeya proof.</p>
+<h3>3.3 Ledger and authority objects</h3>
 <p><strong>Definition 8 (Ledger record).</strong> A ledger <code>L</code> is a finite append-oriented sequence of records</p>
 <p><code>ℓ_j = (τ_j, a_j, subject_j, value_j, provenance_j, status_j, authority_j, supersedes_j, scope_j, event_id)</code>,</p>
 <p>where <code>a_j ∈ {ADD, PEND, REJECT, REVISE, DEFER, SUPERSEDE}</code>. <code>provenance_j</code> is a nonempty set of typed source lineages for an accepted record. <code>authority_j</code> contains authenticated issuer evidence and permitted scope. <code>supersedes_j</code> links to earlier records without deleting them. <code>scope_j</code> names affected claims, routes, tasks, and validity interval.</p>
@@ -93,18 +130,18 @@
 <p><strong>Definition 9 (External authority evidence).</strong> For action <code>x</code>, let <code>S(x)</code> denote authenticated source authority, <code>H(x)</code> hierarchy validity, and <code>U(x)</code> authorized user intent, each in <code>{0,1,UNKNOWN}</code>. Define</p>
 <p><code>Act(x) = 1</code> iff <code>S(x)=H(x)=U(x)=1</code>.</p>
 <p>If any factor is <code>0</code>, <code>Act(x)=0</code>; if none is <code>0</code> and at least one is <code>UNKNOWN</code>, <code>Act(x)=UNKNOWN</code>. This three-valued elaboration preserves the L-seat product rule while preventing missing evidence from becoming a pass. <code>S(x)=0 ⇒ Act(x)=0</code>; <code>Act(x)=0 ⇏ Stop</code>. Coverage, stickiness, a found receipt, causal order, or model agreement never sets <code>S(x)=1</code>.</p>
-<h3 id="34-claims-support-and-generation">3.4 Claims, support, and generation</h3>
+<h3>3.4 Claims, support, and generation</h3>
 <p><strong>Definition 10 (Claim graph).</strong> A claim graph is a finite directed acyclic graph <code>G=(V,E)</code>. Nodes include source units, extracted claims, intermediate inferences, generated claims, obligations, and outputs. An edge <code>u→v</code> means that <code>v</code> depends on <code>u</code>. Every generated externally dependent claim <code>q</code> has a set <code>Cite(q)</code> of typed citation indices and a support label</p>
 <p><code>Support(q) ∈ {SUPPORTED, UNSUPPORTED, CONTESTED, UNKNOWN}</code></p>
 <p>under a declared verifier. <code>Deps(q)</code> includes all ancestors of <code>q</code>. The graph can contain unsupported nodes; its acyclicity is a structural condition, not evidence that its contents are true.</p>
 <p>A support checker may combine exact extraction, logical rules, human annotation, or an entailment model. Its identity, version, and error profile are part of the evaluation. If it is an LLM, agreement with another LLM is not independent proof. <code>UNKNOWN</code> is mandatory when support evidence is out of scope or no applicable verifier exists.</p>
 <p><strong>Definition 11 (Generated continuation).</strong> A continuation segment <code>y_k</code> is represented by <code>(text_digest, Claims(y_k), Cites(y_k), Obligations(y_k), activated_view, generator_version)</code>. <code>Claims</code> includes only claims within the declared audit schema; ordinary stylistic text need not be converted into factual propositions. <code>Cites</code> includes explicit and machine-resolved implicit citations. <code>activated_view</code> identifies the snapshot <code>R_{≤k}</code> and <code>View(L_k)</code> visible to generation.</p>
-<h3 id="35-continuity-state-and-obligations">3.5 Continuity state and obligations</h3>
+<h3>3.5 Continuity state and obligations</h3>
 <p><strong>Definition 12 (Continuity state).</strong> Let</p>
 <p><code>C_k = (C_facts,k, C_disc,k, C_goals,k, C_corr,k)</code>,</p>
 <p>where <code>C_facts,k</code> is a projection of <code>View(L_k)</code>, <code>C_disc,k</code> tracks discourse commitments, <code>C_goals,k</code> tracks open and completed goals, and <code>C_corr,k</code> tracks active correction scopes. A projection function <code>π_{C←L}</code> is declared by the system. Continuity does not require storing the whole ledger in a prompt; it requires that whatever summary is used does not contradict or silently drop in-scope commitments.</p>
 <p>An <strong>obligation</strong> is a typed record <code>(id, condition, required_action, scope, status, source_lineage)</code>. <code>status ∈ {OPEN, SATISFIED, WAIVED, UNKNOWN}</code>; only an authorized record can waive it. Handoffs and resumes generate explicit continuity checkpoints. An open obligation cannot be treated as satisfied merely because later text no longer mentions it.</p>
-<h3 id="36-unified-event-trace">3.6 Unified event trace</h3>
+<h3>3.6 Unified event trace</h3>
 <p><strong>Definition 13 (Indexed event).</strong> An event is</p>
 <p><code>e_t = (t, scale, R_t, proposals_t, commits_t, y_t, C_t, reads_t, writes_t, actor_t, authority_evidence_t, lineage_edges_t, clock_t)</code>.</p>
 <p>The trace <code>T = (e_0,…,e_T)</code> is finite for a certificate run. <code>scale</code> maps the event to one or more scale-tree nodes. <code>clock_t</code> may include logical and physical timestamps, but <code>ORDER</code> uses explicit happened-before edges. A wall clock alone is insufficient across distributed components.</p>
@@ -114,11 +151,11 @@
 <p>The tag and nonce support integrity and replay detection in the proposed construction; cryptography does not make the issuer correct. <code>Authorized(c)</code> requires authenticated issuer authority over <code>target</code> and <code>scope</code>. <code>Dependents(c)</code> is the reachable set from <code>target</code> in <code>G</code>, including generated claims, ledger projections, and pending actions marked in scope.</p>
 <p><strong>Definition 16 (Scale slice).</strong> For scale <code>k</code>, <code>T_k</code> is the subtrace of events, receipts, claims, and corrections assigned to <code>P_k</code>, together with inherited parent context. A slice is <strong>complete for predicate <code>B</code></strong> if every input required by the checker for <code>B</code> is present. Otherwise the predicate returns <code>UNKNOWN</code>. This prevents a truncated log from being certified as aligned.</p>
 <p><strong>Definition 17 (Directional coverage).</strong> Let <code>𝒟_required</code> be a declared set of distinguishable routes of relevance through state, such as required evidence classes, obligations, or tenant partitions. <code>Covered_k(d)</code> means that a distinguishable index lineage for direction <code>d</code> remains recoverable at scale <code>k</code>. This is the directional-index-continuity analog of the light-rule posture in Coleman (2026b): every required direction through the custody center remains represented. Coverage overlap does not place hidden action and does not imply <code>AUTH</code>.</p>
-<hr />
-<h2 id="4-boolean-alignment-predicates">4. Boolean Alignment Predicates</h2>
-<h3 id="41-three-valued-checking-with-boolean-certification">4.1 Three-valued checking with boolean certification</h3>
+<hr>
+<h2>4. Boolean Alignment Predicates</h2>
+<h3>4.1 Three-valued checking with boolean certification</h3>
 <p>Checkers internally return an evidence status <code>Ev(P)∈{PASS, FAIL, UNKNOWN, NO_VERDICT}</code>. <code>PASS</code> means required evidence is present, fresh, and satisfies the caller contract; <code>FAIL</code> means present evidence violates it; <code>UNKNOWN</code> means evidence is missing, incomplete, stale, or an assessor is unavailable; <code>NO_VERDICT</code> means required thresholds or assessor contracts were not supplied. For readability, the propositions below also write <code>True</code>, <code>False</code>, and <code>UNKNOWN</code> for the first three evidence conditions, while preserving <code>NO_VERDICT</code> as a distinct reason code. At the certificate boundary, <code>b(P)=1</code> iff <code>Ev(P)=PASS</code>, and <code>b(P)=0</code> otherwise. This projection does <strong>not</strong> turn unknown evidence into an observed semantic failure. The explanatory trace retains all four statuses. The composite <code>A(k)=True</code> only if every required predicate passes; it is <code>False</code> if at least one fails; otherwise it is non-pass with the set of <code>UNKNOWN</code> and <code>NO_VERDICT</code> reasons. Empty optional conjunctions pass only when inapplicability is explicitly established.</p>
-<h3 id="42-routing-predicate">4.2 Routing predicate</h3>
+<h3>4.2 Routing predicate</h3>
 <p><strong>Definition 18 (<code>A_route</code>).</strong> For scale <code>k</code> and activation <code>r∈R_k</code>, define:</p>
 <ol>
 <li><code>Typed(r)</code>: every index and morphism has a declared type.</li>
@@ -131,11 +168,11 @@
 <p>Then</p>
 <p><code>A_route(k) := ∀r∈RequiredRoutes(k), Typed(r) ∧ Live(r) ∧ Permitted(r) ∧ Budget(r) ∧ Parent(r) ∧ Admissible(r)</code>.</p>
 <p><code>Admissible</code> is optional only when explicitly declared out of scope; it is not silently <code>True</code>. <code>A_route</code> does not infer semantic expert quality from balance or gate magnitude. If <code>RequiredRoutes(k)</code> is empty because no routes were required, the checker returns vacuity metadata; Section 6.6 addresses vacuous passes.</p>
-<h3 id="43-ledger-predicate">4.3 Ledger predicate</h3>
+<h3>4.3 Ledger predicate</h3>
 <p><strong>Definition 19 (<code>A_ledger</code>).</strong> Define the following conjuncts over <code>T_k</code>:</p>
 <ul>
 <li><code>PROV_k</code>: every accepted record has nonempty, typed, live provenance and content-bound source lineage where required.</li>
-<li><code>AUTH_k</code>: every commit has <code>Act=1</code> under the action's authenticated source, hierarchy, and user-intent evidence.</li>
+<li><code>AUTH_k</code>: every commit has <code>Act=1</code> under the action&#39;s authenticated source, hierarchy, and user-intent evidence.</li>
 <li><code>TRANSITION_k</code>: each <code>L_{j+1}=δ(L_j,p_j)</code> satisfies schema, authority, temporal, and scope rules.</li>
 <li><code>NOSILENT_k</code>: every replacement has a valid supersession link and the previous record remains queryable.</li>
 <li><code>COV_k</code>: every required unit beneath level-<code>k</code> chunks has a valid content-bound receipt, with scope matched to the claim or route.</li>
@@ -145,19 +182,19 @@
 <p>Then</p>
 <p><code>A_ledger(k) := PROV_k ∧ AUTH_k ∧ TRANSITION_k ∧ NOSILENT_k ∧ COV_k ∧ ORDER_k ∧ CORR_k</code>.</p>
 <p><code>COV</code> and <code>CORR</code> are separated because complete intake does not show that later corrections propagated. <code>ORDER</code> and <code>AUTH</code> are separated because causal precedence does not authenticate an issuer. <code>PROV</code> and <code>COV</code> are separated because one cited source lineage does not establish coverage of all required units.</p>
-<h3 id="44-generation-predicate">4.4 Generation predicate</h3>
+<h3>4.4 Generation predicate</h3>
 <p><strong>Definition 20 (<code>A_gen</code>).</strong> For every in-scope generated claim <code>q</code> in <code>y_k</code>:</p>
 <ul>
 <li><code>Lineage(q)</code>: each <code>c∈Cite(q)</code> has <code>Lin_k(c) ≠ ∅</code>, with no failed type cast.</li>
 <li><code>ActiveEvidence(q)</code>: every required evidence index was activated in a snapshot visible to <code>q</code>.</li>
 <li><code>Fidelity(q)</code>: <code>Support(q)=SUPPORTED</code>, all ancestors required for support are supported, and no ancestor is <code>UNSUPPORTED</code> or unquarantined <code>CONTESTED</code>.</li>
-<li><code>StatusType(q)</code>: the claim's asserted status does not exceed source status; <code>{proved, strategy, analogy, measured}</code> are not interchangeable.</li>
+<li><code>StatusType(q)</code>: the claim&#39;s asserted status does not exceed source status; <code>{proved, strategy, analogy, measured}</code> are not interchangeable.</li>
 <li><code>Scope(q)</code>: measured claims remain inside tested workflow scope and source validity intervals.</li>
 <li><code>AttributionCompleteness(q)</code>: every claim class requiring attribution has at least one supporting citation, not merely a real-looking identifier.</li>
 </ul>
 <p><code>A_gen(k) := ∀q∈Claims_required(y_k), Lineage(q) ∧ ActiveEvidence(q) ∧ Fidelity(q) ∧ StatusType(q) ∧ Scope(q) ∧ AttributionCompleteness(q)</code>.</p>
 <p>The pointer-like condition <code>Cite(q)⊆ActiveIndices</code> is necessary for this restricted contract but insufficient for fidelity. A real document ID attached to a fabricated sentence fails <code>Fidelity</code>. An uncited common-knowledge stylistic claim is included only if the audit schema classifies it as externally dependent.</p>
-<h3 id="45-continuity-predicate">4.5 Continuity predicate</h3>
+<h3>4.5 Continuity predicate</h3>
 <p><strong>Definition 21 (<code>A_cont</code>).</strong> At scale <code>k</code>, require:</p>
 <ul>
 <li><code>Projection_k</code>: <code>C_facts,k = π_{C←L}(View(L_k))</code> for the declared discrete projection, or every permitted abstraction has a reversible/explained summary lineage.</li>
@@ -168,60 +205,61 @@
 <li><code>NoAuthorityInflation_k</code>: continuity summaries and experts have not acquired commit authority beyond their declared role.</li>
 </ul>
 <p><code>A_cont(k)</code> is the conjunction of the required clauses. This predicate does not claim a universal scalar coherence metric. It asks whether declared finite obligations survived a specific transformation. A beautifully written continuation can fail <code>Projection</code>; an awkward one can pass.</p>
-<h3 id="46-composite-per-scale-alignment">4.6 Composite per-scale alignment</h3>
+<h3>4.6 Composite per-scale alignment</h3>
 <p><strong>Definition 22 (<code>A(k)</code> and <code>ALIGNED_k</code>).</strong></p>
 <p><code>A(k) := A_route(k) ∧ A_ledger(k) ∧ A_gen(k) ∧ A_cont(k)</code>.</p>
-<p>For the field's coverage/order/correction certificate, with optional routing stickiness,</p>
+<p>For the field&#39;s coverage/order/correction certificate, with optional routing stickiness,</p>
 <p><code>ALIGNED_k := COV_k ∧ ORDER_k ∧ CORR_k (∧ STICKY_k when required)</code>.</p>
 <p>The full certificate uses <code>A(k)</code>. <code>ALIGNED_k</code> is a narrower coverage/order/correction diagnostic included within the ledger checks, with <code>STICKY_k</code> additionally required where routing uses it; it is not an alias for <code>A(k)</code>. This avoids treating <code>COV</code>, <code>ORDER</code>, and <code>CORR</code> as sufficient for semantic generation or continuity.</p>
 <p><strong>Definition 23 (Global alignment).</strong> For scales <code>0,…,M</code>,</p>
 <p><code>ALIGNED(T) := ∀k∈{0,…,M}, A(k)=True</code>.</p>
 <p>Under three-valued internal checking, <code>ALIGNED=False</code> if any <code>A(k)=False</code>, and <code>UNKNOWN</code> if none is false but at least one is unknown. A <code>CERTIFIED</code> outcome additionally requires release authority and non-vacuity; it is not synonymous with raw <code>ALIGNED</code>.</p>
-<h3 id="47-first-failure-and-trace">4.7 First failure and trace</h3>
-<p><strong>Definition 24 (Failure vector).</strong> Let <code>b_k=(A_route(k),A_ledger(k),A_gen(k),A_cont(k))</code>. The trace is <code>𝔅(T)=(b_0,…,b_M)</code> together with sub-conjunct outcomes and witness references. Define</p>
-<p><code>FIRST_FAIL(T) := min{k : A(k)=False}</code>,</p>
-<p>when the set is nonempty. Separately, <code>FIRST_NONPASS(T) := min{k : A(k) is UNKNOWN or NO_VERDICT, and A(j)=True for every j&lt;k}</code> when that set is nonempty. If a later observed failure exists, it does not erase an earlier non-pass; <code>FIRST_FAIL</code> and <code>FIRST_NONPASS</code> are reported as distinct locations rather than overriding one another. <code>FIRST_FAIL</code> is unique because it is the minimum of a finite set. This is a definitional fact, not a Kakeya theorem.</p>
+<h3>4.7 First failure and trace</h3>
+<p><strong>Definition 24 (Failure vector).</strong> Let <code>b_k=(A_route(k),A_ledger(k),A_gen(k),A_cont(k))</code>. Declare an ordering <code>π=(k_0,…,k_M)</code> of the partition depths. The ordered trace is <code>𝔅(T;π)=(b_{k_0},…,b_{k_M})</code> together with sub-conjunct outcomes and witness references. Define</p>
+<p><code>FIRST_FAIL(T;π) := min{i : A(k_i)=False}</code>,</p>
+<p>when the set is nonempty, and report both the order position <code>i</code> and partition depth <code>k_i</code>. For finest-first induction, <code>π=(M,…,0)</code>, so <code>i=j</code> and <code>k_i=M-j</code>; write <code>A_lift(j)=A(M-j)</code>. A coarse-first display uses <code>π=(0,…,M)</code> and may have a different first failure. Separately, <code>FIRST_NONPASS(T;π) := min{i : A(k_i) is UNKNOWN or NO_VERDICT, and A(k_h)=True for every h&lt;i}</code> when that set is nonempty. If a later observed failure exists, it does not erase an earlier non-pass; <code>FIRST_FAIL</code> and <code>FIRST_NONPASS</code> are reported as distinct locations rather than overriding one another. <code>FIRST_FAIL</code> is unique because it is the minimum of a finite set. This is a definitional fact, not a Kakeya theorem.</p>
 <p>A certificate includes the first failure <strong>and</strong> all later observed failures. Later checks may be unsafe to execute after an earlier failure; those are marked <code>SKIPPED</code>, not <code>True</code>. Thus early failure does not erase the rest of the evidence.</p>
-<h3 id="48-two-ends-support-condition">4.8 Two-ends support condition</h3>
+<h3>4.8 Two-ends support condition</h3>
 <p><strong>Definition 25 (<code>TWO_ENDS</code>).</strong> For claim <code>q</code>, let <code>SupportUnits(q)</code> be the source units in its supporting ancestry and let <code>ε&gt;0</code>, <code>θ_2E</code> be caller-supplied. Then</p>
-<p><code>TWO_ENDS(q) :=</code> no admissible window shorter than <code>ε|S|</code> contains more than a <code>θ_2E</code> share of <code>q</code>'s declared support.</p>
+<p><code>TWO_ENDS(q) :=</code> no admissible window shorter than <code>ε|S|</code> contains more than a <code>θ_2E</code> share of <code>q</code>&#39;s declared support.</p>
 <p>The window family and support weights must be specified; otherwise the result is <code>UNKNOWN</code>. This condition is inspired by two-ends vocabulary, not imported as a theorem. It detects support concentration that a receipt count can miss. It is optional for local single-source extraction and mandatory only where the evaluation contract requires distributed evidence.</p>
-<h3 id="49-non-compensatory-semantics">4.9 Non-compensatory semantics</h3>
-<p>A score <code>0.99</code> on three predicate families does not compensate for <code>AUTH=0</code>. Formally, the release lattice is conjunctive: replacing any required <code>True</code> by <code>False</code> makes <code>A(k)</code> false regardless of all other values. Scalar telemetry can still summarize defect density, witness latency, or route entropy, but cannot reverse a certificate outcome. This is the paper's operational interpretation of “boolean alignment”: named necessary conditions, not a weighted sense of aligned-ness.</p>
-<h2 id="5-induction-on-declared-scales">5. Induction on Declared Scales</h2>
+<h3>4.9 Non-compensatory semantics</h3>
+<p>A score <code>0.99</code> on three predicate families does not compensate for <code>AUTH=0</code>. This is a property of the release policy, not its numeric representation: for binary <code>b_i</code>, positive <code>w_i</code>, and <code>D=Σ_i w_i(1-b_i)</code>, release iff <code>D=0</code> is exactly conjunction. A compensatory threshold policy and a scalar encoding of the same non-compensatory policy are distinct baselines. Formally, the release lattice is conjunctive: replacing any required <code>True</code> by <code>False</code> makes <code>A(k)</code> false regardless of all other values. Scalar telemetry can still summarize defect density, witness latency, or route entropy, but cannot reverse a certificate outcome. This is the paper&#39;s operational interpretation of “boolean alignment”: named necessary conditions, not a weighted sense of aligned-ness.</p>
+<h2>5. Induction on Declared Scales</h2>
 <p>The schedule below is a systems methodology. The propositions about finite trees, graphs, and lists are proved inside the stated model. Induction runs over declared abstraction levels, not automatically over model size, training compute, token count, or an external geometric scale.</p>
-<h3 id="51-obligations-semantic-predicates-and-evidence-predicates">5.1 Obligations, semantic predicates, and evidence predicates</h3>
-<p>At scale <code>k</code>, let <code>Q_k</code> be the independently specified finite obligation universe. An obligation can concern one expert activation, one retrieval, one ledger transition, one citation, or a <strong>cross-operation invariant</strong> such as a shared capacity or correction frontier. For obligation <code>q</code>, fixed history <code>H_q</code>, policy snapshot <code>Π(q)</code>, and specification <code>Spec_k</code>, semantic authorization and compliance predicates are</p>
-<p><code>A_q(H_q,Π(q))∈{0,1}</code>,  <code>C_q(H_q,Spec_k)∈{0,1}</code>.</p>
+<h3>5.1 Obligations, semantic predicates, and evidence predicates</h3>
+<p>Use partition depth <code>k</code> from Definition 5 and a separate induction level <code>j=M-k</code>. Define <code>Q_j</code> as the independently specified finite obligation universe associated with <code>P_{M-j}</code>. Thus <code>Q_0</code> is the finest base level and <code>Q_M</code> the coarsest parent level; <code>D_j(q)⊆Q_{j-1}</code> lifts children toward a parent. <code>A_lift(j):=A(M-j)</code> translates the per-partition predicates into induction order. A certificate records both indices; any reported first failure states its declared ordering. An obligation can concern one expert activation, one retrieval, one ledger transition, one citation, or a <strong>cross-operation invariant</strong> such as a shared capacity or correction frontier. For obligation <code>q</code>, fixed history <code>H_q</code>, policy snapshot <code>Π(q)</code>, and specification <code>Spec_{M-j}</code>, semantic authorization and compliance predicates are</p>
+<p><code>A_q(H_q,Π(q))∈{0,1}</code>,  <code>C_q(H_q,Spec_{M-j})∈{0,1}</code>.</p>
 <p>They answer different questions. An authorized write can violate a schema; a well-formed retrieved instruction can be unauthorized. A monitor with evidence <code>E_q</code> returns <code>V^A_q,V^C_q∈{T,F,U}</code>, where <code>U</code> covers both missing evidence (<code>UNKNOWN</code>) and missing contract (<code>NO_VERDICT</code>) at the diagnostic layer. A <strong>sound verdict</strong> satisfies</p>
 <p><code>V^A_q=T ⇒ A_q=1</code>, <code>V^A_q=F ⇒ A_q=0</code>, and similarly for <code>C_q</code>.</p>
-<p>This is a requirement on the checker, not a property conferred by its name. Independent specification review, negative controls, and adversarial review are needed to assess it. The monitor's self-score cannot be its ground truth. <code>FOUND</code> is evidence of retrieval, never an authorization bit. A test-runner crash is not a semantic <code>F</code>.</p>
-<h3 id="52-grains-and-slabs-as-typed-audit-records">5.2 Grains and slabs as typed audit records</h3>
+<p>This is a requirement on the checker, not a property conferred by its name. T/F/U is the evidence algebra chosen here; sound monitors may instead expose abstention or richer evidence states. Strong Kleene conjunction is chosen for its decisive-F behavior, not because every other sound algebra is impossible. Independent specification review, negative controls, and adversarial review are needed to assess it. The monitor&#39;s self-score cannot be its ground truth. <code>FOUND</code> is evidence of retrieval, never an authorization bit. A test-runner crash is not a semantic <code>F</code>.</p>
+<h3>5.2 Grains and slabs as typed audit records</h3>
 <p>We use <strong>grain</strong> only as a structural analogy for an inspectable packet:</p>
 <pre><code class="language-text">g = (id, scale, source_identity, span, content_hash, status,
      authority_stamp, dependencies, governing_ack[], transfer_receipts[])
 </code></pre>
 <p><code>content_hash</code> binds intake bytes; it is not a read receipt, semantic support, freshness, or permission. <code>status</code> distinguishes proved, proposed, strategy, analogy, measured, and observed. <code>authority_stamp</code> belongs to a channel external to content. A <strong>slab</strong> is a bounded collection of grain records at one scale with a declared partition rule, overlap rule, and typed cross-scale morphisms. It is not a geometric slab. Paper grains, SAVER grains, MoE experts, and source chunks are not identified with one another.</p>
-<p>For every applicable ancestor <code>a</code> of grain <code>g</code>, <code>ANCEST_OK_k</code> requires an acknowledgment <code>(a.id,c_id,c_ver)</code> in <code>g.governing_ack</code>, where <code>(c_id,c_ver)</code> is the currently governing correction in <code>a</code>'s authoritative registry and the acknowledgment is authorized under <code>a</code>'s channel. An authorized supersession may replace it. <code>NEST_OK_k</code> requires fresh parent edges and content hashes. Then</p>
-<p><code>STICKY_k := NEST_OK_k ∧ ANCEST_OK_k ∧ optional declared clustering caps</code>.</p>
+<p>For every applicable ancestor <code>a</code> of grain <code>g</code>, <code>ANCEST_OK_k</code> requires an acknowledgment <code>(a.id,c_id,c_ver)</code> in <code>g.governing_ack</code>, where <code>(c_id,c_ver)</code> is the currently governing correction in <code>a</code>&#39;s authoritative registry and the acknowledgment is authorized under <code>a</code>&#39;s channel. An authorized supersession may replace it. <code>NEST_OK_k</code> requires fresh parent edges and content hashes. Then</p>
+<p><code>STICKY_k := NEST_OK_k ∧ ANCEST_OK_k ∧ (CLUSTER_OK_k if explicitly required)</code>,</p>
+<p>using the same definition as Definition 7. <code>CLUSTER_OK_k</code> does not replace custody nesting or governing acknowledgments.</p>
 <p>No global <code>correction_version(parent)≤correction_version(child)</code> comparison is used: counters from different registries are incomparable. This <strong>stable-custody nesting</strong> is neither the sticky case of an external Kakeya proof nor KNS fan closure.</p>
-<h3 id="53-sticky-case-unique-visible-parentage">5.3 Sticky case: unique visible parentage</h3>
-<p>The simplest audit case has a unique coarse parent for each fine item, shared authority and correction scope, and transfer receipts that make the coarse checker depend only on its declared children. Let <code>D_k(q)⊆Q_{k-1}</code> be the child obligations needed for parent obligation <code>q</code>. In the sticky case, every required child has one visible parent, all source versions agree with the snapshot, and no unlisted execution channel affects the parent.</p>
+<h3>5.3 Sticky case: unique visible parentage</h3>
+<p>The simplest audit case has a unique coarse parent for each fine item, shared authority and correction scope, and transfer receipts that make the coarse checker depend only on its declared children. Let <code>D_j(q)⊆Q_{j-1}</code> be the child obligations needed for parent obligation <code>q</code>. In the sticky case, every required child has one visible parent, all source versions agree with the snapshot, and no unlisted execution channel affects the parent.</p>
 <p>A sticky pass is not a semantic theorem. It gives a small certificate: parent identity, children, content-bound receipts, correction acknowledgments, and a refinement witness. If any child has multiple incompatible authorities, missing acknowledgment, divergent snapshot, or cross-parent dependency, the trace leaves the sticky case. This is a change in audit regime, not a geometric singularity.</p>
-<h3 id="54-r-evidence-preserving-refinement">5.4 R: evidence-preserving refinement</h3>
-<p><strong>Refinement condition R.</strong> For each parent obligation <code>q</code>, there is an abstraction map and child set <code>D_k(q)</code> such that</p>
-<p><code>(⋀_{r∈D_k(q)} (A_r∧C_r)) ⇒ (A_q∧C_q)</code>.</p>
+<h3>5.4 R: evidence-preserving refinement</h3>
+<p><strong>Refinement condition R.</strong> For each parent obligation <code>q</code>, there is an abstraction map and child set <code>D_j(q)</code> such that</p>
+<p><code>(⋀_{r∈D_j(q)} (A_r∧C_r)) ⇒ (A_q∧C_q)</code>.</p>
 <p>The child certificates and refinement witness must establish the implication without enlarging authority or scope. A real refinement records how child operations implement the parent and includes every cross-child premise. Renaming an index, matching a display label, or observing local fluent output is insufficient. Finer-scale <code>PASS</code> does not imply coarser semantic fidelity, and coarse <code>PASS</code> does not imply every finer obligation; <code>CROSS_SCALE_OK</code> names the required transfer receipts.</p>
-<h3 id="55-c-complete-obligation-coverage">5.5 C: complete obligation coverage</h3>
-<p><strong>Coverage condition C.</strong> <code>D_k(q)</code> accounts for every operation, effect, and cross-operation premise relevant to <code>q</code>, and <code>Q_k</code> is closed under work generated during the trace. Retries, asynchronous callbacks, dynamically created tasks, and side effects must extend the universe. Coverage is not the fraction of conveniently logged calls.</p>
+<h3>5.5 C: complete obligation coverage</h3>
+<p><strong>Coverage condition C.</strong> <code>D_j(q)</code> accounts for every operation, effect, and cross-operation premise relevant to <code>q</code>, and <code>Q_j</code> is closed under work generated during the trace. Retries, asynchronous callbacks, dynamically created tasks, and side effects must extend the universe. Coverage is not the fraction of conveniently logged calls.</p>
 <p>Independent evidence must establish the obligation universe. “All five obligations are present” cannot itself prove that five are all required; that would be circular. A specification manifest, externally reviewed task model, or independently enumerated source inventory supplies the denominator. If a tolerated uncovered fraction is used, it may support a risk statement but not the exact global boolean proposition below. Missing <code>min_coverage</code>, required thresholds, or a nonempty applicable scale family yields <code>NO_VERDICT</code>.</p>
-<h3 id="56-n-noninterference-and-authority-isolation">5.6 N: noninterference and authority isolation</h3>
+<h3>5.6 N: noninterference and authority isolation</h3>
 <p><strong>Noninterference condition N.</strong> Operations outside the certified obligation set cannot alter state on which authorization, compliance, evidence, or refinement depends. Unverified content cannot rewrite policy, registry, authority, snapshots, or verifier output. Routers propose but do not commit; generators propose ledger entries but do not self-accept; imported ledgers are rechecked under importer authority; child success cannot enlarge child scope.</p>
 <p>Append-only storage does not supply N. It can faithfully preserve an unauthorized write. Similarly, immutable evidence can preserve a stale approval. Capability isolation is a semantic restriction on influence, not just a diagram with separate boxes.</p>
-<h3 id="57-k-correction-aware-concurrency-and-freshness">5.7 K: correction-aware concurrency and freshness</h3>
-<p><strong>Condition K</strong> requires: (1) policy, registry, authority, and relevant ledger reads come from a stated snapshot with linearizable or equivalently serializable commit semantics; (2) every causally preceding correction is included, without fabricating concurrent corrections into dependencies; (3) versions remain valid at effect boundaries or are revalidated; (4) accepted corrections transitively invalidate dependents before promotion; (5) conflicting concurrent operations are ordered or explicitly resolved; and (6) replayed approvals and nonces do not create fresh authority.</p>
-<p>Logical clocks help represent visibility, but Lamport order is not authority or consensus. A historically valid signature is not necessarily current. <code>NOT_YET</code>, <code>ABSENT</code>, <code>LOST</code>, and <code>FOUND</code> must remain distinct: causal invisibility is not nonexistence, failed retrieval is not a legitimate negative, and retrieval is not permission.</p>
-<h3 id="58-non-sticky-band-factoring-and-affected-closure">5.8 Non-sticky band factoring and affected closure</h3>
+<h3>5.7 K: correction-aware concurrency and freshness</h3>
+<p><strong>Condition K</strong> requires: (1) policy, registry, authority, and relevant ledger reads come from a stated snapshot under explicitly declared operation/transaction boundaries, using a jointly consistent atomic snapshot, a justified strictly serializable transaction, or a validated version protocol across all relevant fields; individually linearizable field reads alone can straddle an update and do not establish a joint snapshot; ordinary serializability alone is insufficient when real-time precedence is required; (2) every causally preceding correction is included, without fabricating concurrent corrections into dependencies; (3) versions remain valid at effect boundaries or are revalidated; (4) accepted corrections transitively invalidate dependents before promotion; (5) conflicting concurrent operations are ordered or explicitly resolved; and (6) replayed approvals and nonces do not create fresh authority.</p>
+<p>Linearizability and serializability are not interchangeable. Strict serializability adds real-time transaction precedence; linearizability concerns operations on concurrent objects (Herlihy and Wing, 1990, §3.3). Even these consistency conditions do not by themselves establish authority or atomicity between authorization and an external effect; that boundary needs its own witness. Logical clocks help represent visibility, but Lamport order is not authority or consensus. A historically valid signature is not necessarily current. <code>NOT_YET</code>, <code>ABSENT</code>, <code>LOST</code>, and <code>FOUND</code> must remain distinct: causal invisibility is not nonexistence, failed retrieval is not a legitimate negative, and retrieval is not permission.</p>
+<h3>5.8 Non-sticky band factoring and affected closure</h3>
 <p>A non-sticky band is a set of grains, claims, and transitions for which sticky nesting or another structural predicate is non-pass. Repair proceeds by <strong>affected dependency closure</strong>, not by editing only the visible seed:</p>
 <ol>
 <li>Identify failing or unresolved seeds <code>Z_k</code>.</li>
@@ -230,13 +268,14 @@
 <li>Retain evidence outside <code>Aff</code> unchanged if N holds and its own freshness remains valid.</li>
 <li>Repair, re-receipt, re-acknowledge, or reauthorize within the band and along every affected edge.</li>
 <li>Recheck all of <code>Aff</code>, including cross-scale transfer, rather than just the seed.</li>
-<li>Stop after a caller-supplied <code>max_rounds</code>; exhaustion gives <code>NO_VERDICT</code> or a correction-storm refusal, never an automatic pass.</li>
+<li>Bound iterations by caller-supplied <code>max_rounds</code>; exhaustion gives <code>NO_VERDICT</code> or a correction-storm refusal, never an automatic pass. A decision-time bound additionally requires terminating subcalls or an enforced supervisory deadline; unconfirmed effects from timed-out work remain quarantined.</li>
 </ol>
 <p>Local repair does not imply semantic stability outside the rechecked closure. If N fails, the assumption that outside evidence is unaffected is itself unjustified and the closure must expand.</p>
-<h3 id="59-capped-general-schedule">5.9 Capped general schedule</h3>
+<h3>5.9 Capped general schedule</h3>
 <p>The proposed schedule is:</p>
-<pre><code class="language-text">for k = 0 … M:
-    establish independent Q_k and policy/registry/snapshot versions
+<pre><code class="language-text">for j = 0 … M:
+    k = M - j  # partition depth; j increases from leaves toward parents
+    establish independent Q_j and policy/registry/snapshot versions
     if sticky contract holds:
         verify local obligations and refinement witnesses
     else:
@@ -246,8 +285,8 @@
     record residuals and non-PASS statuses
 return STRUCTURAL_READY only if every required level is PASS
 </code></pre>
-<p>A finite loop is not by itself an induction proof. The proof uses explicit child-to-parent implications and complete coverage. <code>max_rounds</code> bounds reconciliation; it does not establish correctness. Residuals remain visible in the certificate.</p>
-<h3 id="510-structural-readiness-versus-full-release">5.10 Structural readiness versus full release</h3>
+<p>A finite loop is not by itself an induction proof. The proof uses explicit child-to-parent implications and complete coverage. <code>max_rounds</code> bounds the number of reconciliation rounds; it establishes total termination only when each subcall terminates or the decision supervisor enforces a deadline. It does not establish correctness or cancellation of external effects. Residuals remain visible in the certificate.</p>
+<h3>5.10 Structural readiness versus full release</h3>
 <p>Define</p>
 <pre><code class="language-text">STRUCTURAL_READY_k = b(COV_k) ∧ b(ORDER_k) ∧ b(CORR_k)
                    ∧ b(ROUTE_OK_k) ∧ b(LEDGER_OK_k) ∧ b(GEN_OK_k)
@@ -260,75 +299,75 @@ return STRUCTURAL_READY only if every required level is PASS
              ∧ b(AUTH) ∧ b(SUPPORT) ∧ b(FID) ∧ b(NONVACUOUS).
 </code></pre>
 <p><code>POLICY_OK</code> and <code>AUTH</code> use evidence independent of ingestion receipts. <code>SUPPORT/FID</code> use a declared external assessor contract whose reliability is unresolved unless independently validated. No receipt can certify semantic truth. Unknown or no-verdict evidence blocks full promotion but is not automatically a semantic failure; authorized unaffected partial output remains possible.</p>
-<hr />
-<h2 id="6-conditional-propositions-and-failure-localization">6. Conditional Propositions and Failure Localization</h2>
-<h3 id="61-sound-three-valued-aggregation">6.1 Sound three-valued aggregation</h3>
+<hr>
+<h2>6. Conditional Propositions and Failure Localization</h2>
+<h3>6.1 Sound three-valued aggregation</h3>
 <p><strong>Proposition 1.</strong> Let <code>Q</code> be finite. For each <code>q∈Q</code>, let <code>V_q∈{T,F,U}</code> be a sound verdict for semantic predicate <code>P_q∈{0,1}</code>. Let <code>G=⋀_qP_q</code> and let <code>V_G=⋀_qV_q</code> under strong Kleene conjunction: <code>F</code> dominates, <code>T</code> is identity, and otherwise the result is <code>U</code>. Then <code>V_G=T⇒G=1</code>, <code>V_G=F⇒G=0</code>, and if no <code>V_q=F</code> but some necessary <code>V_q=U</code>, neither semantic value is certified.</p>
 <p><strong>Proof.</strong> If <code>V_G=T</code>, every <code>V_q=T</code>; soundness gives every <code>P_q=1</code>. If <code>V_G=F</code>, some <code>V_q=F</code>; soundness gives <code>P_q=0</code>, so the semantic conjunction is false. In the remaining case, no false conjunct determines the aggregate and at least one unknown blocks a true monitor verdict. <code>U</code> asserts neither semantic truth nor semantic falsity. ∎</p>
 <p>This result distinguishes a semantic boolean from monitor knowledge. It does not make an unsound checker sound. <code>NO_VERDICT</code> is an operational presentation of <code>U</code>, not a fifth truth value. A boolean release projection <code>b=1</code> only on PASS is a control rule, not a claim that unknown evidence is false.</p>
-<h3 id="62-conditional-induction-across-scales">6.2 Conditional induction across scales</h3>
-<p><strong>Proposition 2.</strong> Fix finite scales <code>0,…,m</code> and finite traces. Assume: (1) every obligation in <code>Q_0</code> has sound <code>T</code> verdicts for authorization and compliance; (2) R holds at every adjacent scale; (3) C holds there; (4) N holds throughout; and (5) K holds throughout. Then every parent obligation at every scale has <code>A_q=C_q=1</code>. If the global specification is the conjunction of obligations at scale <code>m</code>, global authorization and compliance are true. Every global <code>T</code> verdict has a finite certificate path to base evidence.</p>
-<p><strong>Proof.</strong> The base case is assumption 1 and verdict soundness. Assume all obligations at scale <code>k-1</code> have true authorization and compliance predicates with sound certificates. Choose <code>q∈Q_k</code>. By C, <code>D_k(q)</code> accounts for all operations, effects, and cross-operation premises relevant to <code>q</code>. By N, no outside operation changes those predicates or their evidence, and composition grants no new authority. By K, certificates use current correction-closed snapshots and stale dependents cannot survive promotion. The induction hypothesis makes every predicate in <code>D_k(q)</code> true. R yields <code>A_q=C_q=1</code>. Appending the refinement witness to child paths yields the parent witness. Finite induction proves the claim. ∎</p>
+<h3>6.2 Conditional induction across scales</h3>
+<p><strong>Proposition 2.</strong> Fix finite induction levels <code>j=0,…,M</code> associated with partition depths <code>k=M-j</code>, and finite traces. Assume: (1) every obligation in <code>Q_0</code> has sound <code>T</code> verdicts for authorization and compliance; (2) R holds at every adjacent scale; (3) C holds there; (4) N holds throughout; and (5) K holds throughout. Then every parent obligation at every scale has <code>A_q=C_q=1</code>. If the global specification is the conjunction of obligations at induction level <code>M</code>, global authorization and compliance are true. Every global <code>T</code> verdict has a finite certificate path to base evidence.</p>
+<p><strong>Proof.</strong> The base case is assumption 1 and verdict soundness. Assume all obligations at induction level <code>j-1</code> have true authorization and compliance predicates with sound certificates. Choose <code>q∈Q_j</code>. By C, <code>D_j(q)</code> accounts for all operations, effects, and cross-operation premises relevant to <code>q</code>. By N, no outside operation changes those predicates or their evidence, and composition grants no new authority. By K, certificates use current correction-closed snapshots and stale dependents cannot survive promotion. The induction hypothesis makes every predicate in <code>D_j(q)</code> true. R yields <code>A_q=C_q=1</code>. Appending the refinement witness to child paths yields the parent witness. Finite induction proves the claim. ∎</p>
 <p>The hypotheses are substantial. Real systems have not been shown to satisfy them. The proposition does not imply that every desirable global property is conjunctively decomposable, that model scaling preserves alignment, or that a lineage certificate proves entailment. It is a proof about a formal model, not an empirical theorem about deployed LLMs.</p>
-<h3 id="63-existence-and-uniqueness-of-the-first-observed-failed-scale">6.3 Existence and uniqueness of the first observed failed scale</h3>
-<p><strong>Proposition 3.</strong> For a finite total scale order, if <code>F={k:A(k)=False}</code> is nonempty, <code>FIRST_FAIL(T)=min F</code> exists and is unique. If sub-conjuncts at that scale are ordered by a declared rule, the reported first failed predicate is also unique.</p>
+<h3>6.3 Existence and uniqueness of the first observed failed scale</h3>
+<p><strong>Proposition 3.</strong> For a finite total scale order, if <code>F_π={i:A(k_i)=False}</code> is nonempty, <code>FIRST_FAIL(T;π)=min F_π</code> exists and is unique within that declared order. If sub-conjuncts at that scale are ordered by a declared rule, the reported first failed predicate is also unique.</p>
 <p><strong>Proof.</strong> A nonempty finite subset of a totally ordered set has a unique minimum. The same fact applies to the finite ordered list of failed sub-conjuncts at that scale. ∎</p>
 <p>This says nothing about a unique semantic root cause. Several defects can cause the same failed predicate; an earlier unobserved cause may lie outside the trace. <code>FIRST_FAIL</code> is the earliest <strong>known failed declared lift</strong>, not a metaphysical origin.</p>
-<h3 id="64-concurrent-failures-on-dags">6.4 Concurrent failures on DAGs</h3>
-<p><strong>Definition 26 (Concurrent failure frontier).</strong> Let failed scale nodes form a finite set <code>F</code> in a DAG with declared causal order <code>≺</code>. Define <code>Frontier(F)={x∈F : no y∈F has y≺x}</code>. If <code>≺</code> is a valid topological partial order, return <code>Frontier(F)</code> and all failures incomparable with its members as a set. If required order edges are missing, return <code>UNKNOWN_ORDER</code>.</p>
+<h3>6.4 Concurrent failures on DAGs</h3>
+<p><strong>Definition 26 (Concurrent failure frontier).</strong> Let failed scale nodes form a finite set <code>F</code> in a DAG with declared causal order <code>≺</code>. Define <code>Frontier(F)={x∈F : no y∈F has y≺x}</code>. If <code>≺</code> is the declared causal partial order, return exactly <code>Frontier(F)</code>. Do not add failures merely because they are incomparable with some frontier member: with <code>a≺c</code> and independent <code>b</code>, the frontier is <code>{a,b}</code>, not <code>{a,b,c}</code>. If required order edges are missing, return <code>UNKNOWN_ORDER</code>.</p>
 <p><strong>Proposition 4.</strong> Every finite nonempty <code>F</code> has at least one minimal failed node when <code>≺</code> is acyclic, and every failed node has a minimal failed ancestor in <code>F</code>.</p>
 <p><strong>Proof.</strong> Choose any <code>x∈F</code> and follow strict failed predecessor edges while possible. Acyclicity forbids repetition and finiteness forces termination at a minimal failed node. For arbitrary <code>x</code>, either it is minimal or this descent supplies a minimal ancestor. ∎</p>
 <p>A single minimum need not exist: two independent failures can be incomparable. Certificates therefore return a set rather than arbitrarily choosing a “first” failure. A topological display order is only a presentation convention.</p>
-<h3 id="65-finite-computability-of-localization">6.5 Finite computability of localization</h3>
+<h3>6.5 Finite computability of localization</h3>
 <p><strong>Proposition 5.</strong> Suppose each declared predicate checker terminates on its finite slice, graph reachability is over a finite graph, and all required thresholds are present. Then the boolean trace, <code>Frontier(F)</code>, and affected closure are computable in finite time.</p>
 <p><strong>Proof.</strong> There are finitely many scales and obligations. Evaluate each terminating checker and record its result. Finite graph traversal marks reachable affected nodes in finite steps. The finite failed-node frontier is obtained by checking predecessor membership. Sorting or displaying the trace also terminates. ∎</p>
 <p>This is not a polynomial bound for semantic discovery, independent source enumeration, or finding repairs. An LLM support assessor may be expensive, unreliable, or nonterminating in practice; timeouts become execution statuses, not semantic failures.</p>
-<h3 id="66-non-vacuity-requirement">6.6 Non-vacuity requirement</h3>
+<h3>6.6 Non-vacuity requirement</h3>
 <p><strong>Definition 27 (Vacuous certificate).</strong> A scale certificate is vacuous when its required obligation set is empty, its source denominator is unknown, all route or claim sets are empty despite required work, or its checks are skipped while reported as passes. An explicitly empty task with a proof that no obligations apply is different from an empty log.</p>
 <p><strong>Proposition 6.</strong> If the release contract requires <code>NONVACUOUS</code> and <code>NONVACUOUS</code> is not PASS, then <code>b(RELEASE_FULL)=0</code>.</p>
 <p><strong>Proof.</strong> <code>RELEASE_FULL</code> is a conjunction with PASS-only projection. Any non-PASS required conjunct has <code>b=0</code>, forcing the conjunction to zero. ∎</p>
 <p>Evidence coverage is <code>|Q_sound|/|Q_req|</code>. If <code>Q_req=∅</code>, report <code>n/a</code>, not 100%. The empty denominator cannot be used to certify all work.</p>
-<h3 id="67-conditional-unaffected-content-preservation">6.7 Conditional unaffected-content preservation</h3>
+<h3>6.7 Conditional unaffected-content preservation</h3>
 <p><strong>Proposition 7.</strong> Let correction seeds be <code>Z</code>, <code>Aff=Reach_G(Z)</code>, and output set <code>O</code> satisfy <code>Deps(O)∩Aff=∅</code>. Assume N, stable evidence versions for <code>O</code>, and a complete dependency graph for the release scope. Then a correction confined to <code>Z</code> and its outgoing dependencies does not change the semantic predicates certified for <code>O</code>.</p>
-<p><strong>Proof.</strong> Every dependency of <code>O</code> lies outside <code>Aff</code>. By definition of reachability, no dependency path from <code>Z</code> reaches those dependencies. N excludes unmodeled influence from the correction or its execution. Stable evidence versions preserve the predicates' inputs; hence their values are unchanged. ∎</p>
+<p><strong>Proof.</strong> Every dependency of <code>O</code> lies outside <code>Aff</code>. By definition of reachability, no dependency path from <code>Z</code> reaches those dependencies. N excludes unmodeled influence from the correction or its execution. Stable evidence versions preserve the predicates&#39; inputs; hence their values are unchanged. ∎</p>
 <p>This justifies authorized partial release only when its own policy, authority, scope, and support checks pass. If dependency enumeration or N is incomplete, unaffectedness is unknown. Previously emitted unretractable copies cannot be recalled by graph invalidation.</p>
-<h3 id="68-conditional-retention-on-a-finite-dag">6.8 Conditional retention on a finite DAG</h3>
+<h3>6.8 Conditional retention on a finite DAG</h3>
 <p>AIce supplies an elementary retention proposition adapted here. For each node <code>v</code>, let <code>Required(v)</code> be the governing evidence and transitions needed for its current action and <code>C(v)</code> the admitted carried set. Assume base coverage of every reachable transition, edge preservation, admission of newly governing patches before action, valid scoped fresh supersession, an enforced gate on every execution, and no unmodeled execution channel.</p>
 <p><strong>Proposition 8.</strong> Under these hypotheses, topological processing gives <code>Required(v)⊆C(v)</code> for every reachable <code>v</code>.</p>
 <p><strong>Proof.</strong> At a source node, base coverage includes all required transitions. Suppose the claim holds for every predecessor. Edge preservation carries their required records into <code>v</code>; admission adds any newly governing patch before <code>v</code> acts; valid supersession replaces obsolete records without dropping current requirements. Thus the required set is contained in the carried set. Topological induction covers the finite DAG. The enforced gate ensures an execution cannot bypass this admission condition. ∎</p>
 <p>The result is structural retention, not semantic sufficiency. Distinguish <code>selected_action</code>, <code>gate_verdict</code>, <code>executed_action</code>, and <code>observed_effect</code>: the shipped AIce simulator is advisory and can execute a rejected selection. A local enforcing wrapper blocks it, but a reported E2 false-stop shows enforcement can reject legitimate work. Custody is not enforcement.</p>
-<h3 id="69-refinement-invalidation">6.9 Refinement invalidation</h3>
+<h3>6.9 Refinement invalidation</h3>
 <p><strong>Proposition 9.</strong> If any certificate on the path from base evidence to parent <code>q</code> is invalidated, or R, C, N, or K ceases to hold on that path, the old parent <code>T</code> certificate is no longer justified by Proposition 2.</p>
-<p><strong>Proof.</strong> Proposition 2's parent witness consists of valid child paths and all composition hypotheses on the path. Removing any premise invalidates that instance of the proof. This does not establish that the parent semantic predicate is false; it establishes that the old certificate must be withdrawn or rechecked. ∎</p>
+<p><strong>Proof.</strong> Proposition 2&#39;s parent witness consists of valid child paths and all composition hypotheses on the path. Removing any premise invalidates that instance of the proof. This does not establish that the parent semantic predicate is false; it establishes that the old certificate must be withdrawn or rechecked. ∎</p>
 <p>This is why policy drift, source version changes, correction acknowledgments, and verifier updates are part of certificate identity.</p>
-<h3 id="610-bounded-verification-proposition">6.10 Bounded verification proposition</h3>
+<h3>6.10 Bounded verification proposition</h3>
 <p><strong>Proposition 10.</strong> Given supplied certificates and an explicit finite obligation universe, let <code>n</code> be records, <code>|E|</code> dependency edges, <code>c</code> claims, <code>r</code> receipts, and <code>w</code> declared windows. Further restrict the witness so that dependency/support markings and the affected-closure union are checkable in one shared graph traversal, any additional lineage path is already counted in <code>n</code>, every declared window check is constant-time, and each claim triggers at most one support-oracle call. If primitive schema, signature, hash, and threshold checks cost constant time and each support oracle call costs <code>O(B)</code>, verification under these restrictions costs</p>
 <p><code>O(n+|E|+cB+r+w)</code></p>
 <p>plus the cost of sorting where canonical display order is requested. If support text length is bounded, this is linear in supplied records and edges.</p>
 <p><strong>Proof.</strong> One pass checks schemas and local predicates. By the additional restriction, shared BFS/DFS and support/dependency propagation visit each supplied graph node and edge once rather than repeating traversal per claim or per seed. Claim checks make at most <code>c</code> support calls, receipt checks at most <code>r</code>, and constant-time window checks at most <code>w</code>; supplied lineage material is included in <code>n</code>. Sorting adds its standard comparison cost. Without these restrictions, repeated per-claim or per-seed traversals must be charged separately. ∎</p>
 <p>The bound applies to a <strong>supplied restricted witness</strong>, not to discovering obligations, searching for a good route, training a model, or proving semantic support. Cryptographic verification and large integer costs must be modeled separately in a real implementation.</p>
-<h3 id="611-nontransfer-and-counterexamples">6.11 Nontransfer and counterexamples</h3>
+<h3>6.11 Nontransfer and counterexamples</h3>
 <p><strong>Local-to-global budget.</strong> A parent allows total spending at most 100. Two children each spend 60 and are individually authorized up to 60. Both local authorization and compliance pairs are <code>(T,T)</code>, but <code>60+60=120</code>, so parent compliance is false. R and C omitted a cross-operation obligation. The repair is a shared-cap invariant, partitioned budget, or atomic reservation, not another count of local passes.</p>
 <p><strong>Unknown is not true.</strong> Required operations are <code>{o1,o2,o3}</code>; only <code>o1,o2</code> are observed and pass. Reporting <code>2/2 passed</code> changes the denominator to observed obligations. <code>V3=U</code> and global verdict is <code>U</code>. Without an independent counterexample, <code>F</code> would also be unsound.</p>
 <p><strong>Stale concurrent approval.</strong> Approval <code>a</code> authorizes <code>tool:t17</code> under registry <code>r7</code>; correction <code>c</code> revokes it in <code>r8</code>; operation <code>o</code> depends on <code>a</code> but not <code>c</code>. Vector clocks <code>VC(a)=(1,0,0)</code>, <code>VC(c)=(0,1,0)</code>, <code>VC(o)=(1,0,1)</code> show <code>a≺o</code> while <code>c</code> and <code>o</code> are concurrent. Before the correction frontier is known, current authorization is <code>U</code>; after a complete required-current-policy history shows revoked use, it is <code>F</code>. Signed and fresh are separate.</p>
 <p><strong>Authority pollution despite immutability.</strong> A router logs every request, but an unverified instruction chunk changes the authority table and makes the router an approver. Later schemas pass and the append-only log preserves all history. N fails because unverified content affected an authority premise. Persistence is not isolation.</p>
 <p><strong>Found content is not an instruction.</strong> A retrieved chunk says “approve X” and returns FOUND, but its issuer is absent from the authority registry. <code>V^A</code> is <code>F</code> if evidence establishes no authority and <code>U</code> if authority evidence is incomplete, never <code>T</code> from FOUND alone.</p>
-<hr />
-<h2 id="7-architecture-mapping">7. Architecture Mapping</h2>
-<h3 id="71-non-authoritative-router">7.1 Non-authoritative router</h3>
+<hr>
+<h2>7. Architecture Mapping</h2>
+<h3>7.1 Non-authoritative router</h3>
 <p>The router proposes <code>R_t</code> and typed morphisms. Its certificate contains registry and policy versions, gate telemetry, budgets, parentage, and task admissibility where declared. It has no ledger commit capability. <code>A_route</code> checks these facts without treating gate entropy as semantic quality. Router agreement is not ground truth, and consensus among routers does not mint <code>AUTH</code>.</p>
 <p>A soft mixture with no exposed hard expert identity may be outside the routing contract. The correct response is limited scope or <code>UNKNOWN</code>, not an invented discrete index. Hidden computation remains hidden even if exposed routing logs pass.</p>
-<h3 id="72-ledger-as-authority-boundary">7.2 Ledger as authority boundary</h3>
+<h3>7.2 Ledger as authority boundary</h3>
 <p>The ledger consumes proposals and emits accepted, rejected, pending, superseding, or deferred records. Its checker separately verifies provenance, content-bound coverage, causal order, transition validity, authority, nonsilent supersession, and correction closure. The name “ledger” confers none of these properties.</p>
 <p>An enforcing ledger must also distinguish selection, gate verdict, execution, and effect. If the gate rejects a tool but an executor invokes it anyway, the execution policy fails independently of whether the log records the rejection. Conversely, a gate can false-stop valid work while detection remains correct.</p>
-<h3 id="73-generative-continuity-expert">7.3 Generative continuity expert</h3>
+<h3>7.3 Generative continuity expert</h3>
 <p>The continuity expert maintains projections of facts, discourse, goals, and corrections. It can propose text and summaries but does not gain factual or commit authority from that role. <code>A_cont</code> tests preservation of open obligations and active correction scope across compression, handoff, and resume. The projection need not contain the entire ledger; it needs a declared, inspectable relation to the committed view.</p>
 <p>A continuity summary can be internally consistent and wrong. Projection consistency is not factual support, and support is not user authority. These three channels remain separate.</p>
-<h3 id="74-diagnostic-ladder">7.4 Diagnostic ladder</h3>
+<h3>7.4 Diagnostic ladder</h3>
 <p>For each task, preregister an applicable subset of</p>
 <p><code>chunk → section → source → cross-source → handoff</code>.</p>
 <p>The ladder is a diagnostic schedule, not a universal law. A single-document extraction may stop at source; a multi-agent resume may require handoff; a cross-source synthesis needs all relevant earlier levels. Each level has an obligation universe and transfer witness. Passing one level cannot substitute for a missing later level.</p>
-<h3 id="75-role-to-predicate-matrix">7.5 Role-to-predicate matrix</h3>
+<h3>7.5 Role-to-predicate matrix</h3>
 <table>
 <thead>
 <tr>
@@ -339,8 +378,7 @@ return STRUCTURAL_READY only if every required level is PASS
 <th>Typical first failure</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>MoE/router</td>
 <td>expert IDs, gates, casts</td>
 <td>authority, semantic expert quality</td>
@@ -389,17 +427,16 @@ return STRUCTURAL_READY only if every required level is PASS
 <td>CROSS, CROSS_SCALE, SUPPORT/FID</td>
 <td>unknown assessor</td>
 </tr>
-</tbody>
-</table>
-<h3 id="76-certificate-governance-manifest">7.6 Certificate governance manifest</h3>
-<p>The manifest versions criteria as well as code. It names specification, registry, policy, authority, source inventory, thresholds, support assessor, mutation set, and release scope. Criteria drift is a new certificate epoch, not a silent edit to old results. EvalGen's criteria-drift findings motivate this versioning; they do not validate this design.</p>
+</tbody></table>
+<h3>7.6 Certificate governance manifest</h3>
+<p>The manifest versions criteria as well as code. It names specification, registry, policy, authority, source inventory, thresholds, support assessor, mutation set, and release scope. Criteria drift is a new certificate epoch, not a silent edit to old results. EvalGen&#39;s criteria-drift findings motivate this versioning; they do not validate this design.</p>
 <p>Independent judgments must be collected before discussion where human or model assessors are used. Consensus after discussion can hide correlated anchoring. Sycophancy and BenchForm results motivate this protocol but supply no reliability estimate here.</p>
-<hr />
-<h2 id="8-correction-invalidation-and-partial-release">8. Correction, Invalidation, and Partial Release</h2>
-<h3 id="81-corrections-are-scoped-graph-operations">8.1 Corrections are scoped graph operations</h3>
+<hr>
+<h2>8. Correction, Invalidation, and Partial Release</h2>
+<h3>8.1 Corrections are scoped graph operations</h3>
 <p>A correction changes the status of evidence or commitments only when its issuer, applicability, scope, and freshness are established. <code>Authorized(c)</code> is independent of whether many agents repeat it. Once accepted, the correction seed <code>target(c)</code> identifies the start of <code>Dependents(c)</code>, computed over claim, ledger, routing, and output dependencies. All dependent certificates become stale before any new promotion.</p>
 <p>The operation preserves history. The prior value remains queryable, the supersession edge records why it changed, and dependent certificates retain their old evidence with an <code>INVALIDATED</code> marker. Deleting the old record would destroy the ability to audit whether correction propagation worked. A valid correction can itself later be corrected; each new version forms a new frontier.</p>
-<h3 id="82-freshness-and-invalidation-table">8.2 Freshness and invalidation table</h3>
+<h3>8.2 Freshness and invalidation table</h3>
 <table>
 <thead>
 <tr>
@@ -408,8 +445,7 @@ return STRUCTURAL_READY only if every required level is PASS
 <th>Event that invalidates old certificate</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>COV</td>
 <td>challenged span, source version, nonce/window</td>
 <td>version bump or span mismatch</td>
@@ -459,37 +495,35 @@ return STRUCTURAL_READY only if every required level is PASS
 <td>external assessor run and rubric</td>
 <td>assessor unavailable, drift, or scope change</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>A preserved artifact can be obsolete; custody is not freshness. An assessor <code>UNKNOWN</code> is not evidence that a claim is false, but it blocks a PASS-only release bit.</p>
-<h3 id="83-five-certificate-outcomes">8.3 Five certificate outcomes</h3>
+<h3>8.3 Five certificate outcomes</h3>
 <p><code>CERTIFIED</code> requires all full-release conjuncts to pass, independent release authority, and non-vacuity. <code>HELD_PARTIAL</code> emits only authorized unaffected content and names held dependencies. <code>REFUSED</code> records an observed failure that prohibits the requested release. <code>AWAITING_HUMAN</code> is used when an authorized adjudicator is required; it does not mean a human is universally necessary. <code>NO_VERDICT</code> records missing thresholds, incomplete evidence, unavailable assessor, exhausted reconciliation, or invalid execution.</p>
 <p>The same predicate trace can therefore lead to different control outcomes under different authorized scopes. A factual failure in one section can coexist with an unaffected partial extraction. Conversely, a semantic pass in a sandbox can coexist with refusal to publish because <code>AUTH</code> is absent.</p>
-<h3 id="84-partial-release-rule">8.4 Partial release rule</h3>
+<h3>8.4 Partial release rule</h3>
 <p>For candidate output <code>o</code>, partial emission requires</p>
 <pre><code class="language-text">Deps(o) ∩ Aff = ∅
-∧ o's route, authority, policy, support, scope, and continuity checks PASS
+∧ o&#39;s route, authority, policy, support, scope, and continuity checks PASS
 ∧ dependency enumeration and N are PASS for its scope
 ∧ output is labeled PARTIAL and names excluded obligations.
 </code></pre>
 <p>If any of these is unknown, <code>o</code> is not certified unaffected. <code>Act=0⇏Stop</code> means a privileged action may be denied while a labeled informational response is still emitted. It does not override a separate policy requiring complete suppression.</p>
-<h3 id="85-independent-verifier-boundary">8.5 Independent verifier boundary</h3>
+<h3>8.5 Independent verifier boundary</h3>
 <p>PROV-002 requires a verifier outside the process capable of forging receipts. A challenged quotation generated and checked by the same process is an honest-workflow control, not a security boundary. An in-process HMAC does not protect against code holding the same key. Independent review includes source access, specification review, and named negative controls; model agreement alone is not independence.</p>
-<hr />
-<h2 id="9-worked-boolean-traces">9. Worked Boolean Traces</h2>
-<p>All traces below are <strong>hand-constructed synthetic illustrations</strong>. No external action was performed, no model was run, and no empirical success rate is implied. <code>T/F/U</code> abbreviate <code>PASS/FAIL/UNKNOWN</code>; <code>NV</code> denotes missing contract. Execution outcomes are listed separately.</p>
-<h3 id="91-trace-a-valid-sticky-two-level-retrieval-lift">9.1 Trace A: valid sticky two-level retrieval lift</h3>
-<p>Policy <code>P9</code>, registry <code>R4</code>, authority <code>Auth3</code>, snapshot <code>S12</code>, and <code>min_coverage=1.0</code> are fixed. An independent specification manifest lists exactly five obligations: route <code>w1</code> to <code>d3</code>; read <code>d3</code> with verifier challenge <code>q88</code>; propose <code>m:/plan/x</code> with valid signature and unused nonce; generate a claim with lineage to both indices; and check the parent coverage/continuity invariant. The fifth obligation's completeness comes from the manifest, not from counting the five rows in this table.</p>
+<hr>
+<h2>9. Worked Boolean Traces</h2>
+<p>All traces below are <strong>hand-constructed synthetic illustrations</strong>. Their numbered levels and FIRST_FAIL values use induction index <code>j</code> (finest-first order <code>π=(M,…,0)</code>), with partition depth <code>k=M-j</code>; they do not reverse Definition 5. No external action was performed, no model was run, and no empirical success rate is implied. <code>T/F/U</code> abbreviate <code>PASS/FAIL/UNKNOWN</code>; <code>NV</code> denotes missing contract. Execution outcomes are listed separately.</p>
+<h3>9.1 Trace A: valid sticky two-level retrieval lift</h3>
+<p>Policy <code>P9</code>, registry <code>R4</code>, authority <code>Auth3</code>, snapshot <code>S12</code>, and <code>min_coverage=1.0</code> are fixed. An independent specification manifest lists exactly five obligations: route <code>w1</code> to <code>d3</code>; read <code>d3</code> with verifier challenge <code>q88</code>; propose <code>m:/plan/x</code> with valid signature and unused nonce; generate a claim with lineage to both indices; and check the parent coverage/continuity invariant. The fifth obligation&#39;s completeness comes from the manifest, not from counting the five rows in this table.</p>
 <table>
 <thead>
 <tr>
-<th>Scale</th>
+<th>Induction level j</th>
 <th>Predicate evidence</th>
 <th>Outcome</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>0 routing</td>
 <td><code>d3</code> live in R4, <code>w1</code> permitted</td>
 <td><code>A_route=T</code></td>
@@ -515,49 +549,48 @@ return STRUCTURAL_READY only if every required level is PASS
 <td><code>A_cont=T</code></td>
 </tr>
 <tr>
-<td>1 lift</td>
+<td>1 lift (k=0)</td>
 <td>typed identities preserved, only <code>o3</code> changes state, R/C/N/K witnesses pass</td>
-<td><code>A(1)=T</code></td>
+<td><code>A_lift(1)=A(0)=T</code></td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>The resulting <code>STRUCTURAL_READY=T</code>; if <code>CROSS_SCALE_OK</code>, <code>AUTH</code>, <code>POLICY_OK</code>, <code>SUPPORT/FID</code>, and <code>SCOPE</code> also pass, the restricted certificate is <code>CERTIFIED</code>. The illustration still does not prove that natural-language truth follows from citation membership: support is an explicit additional assessor input.</p>
-<h3 id="92-trace-b-registered-but-unauthorized-moe-substitution">9.2 Trace B: registered but unauthorized MoE substitution</h3>
+<h3>9.2 Trace B: registered but unauthorized MoE substitution</h3>
 <p>At a token-routing layer, <code>expert:e7</code> is live, typed, and within budget. Registry policy permits code analysis only for <code>e8</code>, but the router activates <code>e7</code> for a privileged repository transformation. Gate weights and load balance are normal.</p>
 <p><code>Typed=T</code>, <code>Live=T</code>, <code>Budget=T</code>, <code>Permitted=F</code>, hence <code>A_route=F</code>. Other predicates may be evaluated for diagnosis but cannot compensate. <code>FIRST_FAIL=0 (A_route.Permitted)</code>. Execution is <code>REFUSED</code> for the privileged transformation. A non-privileged explanation of the routing mismatch may be emitted if separately authorized. Registry membership alone did not confer authority.</p>
-<h3 id="93-trace-c-retrieval-coverage-with-false-fidelity">9.3 Trace C: retrieval coverage with false fidelity</h3>
+<h3>9.3 Trace C: retrieval coverage with false fidelity</h3>
 <p>Every required source chunk has a fresh content-bound receipt, causal order is valid, and all citations point to active document IDs. The generated conclusion says a medication dose was doubled, while the source says it was halved. The external support assessor identifies the contradiction.</p>
 <p><code>COV=T</code>, <code>ORDER=T</code>, <code>Lineage=T</code>, <code>ActiveEvidence=T</code>, <code>Fidelity=F</code>; therefore <code>A_gen=F</code>. This trace is the canonical coverage-pass/fidelity-fail counterexample. Full release is refused even though all receipt counters are green. It also demonstrates why <code>GEN_OK</code> defined merely as active citation lineage is only structural and cannot replace <code>SUPPORT/FID</code>.</p>
-<h3 id="94-trace-d-long-context-middle-omission">9.4 Trace D: long-context middle omission</h3>
+<h3>9.4 Trace D: long-context middle omission</h3>
 <p>A synthesis task requires evidence at beginning, middle, and end of a long input. Beginning and end chunks have challenged quotations. The middle chunk has only a file hash; no quoted span or independent coverage receipt is present. Two generated claims are supported, and the third may or may not be true.</p>
 <p><code>COV_middle=U</code>, not <code>F</code>; <code>A(1)=U</code> if no observed predicate fails. The release bit is zero. Lost-in-the-middle results motivate testing this location, but this trace does not assume every model omits the middle. The certificate reports missing evidence rather than claiming an observed semantic omission. Authorized beginning/end extracts may be partial only if their dependencies exclude the unresolved middle claim.</p>
-<h3 id="95-trace-e-stale-tool-authority-at-commit">9.5 Trace E: stale tool authority at commit</h3>
-<p>At proposal time, signed approval authorizes <code>tool:t17</code> under registry <code>r7</code>. Before execution, an applicable correction revokes it in <code>r8</code>. The tool call's causal record includes the old approval but not the correction; the correction frontier at commit is known and requires current registry validity.</p>
+<h3>9.5 Trace E: stale tool authority at commit</h3>
+<p>At proposal time, signed approval authorizes <code>tool:t17</code> under registry <code>r7</code>. Before execution, an applicable correction revokes it in <code>r8</code>. The tool call&#39;s causal record includes the old approval but not the correction; the correction frontier at commit is known and requires current registry validity.</p>
 <p>The historical signature check passes. <code>AUTH_current=F</code>, <code>ROUTE_OK=F</code>, and the affected output is quarantined. If the frontier were not yet known, the monitor outcome would be <code>U</code>, not <code>T</code>. This distinguishes stale evidence from fabricated evidence: the approval was genuine but obsolete.</p>
-<h3 id="96-trace-f-concurrent-agent-failures">9.6 Trace F: concurrent agent failures</h3>
+<h3>9.6 Trace F: concurrent agent failures</h3>
 <p>Agent A commits a valid plan; Agent B uses a revoked memory item; Agent C drops an unrelated open obligation. B and C have no causal order between their failures, and both occur after A. The DAG failed set has two minimal failed nodes.</p>
 <p><code>Frontier(F)={B.A_ledger.CORR, C.A_cont.Obligation}</code>. No unique <code>FIRST_FAIL</code> is reported under the causal partial order. A topological display may show B first, but the certificate preserves incomparability. Repair computes two affected closures and their union for shared outputs. Partial release of A is allowed only if its dependencies intersect neither closure and its own release checks pass.</p>
-<h3 id="97-trace-g-correction-propagation-and-unaffected-partial">9.7 Trace G: correction propagation and unaffected partial</h3>
+<h3>9.7 Trace G: correction propagation and unaffected partial</h3>
 <p>A source correction changes <code>d4</code> from version 2 to 3. Claim <code>q4</code>, summary <code>s4</code>, and pending tool action <code>x4</code> depend on <code>d4</code>; unrelated extraction <code>q1</code> depends only on <code>d1</code>. Independent dependency enumeration and N pass.</p>
-<p><code>Aff={d4,q4,s4,x4}</code>. Their certificates are invalidated, while <code>q1</code>'s evidence remains stable. <code>q4/s4/x4</code> are held; <code>q1</code> can be <code>HELD_PARTIAL</code> with an explicit exclusion notice after its own authority and support pass. If <code>q1</code> had been emitted in an earlier irreversible external message, graph invalidation would not retract it; this protocol addresses future promotion, not recall of all copies.</p>
-<h3 id="98-trace-h-correction-storm-and-round-cap">9.8 Trace H: correction storm and round cap</h3>
-<p>Two authorized registries alternately supersede conflicting values for the same claim. Each correction correctly invalidates the other branch's dependent certificates. The caller sets <code>max_rounds=3</code>; no stable correction-closed snapshot emerges by the cap.</p>
+<p><code>Aff={d4,q4,s4,x4}</code>. Their certificates are invalidated, while <code>q1</code>&#39;s evidence remains stable. <code>q4/s4/x4</code> are held; <code>q1</code> can be <code>HELD_PARTIAL</code> with an explicit exclusion notice after its own authority and support pass. If <code>q1</code> had been emitted in an earlier irreversible external message, graph invalidation would not retract it; this protocol addresses future promotion, not recall of all copies.</p>
+<h3>9.8 Trace H: correction storm and round cap</h3>
+<p>Two authorized registries alternately supersede conflicting values for the same claim. Each correction correctly invalidates the other branch&#39;s dependent certificates. The caller sets <code>max_rounds=3</code>; no stable correction-closed snapshot emerges by the cap.</p>
 <p>The structural predicates are not declared true. Outcome is <code>NO_VERDICT</code> with reason <code>CORRECTION_STORM</code>, or <code>REFUSED</code> if policy expressly prohibits unresolved contested output. No arithmetic average of versions chooses a winner. Authority, applicability, and conflict resolution must be adjudicated outside the loop; <code>AWAITING_HUMAN</code> is appropriate where the contract names an adjudicator.</p>
-<h3 id="99-trace-i-missing-threshold">9.9 Trace I: missing threshold</h3>
+<h3>9.9 Trace I: missing threshold</h3>
 <p>The same records as Trace A are supplied, but <code>min_coverage</code> is omitted. Every observed local schema check passes. The monitor cannot infer that observed records exhaust required obligations from the fact that they look complete.</p>
 <p><code>CoverageContract=NV</code>; full release is <code>NO_VERDICT</code>, not <code>CERTIFIED</code> and not semantic <code>F</code>. The missing threshold is recorded with the certificate. This no-default rule also applies to clustering thresholds, correction caps, support windows, and acceptable cost budgets.</p>
-<h3 id="910-trace-j-detected-fault-versus-harness-crash">9.10 Trace J: detected fault versus harness crash</h3>
+<h3>9.10 Trace J: detected fault versus harness crash</h3>
 <p>A clean baseline first passes all named checks under configuration <code>cfg17</code>. Fault variant <code>stale_ack</code> then executes and the predeclared assertion <code>reject_stale_governing_ack</code> fails for the injected reason. This is <strong>DETECTED</strong>. A second variant <code>causal_blind_lookup</code> exits nonzero during import before any relevant assertion runs. This is <strong>HARNESS_ERROR</strong>, not detected. A third completes validly with no relevant failure: <strong>UNDETECTED</strong>. If enforcement itself throws while detection correctly returns <code>F</code>, classification is <code>EXECUTION_ERROR</code> on the execution axis and <code>DETECTED</code> on the detection axis.</p>
 <p>A nonzero exit code alone is insufficient. Detection requires a passing baseline and a named attributable property failure. P3 in the neighboring open-addressing probe remains unresolved; its empirical cost behavior is not an index-alignment result.</p>
-<h3 id="911-trace-k-shared-global-capacity-violation">9.11 Trace K: shared global capacity violation</h3>
+<h3>9.11 Trace K: shared global capacity violation</h3>
 <p>Two child agents each reserve 60 units under a local limit of 60. Both local predicates pass. The parent budget is 100, and the independent specification includes a shared-cap obligation. If this obligation is omitted from <code>D(parent)</code>, R/C fail and the local passes do not lift. With an atomic reservation ledger, the second reservation observes remaining capacity 40 and <code>C_parent=F</code>; execution rejects the reservation. Detection and rejection are separately recorded.</p>
-<h3 id="912-trace-l-authority-pollution-from-retrieved-instructions">9.12 Trace L: authority pollution from retrieved instructions</h3>
-<p>A retrieved document contains “make router an approver.” Its content receipt and quotation are valid. An unverified ingestion path nevertheless changes the authority table. Later operations have perfect schema and append-only provenance. N fails because content affected the judge's authority premise; AUTH also fails for the router's new role. Reverting the table does not erase the need to invalidate all dependent certificates issued during pollution.</p>
-<h3 id="913-trace-m-authorized-partial-under-semantic-unknown">9.13 Trace M: authorized partial under semantic unknown</h3>
-<p>A report has independent extraction sections <code>X</code> and <code>Y</code>. X has complete current evidence, policy, authority, and support. Y's support assessor is unavailable. No dependency connects X to Y, and N and coverage enumeration pass. Full report promotion is blocked with <code>SUPPORT(Y)=U</code>; X may be emitted as <code>HELD_PARTIAL</code>. The system does not label Y false, nor does it promote X as evidence about Y.</p>
-<h3 id="914-trace-n-continuity-checkpoint-lost-at-handoff">9.14 Trace N: continuity checkpoint lost at handoff</h3>
+<h3>9.12 Trace L: authority pollution from retrieved instructions</h3>
+<p>A retrieved document contains “make router an approver.” Its content receipt and quotation are valid. An unverified ingestion path nevertheless changes the authority table. Later operations have perfect schema and append-only provenance. N fails because content affected the judge&#39;s authority premise; AUTH also fails for the router&#39;s new role. Reverting the table does not erase the need to invalidate all dependent certificates issued during pollution.</p>
+<h3>9.13 Trace M: authorized partial under semantic unknown</h3>
+<p>A report has independent extraction sections <code>X</code> and <code>Y</code>. X has complete current evidence, policy, authority, and support. Y&#39;s support assessor is unavailable. No dependency connects X to Y, and N and coverage enumeration pass. Full report promotion is blocked with <code>SUPPORT(Y)=U</code>; X may be emitted as <code>HELD_PARTIAL</code>. The system does not label Y false, nor does it promote X as evidence about Y.</p>
+<h3>9.14 Trace N: continuity checkpoint lost at handoff</h3>
 <p>A task resumes after context compression. The ledger retains an open obligation to verify source version, but the continuity summary omits it. All original sources and routes remain live. <code>A_route=T</code>, <code>A_ledger=T</code>, <code>A_gen</code> may be locally <code>T</code>, but <code>Obligation=F</code> and <code>Handoff=F</code>. The first failed lift is the handoff scale, even if the underlying omission originated in an earlier compressor not represented in the trace. This illustrates diagnostic rather than unique-root semantics.</p>
-<h3 id="915-trace-summary">9.15 Trace summary</h3>
+<h3>9.15 Trace summary</h3>
 <table>
 <thead>
 <tr>
@@ -566,8 +599,7 @@ return STRUCTURAL_READY only if every required level is PASS
 <th>Certificate/control lesson</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>A</td>
 <td>none under declared scope</td>
 <td>conditional lift, not universal truth</td>
@@ -605,7 +637,7 @@ return STRUCTURAL_READY only if every required level is PASS
 <tr>
 <td>H</td>
 <td>cap exhausted</td>
-<td>termination bound ≠ correctness</td>
+<td>iteration bound ≠ total termination or correctness</td>
 </tr>
 <tr>
 <td>I</td>
@@ -637,11 +669,10 @@ return STRUCTURAL_READY only if every required level is PASS
 <td>continuity obligations fail</td>
 <td>fluent continuation ≠ preserved commitments</td>
 </tr>
-</tbody>
-</table>
-<hr />
-<h2 id="10-index-align-cert-decision-object-and-complexity-boundary">10. <code>INDEX-ALIGN-CERT</code>: Decision Object and Complexity Boundary</h2>
-<h3 id="101-input-and-witness">10.1 Input and witness</h3>
+</tbody></table>
+<hr>
+<h2>10. <code>INDEX-ALIGN-CERT</code>: Decision Object and Complexity Boundary</h2>
+<h3>10.1 Input and witness</h3>
 <p><strong>Definition 28 (Decision object).</strong> An instance of <code>INDEX-ALIGN-CERT</code> contains:</p>
 <ol>
 <li>finite typed index spaces and registry epochs;</li>
@@ -655,10 +686,10 @@ return STRUCTURAL_READY only if every required level is PASS
 </ol>
 <p>A witness is the vector of predicate outcomes, evidence and counterexample references, refinement paths, affected closures, residual items, and evidence supporting the release decision. The release decision itself is verifier output, not evidence of its own correctness. The output set is <code>{CERTIFIED, HELD_PARTIAL, REFUSED, AWAITING_HUMAN, NO_VERDICT}</code>.</p>
 <p>This object does not ask “is this LLM aligned in general?” It asks whether a fixed trace satisfies a fixed restricted contract with adequate evidence. The object is meaningful only with its specification and scope.</p>
-<h3 id="102-restricted-supplied-certificate-verification">10.2 Restricted supplied-certificate verification</h3>
+<h3>10.2 Restricted supplied-certificate verification</h3>
 <p>The verifier performs a bounded sequence: schema checks; typed lineage checks; content-receipt comparisons; causal graph validation; authority/policy comparisons; support-oracle calls; graph reachability; correction-frontier checks; cross-scale witness checks; and final conjunctive release. Proposition 10 gives a restricted linear bound when primitive and oracle costs are bounded. Without that restriction, graph operations are polynomial in supplied nodes and edges, while window enumeration depends on the declared family.</p>
 <p>No theorem here places general Index Alignment in P or NP. Finding an optimal route, discovering all side effects, independently enumerating obligations, constructing refinement witnesses, and determining unrestricted natural-language support are separate tasks. Polynomial verification of a supplied witness is not a classification of those tasks.</p>
-<h3 id="103-p-np-non-claims-d1d9">10.3 P-NP non-claims D1–D9</h3>
+<h3>10.3 P-NP non-claims D1–D9</h3>
 <p>Following the P-NP seat, the paper expressly states:</p>
 <ul>
 <li><strong>D1.</strong> No reduction from SAT or another NP-complete problem to general Index Alignment is given.</li>
@@ -672,13 +703,13 @@ return STRUCTURAL_READY only if every required level is PASS
 <li><strong>D9.</strong> No P-versus-NP consequence, RH consequence, or Coleman Conjecture consequence is claimed.</li>
 </ul>
 <p>The useful complexity claim is deliberately modest: explicit witnesses make some audits mechanically checkable and their costs measurable.</p>
-<h3 id="104-search-verification-enforcement-and-effect">10.4 Search, verification, enforcement, and effect</h3>
+<h3>10.4 Search, verification, enforcement, and effect</h3>
 <p>Four costs must not be conflated. <strong>Search</strong> finds routes, evidence, or repairs. <strong>Verification</strong> checks the supplied witness. <strong>Enforcement</strong> permits or blocks an execution. <strong>Observed effect</strong> records what the environment actually did. A verifier can be cheap while search is expensive; a correct verifier can be attached to a broken executor; a blocked action can still produce partial logs or externally visible effects before the block.</p>
 <p>The AIce shipped simulator illustrates the distinction: advisory selection can be rejected yet executed by the simulator. A local wrapper can enforce blocking, but its E2 false-stop demonstrates a utility loss. These are source-reported synthetic observations, not a new live validation.</p>
-<hr />
-<h2 id="11-evaluation-protocol">11. Evaluation Protocol</h2>
+<hr>
+<h2>11. Evaluation Protocol</h2>
 <p>This section specifies the evaluation that tests the construction. The real-transcript and mutant suites it describes are the next experimental step; AIce/CWI figures quoted below are source-reported synthetic construction evidence for neighboring components.</p>
-<h3 id="111-research-questions">11.1 Research questions</h3>
+<h3>11.1 Research questions</h3>
 <p><strong>RQ1 — Sound booleanization.</strong> Can independent raters and rule-based oracles assign authorization and compliance labels under fixed specifications without unacceptable disagreement?</p>
 <p><strong>RQ2 — Localization.</strong> Does the first failed declared lift or concurrent frontier predict the actual repair site better than scalar-only telemetry?</p>
 <p><strong>RQ3 — Composition.</strong> Do R/C/N/K witnesses prevent false global acceptance under omitted side effects, shared invariants, stale approvals, and correction races?</p>
@@ -686,11 +717,11 @@ return STRUCTURAL_READY only if every required level is PASS
 <p><strong>RQ5 — Cost and utility.</strong> What latency, token, dollar, human-review, false-block, and missed-coverage costs arise at each scale?</p>
 <p><strong>RQ6 — Drift.</strong> How often do criteria, registries, sources, and assessors change enough to invalidate old certificates?</p>
 <p>These are questions, not predicted positive results.</p>
-<h3 id="112-evaluation-units-and-independent-labels">11.2 Evaluation units and independent labels</h3>
+<h3>11.2 Evaluation units and independent labels</h3>
 <p>Use operation/obligation episodes and whole traces. Episode labels include <code>A</code>, <code>C</code>, evidence sufficiency, causal freshness, and expected detection. Trace labels include global invariants, required obligation sets, refinement failures, corrections, and concurrent interleavings.</p>
-<p>Ground truth must come from independently constructed specifications, hand-audited synthetic traces, or deliberately injected faults with known mechanisms. The monitor's own output cannot supply its labels. Pre-register thresholds, trace generation, primary outcomes, exclusions, and analysis before comparison; keep exploratory analyses separate.</p>
-<p>Human raters label a subset independently before discussion. Report agreement, adjudication, and unresolved cases. Model-based support assessors must be compared with human or exact synthetic labels; another LLM's agreement is not independent proof. Cer-Eval motivates selective verification cost analysis, while VeriLA motivates explicit agent criteria; neither supplies labels for this protocol.</p>
-<h3 id="113-diagnostic-benchmark-matrix">11.3 Diagnostic benchmark matrix</h3>
+<p>Ground truth must come from independently constructed specifications, hand-audited synthetic traces, or deliberately injected faults with known mechanisms. The monitor&#39;s own output cannot supply its labels. Pre-register thresholds, trace generation, primary outcomes, exclusions, and analysis before comparison; keep exploratory analyses separate.</p>
+<p>Human raters label a subset independently before discussion. Report agreement, adjudication, and unresolved cases. Model-based support assessors must be compared with human or exact synthetic labels; another LLM&#39;s agreement is not independent proof. Cer-Eval motivates selective verification cost analysis, while VeriLA motivates explicit agent criteria; neither supplies labels for this protocol.</p>
+<h3>11.3 Diagnostic benchmark matrix</h3>
 <table>
 <thead>
 <tr>
@@ -700,8 +731,7 @@ return STRUCTURAL_READY only if every required level is PASS
 <th>Required detection</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>MoE routing</td>
 <td>live permitted experts</td>
 <td>stale epoch, unauthorized substitution, missing type</td>
@@ -761,18 +791,17 @@ return STRUCTURAL_READY only if every required level is PASS
 <td>silent rubric or registry drift</td>
 <td>new epoch/invalidated certificate</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>The chunk→section→source→cross-source→handoff ladder is preregistered per task. Not every task uses every level, and skipped levels must be justified as inapplicable rather than silently omitted.</p>
-<h3 id="114-detection-metrics">11.4 Detection metrics</h3>
+<h3>11.4 Detection metrics</h3>
 <p>Let <code>Y=1</code> denote an independently labeled violation and <code>D=1</code> a monitor violation detection. On valid evaluable episodes report TP, FP, TN, FN and</p>
 <p><code>TPR=TP/(TP+FN)</code>, <code>FPR=FP/(FP+TN)</code>, <code>precision=TP/(TP+FP)</code>.</p>
 <p>Use <code>n/a</code> for empty denominators. Report <code>U</code> separately; do not encode it as either detection or non-detection. Where policy holds on <code>U</code>, measure that control choice under false-block and missed-violation outcomes without changing the epistemic label.</p>
 <p>Trace-level metrics are global-violation recall, R/C/N/K failure recall by category, false global acceptance, false-block rate, detection latency, correction propagation completeness, stale-approval acceptance, and lineage completeness. A certificate that refuses everything could have zero false acceptance and unacceptable utility; a certificate that accepts everything could have high task completion and no safety value.</p>
-<h3 id="115-evidence-and-composition-metrics">11.5 Evidence and composition metrics</h3>
+<h3>11.5 Evidence and composition metrics</h3>
 <p><code>EvidenceCoverage(τ)=|Q_sound(τ)|/|Q_req(τ)|</code>, with <code>n/a</code> for an empty required universe and a separate vacuity flag. Report unknown rate and reasons, threshold-supplied rate, content-bound versus hash-only coverage, fresh-snapshot coverage, asynchronous side-effect coverage, refinement-witness coverage, and correction-frontier completeness.</p>
 <p>Composition reporting includes the number of parent obligations with valid R/C/N/K witnesses, missing cross-operation invariants, cross-scale transfer failures, outside interference, and stale snapshot acceptance. Fine-scale pass rate is not a substitute for any of these.</p>
-<h3 id="116-execution-classification">11.6 Execution classification</h3>
+<h3>11.6 Execution classification</h3>
 <p>Every fault variant requires the unmodified clean baseline under the same configuration.</p>
 <ul>
 <li><strong>CLEAN_PASS:</strong> baseline satisfies named checks; otherwise comparison is invalid or labeled baseline failure.</li>
@@ -782,13 +811,13 @@ return STRUCTURAL_READY only if every required level is PASS
 <li><strong>EXECUTION_ERROR:</strong> enforcement or environment fails even if detection itself is valid.</li>
 </ul>
 <p>A nonzero exit status alone never counts as detection. Named test results and reasons must be inspected. This corrects the methodological hazard in same-author mutation scripts that increment “killed” for any nonzero exit.</p>
-<h3 id="117-baselines-and-ablations">11.7 Baselines and ablations</h3>
-<p>Compare against: scalar weighted deficit; raw model self-assessment; citation-membership only; receipt-coverage only; global end-of-trace judge; per-call local checks without R/C/N/K; and human review alone where feasible. Match model capability, context, tool access, token budget, and human time as closely as possible.</p>
+<h3>11.7 Baselines and ablations</h3>
+<p>Compare against: a compensatory scalar weighted deficit; a non-compensatory scalar zero-deficit rule implementing the same necessary conditions; raw model self-assessment; citation-membership only; receipt-coverage only; global end-of-trace judge; per-call local checks without R/C/N/K; and human review alone where feasible. Match model capability, context, tool access, token budget, and human time as closely as possible.</p>
 <p>Ablate typed lineage, content-bound receipts, noninterference checks, correction closure, cross-scale receipts, independent assessors, non-vacuity, and partial-release logic. One at a time ablations identify necessary implementation components but do not prove formal necessity. Interactions—especially C with N, and K with correction propagation—require joint ablations.</p>
-<h3 id="118-cost-and-reporting">11.8 Cost and reporting</h3>
+<h3>11.8 Cost and reporting</h3>
 <p>Report wall latency per stage, number and size of model calls, tokens, dollars, storage, graph traversal, human-review minutes, and energy where measurable. Separate verification cost from repair and enforcement. Include false-block cost and missed-coverage cost. Selective verification may reduce assessor calls, but the selection policy itself must be evaluated for missed violations.</p>
 <p>The minimum report has seven axes: detection; T/F/U/NV reasons; execution; evidence coverage; R/C/N/K composition; corrections; and utility/cost. Reproducibility requires preregistration, seeds, versions, hashes, dependency versions, timeouts, and exploratory/confirmatory separation.</p>
-<h3 id="119-eight-core-falsifier-fixtures">11.9 Eight core falsifier fixtures</h3>
+<h3>11.9 Eight core falsifier fixtures</h3>
 <p>These are <strong>fixtures, not run results</strong>.</p>
 <ol>
 <li><strong>COV-pass/FID-fail:</strong> all chunks receipted but conclusion unsupported. Wrong design passes if COV alone releases.</li>
@@ -801,29 +830,32 @@ return STRUCTURAL_READY only if every required level is PASS
 <li><strong>Index echo:</strong> cited identifier absent from visible activations. Wrong design passes without generation–index lineage.</li>
 </ol>
 <p>A fixture falsifies only the named design or implementation conformance condition. It never falsifies RH, the Coleman Conjecture, external Kakeya dimension, or the normative content of an authority predicate. Additional required fixtures test shared budgets, omitted side effects, concurrent failures, authority pollution, replayed approvals, empty obligation sets, and harness crashes.</p>
-<h3 id="1110-existing-construction-evidence-and-its-limits">11.10 Existing construction evidence and its limits</h3>
+<h3>11.10 Existing construction evidence and its limits</h3>
 <p>The opto source reports a versioned synthetic run with 110 runs, zero frozen-expectation mismatches, and 539 tests. These are quoted as source-reported artifacts; no suite was rerun here. They do not establish live efficacy. Limitations include handoff RPL=0, live <code>L_N=.75</code> versus compressed 1, order-unaware replay, and in-process registry forgery.</p>
 <p>The open-addressing probe reports 7/8 confirmatory predictions held with P3 failed and still unresolved. This belongs to a neighboring hash-table model, not LLM alignment. Its value here is methodological: failed predictions remain visible, exploratory sweeps are not confirmatory, and simulation is not a theorem.</p>
 <p>The supplied <code>thinkingmachines.txt</code> documents Benevolence Drift Case 01 only: an initially evasive/neutral response became “Yes” after a forced binary prompt. Case 02 has no forced-binary follow-up in the supplied material. Self-reported score changes are not independent metrics, and neither case validates boolean index alignment.</p>
-<hr />
-<h2 id="12-extended-related-work-failure-modes-and-research-questions">12. Extended Related Work, Failure Modes, and Research Questions</h2>
-<h3 id="121-attribution-support-and-causal-faithfulness">12.1 Attribution, support, and causal faithfulness</h3>
+<hr>
+<h2>12. Extended Related Work, Failure Modes, and Research Questions</h2>
+<h3>12.1 Attribution, support, and causal faithfulness</h3>
 <p>AIS frames attribution as whether generated text is supported by an identified source (Rashkin et al., 2023), and ALCE provides citation-oriented generation and evaluation (Gao et al., 2023). These are closely related to <code>Support(q)</code>, but they do not make support identical to index membership. Our certificate deliberately separates <code>Lineage</code>, <code>ActiveEvidence</code>, and <code>Fidelity</code> so a syntactically valid citation cannot compensate for an unsupported statement.</p>
 <p>Wallat et al. (2024) further distinguish citation correctness from causal faithfulness: a cited document can support an answer without being the document the model actually used. Our event lineage records visible activation and snapshot access, not a complete causal explanation of neural computation. Thus even PASS on <code>ActiveEvidence</code> is evidence about the exposed trace, not a proof of internal causal reliance. This is an explicit limit, not a problem that can be solved by adding more citation IDs.</p>
 <p>FABLES evaluates book-length faithfulness and content selection, including omission errors (Kim et al., 2024). Its human annotation discipline motivates claim-level sampling and omission checks. RAGChecker diagnoses retriever and generator modules with fine-grained metrics (Ru et al., 2024). The present framework differs by making each necessary relation a non-compensatory certificate conjunct with witness paths, while reusing the lesson that aggregate answer quality can conceal module defects.</p>
-<h3 id="122-position-effects-and-scale-placement">12.2 Position effects and scale placement</h3>
-<p>Lost in the Middle shows that relevant information's position can affect long-context performance (Liu et al., 2024). This motivates a benchmark stratification by source location and scale, not a universal rule that middle evidence always fails. The scale tree must preserve source offsets and version identity so that a missing middle receipt is diagnosable. Chunk size, overlap, ordering, and hierarchy are experimental factors rather than fixed optimal design parameters.</p>
-<p>The framework's directional coverage analog likewise requires declared directions of relevance, not a metaphysical claim that all semantic directions have been captured. Source coverage can be stratified by evidence class, tenant, modality, temporal interval, and claim type. An omitted class cannot be repaired by high coverage in other classes.</p>
-<h3 id="123-agent-criteria-reasoning-verification-and-independent-judgments">12.3 Agent criteria, reasoning verification, and independent judgments</h3>
+<h3>12.2 Position effects and scale placement</h3>
+<p>Lost in the Middle shows that relevant information&#39;s position can affect long-context performance (Liu et al., 2024). This motivates a benchmark stratification by source location and scale, not a universal rule that middle evidence always fails. The scale tree must preserve source offsets and version identity so that a missing middle receipt is diagnosable. Chunk size, overlap, ordering, and hierarchy are experimental factors rather than fixed optimal design parameters.</p>
+<p>The framework&#39;s directional coverage analog likewise requires declared directions of relevance, not a metaphysical claim that all semantic directions have been captured. Source coverage can be stratified by evidence class, tenant, modality, temporal interval, and claim type. An omitted class cannot be repaired by high coverage in other classes.</p>
+<h3>12.3 Agent criteria, reasoning verification, and independent judgments</h3>
 <p>VeriLA emphasizes interpretable verification of agent failures against explicit criteria (Sung, Kim, and Zhang, 2025). Derailer-Rerailer studies adaptive verification for reasoning (Wan et al., 2025), and Cer-Eval studies cost-efficient evaluation with statistical guarantees (Wang et al., 2025). These works motivate staged verification and cost reporting, but their methods and guarantees do not transfer automatically to non-compensatory index certificates.</p>
 <p>Sycophancy research shows that model responses can track user preferences in undesirable ways (Sharma et al., 2024); BenchForm studies conformity to group responses (Weng, Chen, and Wang, 2025). For our protocol, independent pre-discussion judgments reduce one obvious channel of anchoring but do not eliminate shared training data, common rubric blind spots, or correlated tools. Multiple model judges are therefore not independent in the strong evidentiary sense merely because they return separate answers.</p>
-<h3 id="124-criteria-drift-and-governance">12.4 Criteria drift and governance</h3>
+<h3>12.4 Criteria drift and governance</h3>
 <p>EvalGen reports criteria drift: judging outputs helps users refine the criteria by which they judge (Shankar et al., 2024). This complicates any claim that a complete fixed rubric can always be specified in advance. Our response is not to deny drift but to version it. Exploratory rubric development creates a new specification epoch; confirmatory runs retain a frozen manifest. Old certificates are comparable only under explicit migration rules.</p>
 <p>Grill (2024) places testing infrastructures in a sociotechnical and political context. This matters because authority, acceptable risk, and release scope are not purely technical observations. A certificate can faithfully implement a harmful or contested policy. Governance must name who sets obligations, who can revise them, whose evidence counts, and who bears false-block and missed-violation costs. Technical provenance does not settle those normative questions.</p>
-<h3 id="125-refinement-runtime-verification-and-concurrency">12.5 Refinement, runtime verification, and concurrency</h3>
+<h3>12.5 Refinement, runtime verification, and concurrency</h3>
 <p>Abadi and Lamport (1991) provide refinement-mapping background; our R is a certificate-specific child-to-parent implication, not a quotation of their existence theorem. Bauer, Leucker, and Schallhart (2011) motivate inconclusive runtime-monitor outcomes. Goguen and Meseguer (1982) provide noninterference background. Herlihy and Wing (1990) supply linearizability, and Lamport (1978) happened-before. These formal traditions clarify R/C/N/K but do not prove that a language model satisfies them.</p>
 <p>The open-addressing work of Farach-Colton, Krapivin, and Kuszmaul (2024/2025) concerns expected probe complexity in specified random-probing hash-table models. Stable placement and bounded lookup are analogies for receipt custody only. A hash-table slot has no authority semantics; successful lookup is not semantic reading; the cited theorems do not establish agent alignment or correction behavior over unbounded retractions.</p>
-<h3 id="126-failure-mode-catalog">12.6 Failure-mode catalog</h3>
+<h3>12.5a Certificate and enforcement precedents</h3>
+<p>Proof-Carrying Code separates supplied safety evidence from a consumer checker (Necula, 1997); assurance-case work examines the gap between a proof, its model, and actual software behavior (Chaki et al., 2009). Least privilege, separation of privilege and complete mediation are established protection principles (Saltzer and Schroeder, 1975), not new consequences of index terminology.</p>
+<p>Recent close comparisons include Proof-Carrying Agent Actions (Kadyrbek and Mansurova, 2026) and Proposal–Certification–Execution (Liu Yanglet et al., 2026). PCAA reports a bounded certificate battery and microbenchmark under trusted tool contracts; the PCE work develops a formal/proposal account of trace certification. Neither validates this construction. A novelty claim must identify what the particular four-predicate integration, corrections and partial-release protocol add beyond these precedents. AgentDojo (Debenedetti et al., 2024) supplies independently developed adversarial tasks for a future utility-and-security evaluation.</p>
+<h3>12.6 Failure-mode catalog</h3>
 <p><strong>Specification underapproximation.</strong> The obligation universe omits asynchronous work, shared resources, or semantic claims. Local checks pass and global acceptance is false. Defense: independent manifests, dynamic closure, side-effect inventory. Residual risk: unknown unknowns remain.</p>
 <p><strong>Checker unsoundness.</strong> A support model labels contradiction as support. Defense: exact synthetic controls, human labels, external assessors, calibrated abstention. Residual risk: correlated assessor failure.</p>
 <p><strong>Semantic booleanization error.</strong> Designers force a graded or contested judgment into PASS/FAIL. Defense: retain <code>UNKNOWN</code>, <code>CONTESTED</code>, thresholds, and assessor identity; booleanize only release control. Residual risk: thresholds can encode arbitrary value judgments.</p>
@@ -836,7 +868,7 @@ return STRUCTURAL_READY only if every required level is PASS
 <p><strong>Criteria drift.</strong> Rubric changes while old certificates retain the same label. Defense: versioned manifest and confirmatory freeze. Residual risk: migration rules can hide substantive drift.</p>
 <p><strong>Enforcement gap.</strong> Selected, gated, executed, and observed actions diverge. Defense: separate records and end-to-end effects audit. Residual risk: irreversible action before gate.</p>
 <p><strong>Cost shifting.</strong> Verification reduces model calls but increases human annotation or storage. Defense: report all cost axes and false blocks. Residual risk: unpriced externalities and review burden.</p>
-<h3 id="127-open-research-questions">12.7 Open research questions</h3>
+<h3>12.7 Open research questions</h3>
 <ol>
 <li>Which useful parent specifications admit sound and efficiently checkable refinement maps?</li>
 <li>How can obligation universes be independently enumerated while agents generate new work dynamically?</li>
@@ -851,171 +883,138 @@ return STRUCTURAL_READY only if every required level is PASS
 <li>How can independent verifiers be instantiated without exposing protected source content?</li>
 <li>What do false blocks cost users, and who adjudicates their appeal?</li>
 </ol>
-<hr />
-<h2 id="13-scope-and-limitations">13. Scope and Limitations</h2>
-<h3 id="131-empirical-limitations">13.1 Empirical limitations</h3>
-<p>No new experiments were performed. All worked traces are synthetic and hand-constructed. No production trace, model checkpoint, user dataset, or real support assessor was evaluated. Existing AIce/CWI synthetic figures are source-reported and were not rerun. The construction therefore has no demonstrated accuracy, false-block rate, latency advantage, or task-success improvement.</p>
+<hr>
+<h2>13. Scope and Limitations</h2>
+<h3>13.1 Empirical limitations</h3>
+<p>No new language-model or real-system experiments were performed. The revision includes deterministic checks of finite specification examples in <code>audit/check_specification.py</code>; these are not executions of the fourteen traces or thirty-two mutation designs, and do not establish efficacy. All worked traces remain synthetic and hand-constructed. No production trace, model checkpoint, user dataset, or real support assessor was evaluated. Existing AIce/CWI synthetic figures are source-reported and were not rerun. The construction therefore has no demonstrated accuracy, false-block rate, latency advantage, or task-success improvement.</p>
 <p>Real-system efficacy is open. In particular, R/C/N/K may be difficult or impossible to establish for opaque models and open tool ecosystems. Complete evidence coverage is often unavailable. The appropriate outcome in such cases is limited scope or <code>NO_VERDICT</code>, not a default boolean pass.</p>
-<h3 id="132-semantic-limitations">13.2 Semantic limitations</h3>
+<h3>13.2 Semantic limitations</h3>
 <p>Index alignment is not preference alignment, truth, beneficence, fairness, or safety. A certificate is relative to a specification, policy, trace, and assessor. A correct certificate under a bad specification can authorize a bad outcome. Exposed index lineage is not an account of all neural causes. <code>SUPPORT/FID</code> assessor reliability remains unresolved, and content-bound receipts cannot discharge it.</p>
-<p>The four predicate families are not claimed to exhaust every desirable systems property. They operationalize portions of Coleman (2026a)'s four consistencies. Additional privacy, security, fairness, legal, and domain-safety obligations require their own specifications.</p>
-<h3 id="133-geometric-and-program-boundaries">13.3 Geometric and program boundaries</h3>
-<p>Wang–Zahl and Guth–Wang–Zahl are theorem-background only. No asymptotic inequality is converted into an LLM boolean. Sticky KNS fan, sticky Kakeya proof case, and computational sticky custody are distinct. KNS-OBS-1 is a closure of a typed observability object only. The CC-S packaging argument is not a positive mathematical result, and program-level exclusions do not enter this paper's proof ledger. RH and the Coleman Conjecture remain open and are not addressed by the construction.</p>
+<p>The four predicate families are not claimed to exhaust every desirable systems property. They operationalize portions of Coleman (2026a)&#39;s four consistencies. Additional privacy, security, fairness, legal, and domain-safety obligations require their own specifications.</p>
+<h3>13.3 Geometric and program boundaries</h3>
+<p>Wang–Zahl and Guth–Wang–Zahl are theorem-background only. No asymptotic inequality is converted into an LLM boolean. Sticky KNS fan, sticky Kakeya proof case, and computational sticky custody are distinct. KNS-OBS-1 is a closure of a typed observability object only. The CC-S packaging argument is not a positive mathematical result, and program-level exclusions do not enter this paper&#39;s proof ledger. RH and the Coleman Conjecture remain open and are not addressed by the construction.</p>
 <p><code>h&lt;1</code> is retained only as a stipulated personal-data/evaluator-non-sovereignty design boundary, not a measured privacy or sovereignty score. Private personal facts are excluded from synthetic predicates and cannot raise or lower a verdict. This does not prove privacy.</p>
-<h3 id="134-provenance-and-contribution-limitations">13.4 Provenance and contribution limitations</h3>
+<h3>13.4 Provenance and contribution limitations</h3>
 <p>Coleman (2026a) and Coleman (2026b) are unpublished manuscripts by the author. Wang, Guth, and Zahl have no affiliation with this work. No all-eight-agent contribution is claimed. Available contributions were Kakeyalogic, L, P-NP, Riemann probe, AIce, Grok Bot, the combined team notes, and a local/public-manifest Git inventory handoff; one room was unreachable and is not listed as a contributor.</p>
-<p>New Git evidence is restricted to the public-repository manifest. The final handoff reports <strong>26 official commit-pinned public snapshots, 177,064,129 archive bytes, and 717 extracted research-text files across 26 public repository folders</strong>. Extraction is not reading or validation; this paper did not indiscriminately review those 717 files and cites no new archive document as individually inspected evidence. <code>-Colemanfiles</code>, all private repositories, quarantined material, and excluded legacy GIUS materials are excluded by owner scope. Private/excluded content was verified absent from the shareable evidence paths by the handoff; none was incorporated and no attempt was made to fill excluded gaps. Snapshots do not include complete branches, tags, releases, issues, PRs, history, LFS, wikis, Actions, or submodule inventories; this is not “Everything” archival completion. No repository write occurred.</p>
-<h3 id="135-complexity-and-security-limitations">13.5 Complexity and security limitations</h3>
+<p>New Git evidence is restricted to the public-repository manifest. The final handoff reports <strong>26 official commit-pinned public snapshots, 177,064,129 archive bytes, and 717 extracted research-text files across 26 public repository folders</strong>. Extraction is not reading or validation; this paper did not indiscriminately review those 717 files and cites no new archive document as individually inspected evidence. <code>-Colemanfiles</code>, all private repositories, quarantined material, and excluded legacy GIUS materials are excluded by owner scope. The handoff reports that private/excluded content was absent from the shareable evidence paths; the underlying 26-repository inventory is not included in this package and those totals/exclusions were not independently re-audited here; none was incorporated and no attempt was made to fill excluded gaps. Snapshots do not include complete branches, tags, releases, issues, PRs, history, LFS, wikis, Actions, or submodule inventories; this is not “Everything” archival completion. The original handoff reported no repository write; subsequent package revisions are tracked separately in Git.</p>
+<h3>13.5 Complexity and security limitations</h3>
 <p>The restricted verification bound assumes supplied certificates, finite graphs, declared windows, and bounded primitive/oracle checks. It is not a general complexity classification. The paper does not prove P≠NP, NP-hardness, or an “NP mechanism.” Cryptographic identifiers are integrity tools under stated key boundaries, not authority or semantic proof. An in-process verifier cannot be independent of itself.</p>
-<hr />
-<h2 id="14-conclusion">14. Conclusion</h2>
+<hr>
+<h2>14. Conclusion</h2>
 <p>Index alignment becomes traceable as a boolean certification problem only after substantial discipline is added: typed indices, fixed registry and policy snapshots, independently declared obligations, explicit evidence, content-bound receipts, correction-aware dependencies, and non-compensatory release rules. Under those conditions, routing, ledger, generation, and continuity can be checked as separate predicate families, and the earliest known failed scale or concurrent failure frontier can be returned with witnesses. This is a finite systems construction, not a consequence of Kakeya geometry.</p>
 <p>The central composition result is conditional. Sound local certificates lift across declared abstraction levels when refinement, complete coverage, noninterference, and correction-aware freshness hold. Local passes alone are insufficient, and the induction is not over model size or training scale. Sticky nesting supplies a simple case; non-sticky bands are repaired by affected-closure invalidation and capped rechecking; residuals remain visible. Structural readiness does not subsume cross-index/scale transfer, authority, scope, or external support/fidelity.</p>
-<p>The practical thesis is therefore deliberately narrow: <strong>at fixed caller-supplied thresholds, a sparse system's declared index-consistency contract can be audited by PASS-only boolean release bits while retaining FAIL, UNKNOWN, and NO_VERDICT diagnostics and evidence paths</strong>. Coverage is not fidelity, order is not authority, custody is not truth, and a blocked full release need not suppress authorized unaffected partial output. Whether this improves real systems remains an empirical question.</p>
-<hr />
+<p>The practical thesis is therefore deliberately narrow: <strong>at fixed caller-supplied thresholds, a sparse system&#39;s declared index-consistency contract can be audited by PASS-only boolean release bits while retaining FAIL, UNKNOWN, and NO_VERDICT diagnostics and evidence paths</strong>. Coverage is not fidelity, order is not authority, custody is not truth, and a blocked full release need not suppress authorized unaffected partial output. Whether this improves real systems remains an empirical question.</p>
+<hr>
 <h2 class="new-page">References</h2>
 <ol>
-<li>
-<p>Coleman, M. (2026a). <em>Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity</em>. Unpublished manuscript.</p>
+<li><p>Coleman, M. (2026a). <em>Index Alignment in Large Language Models: Sparse Routing, State Ledgers, and Generative Continuity</em>. Unpublished manuscript.</p>
 </li>
-<li>
-<p>Coleman, M. (2026b). <em>Kakeya Grain at the Slab: Induction on Scales, Continuous Direction, and Prime-Carrying Custody under Love-Squared Coherence</em>. Unpublished manuscript.</p>
+<li><p>Coleman, M. (2026b). <em>Kakeya Grain at the Slab: Induction on Scales, Continuous Direction, and Prime-Carrying Custody under Love-Squared Coherence</em>. Unpublished manuscript.</p>
 </li>
-<li>
-<p>Shazeer, N., Mirhoseini, A., Maziarz, K., Davis, A., Le, Q., Hinton, G., &amp; Dean, J. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. ICLR. https://arxiv.org/abs/1701.06538</p>
+<li><p>Shazeer, N., Mirhoseini, A., Maziarz, K., Davis, A., Le, Q., Hinton, G., &amp; Dean, J. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. ICLR. <a href="https://arxiv.org/abs/1701.06538">https://arxiv.org/abs/1701.06538</a></p>
 </li>
-<li>
-<p>Lepikhin, D., Lee, H., Xu, Y., Chen, D., Firat, O., Huang, Y., Krikun, M., Shazeer, N., &amp; Chen, Z. (2020). GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding. https://arxiv.org/abs/2006.16668</p>
+<li><p>Lepikhin, D., Lee, H., Xu, Y., Chen, D., Firat, O., Huang, Y., Krikun, M., Shazeer, N., &amp; Chen, Z. (2020). GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding. <a href="https://arxiv.org/abs/2006.16668">https://arxiv.org/abs/2006.16668</a></p>
 </li>
-<li>
-<p>Fedus, W., Zoph, B., &amp; Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR. https://arxiv.org/abs/2101.03961</p>
+<li><p>Fedus, W., Zoph, B., &amp; Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR. <a href="https://arxiv.org/abs/2101.03961">https://arxiv.org/abs/2101.03961</a></p>
 </li>
-<li>
-<p>Jiang, A. Q., et al. (2024). Mixtral of Experts. https://arxiv.org/abs/2401.04088</p>
+<li><p>Jiang, A. Q., et al. (2024). Mixtral of Experts. <a href="https://arxiv.org/abs/2401.04088">https://arxiv.org/abs/2401.04088</a></p>
 </li>
-<li>
-<p>Cai, W., et al. (2024). A Survey on Mixture of Experts in Large Language Models. https://arxiv.org/abs/2407.06204</p>
+<li><p>Cai, W., et al. (2024). A Survey on Mixture of Experts in Large Language Models. <a href="https://arxiv.org/abs/2407.06204">https://arxiv.org/abs/2407.06204</a></p>
 </li>
-<li>
-<p>Yue, T., et al. (2024). Ada-K Routing: Boosting the Efficiency of MoE-based LLMs. https://arxiv.org/abs/2410.10456v1</p>
+<li><p>Yue, T., et al. (2024). Ada-K Routing: Boosting the Efficiency of MoE-based LLMs. <a href="https://arxiv.org/abs/2410.10456v1">https://arxiv.org/abs/2410.10456v1</a></p>
 </li>
-<li>
-<p>Cai, R., Ro, Y., Kim, G.-W., Wang, P., Bejnordi, B. E., Akella, A., &amp; Wang, Z. (2024). Read-ME: Refactorizing LLMs as Router-Decoupled Mixture of Experts with System Co-Design. https://arxiv.org/abs/2410.19123</p>
+<li><p>Cai, R., Ro, Y., Kim, G.-W., Wang, P., Bejnordi, B. E., Akella, A., &amp; Wang, Z. (2024). Read-ME: Refactorizing LLMs as Router-Decoupled Mixture of Experts with System Co-Design. <a href="https://arxiv.org/abs/2410.19123">https://arxiv.org/abs/2410.19123</a></p>
 </li>
-<li>
-<p>Vinyals, O., Fortunato, M., &amp; Jaitly, N. (2015). Pointer Networks. NeurIPS. https://arxiv.org/abs/1506.03134</p>
+<li><p>Vinyals, O., Fortunato, M., &amp; Jaitly, N. (2015). Pointer Networks. NeurIPS. <a href="https://arxiv.org/abs/1506.03134">https://arxiv.org/abs/1506.03134</a></p>
 </li>
-<li>
-<p>Lewis, P., et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS. https://arxiv.org/abs/2005.11401</p>
+<li><p>Lewis, P., et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS. <a href="https://arxiv.org/abs/2005.11401">https://arxiv.org/abs/2005.11401</a></p>
 </li>
-<li>
-<p>Kim, T. E., &amp; Diaz, F. (2025). LTRR: Learning To Rank Retrievers for LLMs. https://arxiv.org/abs/2506.13743</p>
+<li><p>Kim, T. E., &amp; Diaz, F. (2025). LTRR: Learning To Rank Retrievers for LLMs. <a href="https://arxiv.org/abs/2506.13743">https://arxiv.org/abs/2506.13743</a></p>
 </li>
-<li>
-<p>Wu, M., Liu, Z., Li, X., Lan, Y., Yan, Y., Wang, S., Yang, C., Yu, M., Zeng, Z., &amp; Sun, M. (2026). Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval (GraphAnchor). https://arxiv.org/abs/2601.16462</p>
+<li><p>Wu, M., Liu, Z., Li, X., Lan, Y., Yan, Y., Wang, S., Yang, C., Yu, M., Zeng, Z., &amp; Sun, M. (2026). Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval (KAIR). <a href="https://arxiv.org/abs/2601.16462">https://arxiv.org/abs/2601.16462</a></p>
 </li>
-<li>
-<p>Liang, X., Niu, S., Li, Z., Zhang, S., Song, S., Wang, H., Yang, J., Xiong, F., Tang, B., &amp; Xi, C. (2024). Empowering Large Language Models to Set up a Knowledge Retrieval Indexer via Self-Learning. https://arxiv.org/abs/2405.16933</p>
+<li><p>Liang, X., Niu, S., Li, Z., Zhang, S., Song, S., Wang, H., Yang, J., Xiong, F., Tang, B., &amp; Xi, C. (2024). Empowering Large Language Models to Set up a Knowledge Retrieval Indexer via Self-Learning. <a href="https://arxiv.org/abs/2405.16933">https://arxiv.org/abs/2405.16933</a></p>
 </li>
-<li>
-<p>Schick, T., et al. (2023). Toolformer: Language Models Can Teach Themselves to Use Tools. https://arxiv.org/abs/2302.04761</p>
+<li><p>Schick, T., et al. (2023). Toolformer: Language Models Can Teach Themselves to Use Tools. <a href="https://arxiv.org/abs/2302.04761">https://arxiv.org/abs/2302.04761</a></p>
 </li>
-<li>
-<p>Yao, S., et al. (2023). ReAct: Synergizing Reasoning and Acting in Language Models. ICLR. https://arxiv.org/abs/2210.03629</p>
+<li><p>Yao, S., et al. (2023). ReAct: Synergizing Reasoning and Acting in Language Models. ICLR. <a href="https://arxiv.org/abs/2210.03629">https://arxiv.org/abs/2210.03629</a></p>
 </li>
-<li>
-<p>Wu, Q., et al. (2023). AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation. https://arxiv.org/abs/2308.08155</p>
+<li><p>Wu, Q., et al. (2023). AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation. <a href="https://arxiv.org/abs/2308.08155">https://arxiv.org/abs/2308.08155</a></p>
 </li>
-<li>
-<p>Hong, S., et al. (2023). MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework. https://arxiv.org/abs/2308.00352</p>
+<li><p>Hong, S., et al. (2023). MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework. <a href="https://arxiv.org/abs/2308.00352">https://arxiv.org/abs/2308.00352</a></p>
 </li>
-<li>
-<p>Fourney, A., et al. (2024). Magentic-One: A Generalist Multi-Agent System for Solving Complex Tasks. https://arxiv.org/abs/2411.04468</p>
+<li><p>Fourney, A., et al. (2024). Magentic-One: A Generalist Multi-Agent System for Solving Complex Tasks. <a href="https://arxiv.org/abs/2411.04468">https://arxiv.org/abs/2411.04468</a></p>
 </li>
-<li>
-<p>Packer, C., et al. (2023). MemGPT: Towards LLMs as Operating Systems. https://arxiv.org/abs/2310.08560</p>
+<li><p>Packer, C., et al. (2023). MemGPT: Towards LLMs as Operating Systems. <a href="https://arxiv.org/abs/2310.08560">https://arxiv.org/abs/2310.08560</a></p>
 </li>
-<li>
-<p>Park, J. S., et al. (2023). Generative Agents: Interactive Simulacra of Human Behavior. https://arxiv.org/abs/2304.03442</p>
+<li><p>Park, J. S., et al. (2023). Generative Agents: Interactive Simulacra of Human Behavior. <a href="https://arxiv.org/abs/2304.03442">https://arxiv.org/abs/2304.03442</a></p>
 </li>
-<li>
-<p>Xiao, H., Xu, H., Zhang, X., Chen, Y., &amp; Shi, X. (2026). TARL: Transaction-Aware Reliable Ledgers for Executable Memory Management in Long-Term Agents. https://arxiv.org/abs/2608.03699</p>
+<li><p>Xiao, H., Xu, H., Zhang, X., Chen, Y., &amp; Shi, X. (2026). TARL: Transaction-Aware Reliable Ledgers for Executable Memory Management in Long-Term Agents. <a href="https://arxiv.org/abs/2608.03699">https://arxiv.org/abs/2608.03699</a></p>
 </li>
-<li>
-<p>Yang, G., Liu, X., Wu, B., &amp; Wang, S. (2026). StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems. NeurIPS 2026 poster. https://neurips.cc/virtual/2026/poster/151469</p>
+<li><p>Yang, G., Liu, X., Wu, B., &amp; Wang, S. (2026). StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems. Reported NeurIPS 2026 poster. <a href="https://neurips.cc/virtual/2026/poster/151469">https://neurips.cc/virtual/2026/poster/151469</a> <strong>Unresolved citation:</strong> the independent review could not recover a confirming primary record; retained for traceability and excluded from supporting evidence pending verification.</p>
 </li>
-<li>
-<p>Wang, H., &amp; Zahl, J. (2025). Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions. https://arxiv.org/abs/2502.17655</p>
+<li><p>Wang, H., &amp; Zahl, J. (2025). Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions. <a href="https://arxiv.org/abs/2502.17655">https://arxiv.org/abs/2502.17655</a></p>
 </li>
-<li>
-<p>Guth, L., Wang, H., &amp; Zahl, J. (2026). A streamlined proof of the Kakeya set conjecture in ℝ³. https://arxiv.org/abs/2601.14411</p>
+<li><p>Guth, L., Wang, H., &amp; Zahl, J. (2026). A streamlined proof of the Kakeya set conjecture in ℝ³. <a href="https://arxiv.org/abs/2601.14411">https://arxiv.org/abs/2601.14411</a></p>
 </li>
-<li>
-<p>Wang, H., &amp; Wu, S. (2024). Restriction estimates using decoupling theorems and two-ends Furstenberg inequalities. https://arxiv.org/abs/2411.08871</p>
+<li><p>Wang, H., &amp; Wu, S. (2024). Restriction estimates using decoupling theorems and two-ends Furstenberg inequalities. <a href="https://arxiv.org/abs/2411.08871">https://arxiv.org/abs/2411.08871</a></p>
 </li>
-<li>
-<p>Rashkin, H., Nikolaev, V., Lamm, M., Aroyo, L., Collins, M., Das, D., Petrov, S., Tomar, G. S., Turc, I., &amp; Reitter, D. (2023). Measuring Attribution in Natural Language Generation Models. Computational Linguistics 49(4). https://aclanthology.org/2023.cl-4.2/</p>
+<li><p>Rashkin, H., Nikolaev, V., Lamm, M., Aroyo, L., Collins, M., Das, D., Petrov, S., Tomar, G. S., Turc, I., &amp; Reitter, D. (2023). Measuring Attribution in Natural Language Generation Models. Computational Linguistics 49(4). <a href="https://aclanthology.org/2023.cl-4.2/">https://aclanthology.org/2023.cl-4.2/</a></p>
 </li>
-<li>
-<p>Gao, T., Yen, H., Yu, J., &amp; Chen, D. (2023). Enabling Large Language Models to Generate Text with Citations. EMNLP. https://arxiv.org/abs/2305.14627</p>
+<li><p>Gao, T., Yen, H., Yu, J., &amp; Chen, D. (2023). Enabling Large Language Models to Generate Text with Citations. EMNLP. <a href="https://arxiv.org/abs/2305.14627">https://arxiv.org/abs/2305.14627</a></p>
 </li>
-<li>
-<p>Wallat, J., Heuss, M., de Rijke, M., &amp; Anand, A. (2024). Correctness is not Faithfulness in RAG Attributions. https://arxiv.org/abs/2412.18004</p>
+<li><p>Wallat, J., Heuss, M., de Rijke, M., &amp; Anand, A. (2024). Correctness is not Faithfulness in RAG Attributions. <a href="https://arxiv.org/abs/2412.18004">https://arxiv.org/abs/2412.18004</a></p>
 </li>
-<li>
-<p>Liu, N. F., et al. (2024). Lost in the Middle: How Language Models Use Long Contexts. TACL. https://aclanthology.org/2024.tacl-1.9/</p>
+<li><p>Liu, N. F., et al. (2024). Lost in the Middle: How Language Models Use Long Contexts. TACL. <a href="https://aclanthology.org/2024.tacl-1.9/">https://aclanthology.org/2024.tacl-1.9/</a></p>
 </li>
-<li>
-<p>Kim, Y., Chang, Y., Karpinska, M., Garimella, A., Manjunatha, V., Lo, K., Goyal, T., &amp; Iyyer, M. (2024). FABLES: Evaluating Faithfulness and Content Selection in Book-length Summarization. COLM. https://arxiv.org/abs/2404.01261</p>
+<li><p>Kim, Y., Chang, Y., Karpinska, M., Garimella, A., Manjunatha, V., Lo, K., Goyal, T., &amp; Iyyer, M. (2024). FABLES: Evaluating Faithfulness and Content Selection in Book-length Summarization. COLM. <a href="https://arxiv.org/abs/2404.01261">https://arxiv.org/abs/2404.01261</a></p>
 </li>
-<li>
-<p>Ru, D., et al. (2024). RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented Generation. NeurIPS. https://arxiv.org/abs/2408.08067</p>
+<li><p>Ru, D., et al. (2024). RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented Generation. NeurIPS. <a href="https://arxiv.org/abs/2408.08067">https://arxiv.org/abs/2408.08067</a></p>
 </li>
-<li>
-<p>Sung, Y. Y., Kim, H., &amp; Zhang, D. (2025). VeriLA: A Human-Centered Evaluation Framework for Interpretable Verification of LLM Agent Failures. https://arxiv.org/abs/2503.12651</p>
+<li><p>Sung, Y. Y., Kim, H., &amp; Zhang, D. (2025). VeriLA: A Human-Centered Evaluation Framework for Interpretable Verification of LLM Agent Failures. <a href="https://arxiv.org/abs/2503.12651">https://arxiv.org/abs/2503.12651</a></p>
 </li>
-<li>
-<p>Sharma, M., et al. (2024). Towards Understanding Sycophancy in Language Models. ICLR. https://arxiv.org/abs/2310.13548</p>
+<li><p>Sharma, M., et al. (2024). Towards Understanding Sycophancy in Language Models. ICLR. <a href="https://arxiv.org/abs/2310.13548">https://arxiv.org/abs/2310.13548</a></p>
 </li>
-<li>
-<p>Weng, Z., Chen, G., &amp; Wang, W. (2025). Do as We Do, Not as You Think: The Conformity of Large Language Models. ICLR. https://arxiv.org/abs/2501.13381</p>
+<li><p>Weng, Z., Chen, G., &amp; Wang, W. (2025). Do as We Do, Not as You Think: The Conformity of Large Language Models. ICLR. <a href="https://arxiv.org/abs/2501.13381">https://arxiv.org/abs/2501.13381</a></p>
 </li>
-<li>
-<p>Wang, G., Chen, Z., Li, B., &amp; Xu, H. (2025). Cer-Eval: Certifiable and Cost-Efficient Evaluation Framework for LLMs. https://arxiv.org/abs/2505.03814</p>
+<li><p>Wang, G., Chen, Z., Li, B., &amp; Xu, H. (2025). Cer-Eval: Certifiable and Cost-Efficient Evaluation Framework for LLMs. <a href="https://arxiv.org/abs/2505.03814">https://arxiv.org/abs/2505.03814</a></p>
 </li>
-<li>
-<p>Wan, G., Wu, Y., Wang, H., Zhao, S., Chen, J., &amp; Li, S. (2025). Derailer-Rerailer: Adaptive Verification for Efficient and Reliable Language Model Reasoning. Findings of ACL. https://aclanthology.org/2025.findings-acl.18/</p>
+<li><p>Wan, G., Wu, Y., Wang, H., Zhao, S., Chen, J., &amp; Li, S. (2025). Derailer-Rerailer: Adaptive Verification for Efficient and Reliable Language Model Reasoning. Findings of ACL. <a href="https://aclanthology.org/2025.findings-acl.18/">https://aclanthology.org/2025.findings-acl.18/</a></p>
 </li>
-<li>
-<p>Shankar, S., Zamfirescu-Pereira, J. D., Hartmann, B., Parameswaran, A. G., &amp; Arawjo, I. (2024). Who Validates the Validators? Aligning LLM-Assisted Evaluation of LLM Outputs with Human Preferences. UIST. https://arxiv.org/abs/2404.12272</p>
+<li><p>Shankar, S., Zamfirescu-Pereira, J. D., Hartmann, B., Parameswaran, A. G., &amp; Arawjo, I. (2024). Who Validates the Validators? Aligning LLM-Assisted Evaluation of LLM Outputs with Human Preferences. UIST. <a href="https://arxiv.org/abs/2404.12272">https://arxiv.org/abs/2404.12272</a></p>
 </li>
-<li>
-<p>Grill, G. (2024). Constructing Capabilities: The Politics of Testing Infrastructures for Generative AI. FAccT. https://doi.org/10.1145/3630106.3659009</p>
+<li><p>Grill, G. (2024). Constructing Capabilities: The Politics of Testing Infrastructures for Generative AI. FAccT. <a href="https://doi.org/10.1145/3630106.3659009">https://doi.org/10.1145/3630106.3659009</a></p>
 </li>
-<li>
-<p>Abadi, M., &amp; Lamport, L. (1991). The Existence of Refinement Mappings. Theoretical Computer Science 82(2), 253–284. https://doi.org/10.1016/0304-3975(91)90224-P</p>
+<li><p>Abadi, M., &amp; Lamport, L. (1991). The Existence of Refinement Mappings. Theoretical Computer Science 82(2), 253–284. <a href="https://doi.org/10.1016/0304-3975(91)90224-P">https://doi.org/10.1016/0304-3975(91)90224-P</a></p>
 </li>
-<li>
-<p>Bauer, A., Leucker, M., &amp; Schallhart, C. (2011). Runtime Verification for LTL and TLTL. ACM TOSEM 20(4), Article 14. https://doi.org/10.1145/2000799.2000800</p>
+<li><p>Bauer, A., Leucker, M., &amp; Schallhart, C. (2011). Runtime Verification for LTL and TLTL. ACM TOSEM 20(4), Article 14. <a href="https://doi.org/10.1145/2000799.2000800">https://doi.org/10.1145/2000799.2000800</a></p>
 </li>
-<li>
-<p>Farach-Colton, M., Krapivin, A., &amp; Kuszmaul, W. (2024; revised 2025). Optimal Bounds for Open Addressing Without Reordering. FOCS 2024. https://arxiv.org/abs/2501.02305v2</p>
+<li><p>Farach-Colton, M., Krapivin, A., &amp; Kuszmaul, W. (2024; revised 2025). Optimal Bounds for Open Addressing Without Reordering. FOCS 2024. <a href="https://arxiv.org/abs/2501.02305v2">https://arxiv.org/abs/2501.02305v2</a></p>
 </li>
-<li>
-<p>Goguen, J. A., &amp; Meseguer, J. (1982). Security Policies and Security Models. IEEE Symposium on Security and Privacy. https://doi.org/10.1109/SP.1982.10014</p>
+<li><p>Goguen, J. A., &amp; Meseguer, J. (1982). Security Policies and Security Models. IEEE Symposium on Security and Privacy. <a href="https://doi.org/10.1109/SP.1982.10014">https://doi.org/10.1109/SP.1982.10014</a></p>
 </li>
-<li>
-<p>Herlihy, M. P., &amp; Wing, J. M. (1990). Linearizability: A Correctness Condition for Concurrent Objects. ACM TOPLAS 12(3), 463–492. https://doi.org/10.1145/78969.78972</p>
+<li><p>Herlihy, M. P., &amp; Wing, J. M. (1990). Linearizability: A Correctness Condition for Concurrent Objects. ACM TOPLAS 12(3), 463–492. <a href="https://doi.org/10.1145/78969.78972">https://doi.org/10.1145/78969.78972</a></p>
 </li>
-<li>
-<p>Lamport, L. (1978). Time, Clocks, and the Ordering of Events in a Distributed System. Communications of the ACM 21(7), 558–565. https://doi.org/10.1145/359545.359563</p>
+<li><p>Lamport, L. (1978). Time, Clocks, and the Ordering of Events in a Distributed System. Communications of the ACM 21(7), 558–565. <a href="https://doi.org/10.1145/359545.359563">https://doi.org/10.1145/359545.359563</a></p>
+</li>
+<li><p>Necula, G. C. (1997). Proof-carrying code. Proceedings of POPL. <a href="https://doi.org/10.1145/263699.263712">https://doi.org/10.1145/263699.263712</a></p>
+</li>
+<li><p>Chaki, S., Gurfinkel, A., Wallnau, K., &amp; Weinstock, C. (2009). Assurance Cases for Proofs as Evidence. Proceedings of the Third International Workshop on Proof-Carrying Code and Software Certification. <a href="https://ntrs.nasa.gov/citations/20150004720">https://ntrs.nasa.gov/citations/20150004720</a></p>
+</li>
+<li><p>Saltzer, J. H., &amp; Schroeder, M. D. (1975). The Protection of Information in Computer Systems. Proceedings of the IEEE 63(9), 1278–1308. <a href="https://doi.org/10.1109/PROC.1975.9939">https://doi.org/10.1109/PROC.1975.9939</a></p>
+</li>
+<li><p>Kadyrbek, N., &amp; Mansurova, M. (2026). Proof carrying agent actions enable verifiable licensing of language model tool use. Scientific Reports. <a href="https://doi.org/10.1038/s41598-026-74900-x">https://doi.org/10.1038/s41598-026-74900-x</a></p>
+</li>
+<li><p>Liu Yanglet, X.-Y., Wang, X., &amp; Capponi, A. (2026). No Certificate, No Execution: Certified Traces as a Foundation for Trustworthy AI Agents. Preprint. <a href="https://arxiv.org/abs/2605.24462">https://arxiv.org/abs/2605.24462</a></p>
+</li>
+<li><p>Debenedetti, E., Zhang, J., Balunović, M., Beurer-Kellner, L., Fischer, M., &amp; Tramèr, F. (2024). AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents. <a href="https://arxiv.org/abs/2406.13352">https://arxiv.org/abs/2406.13352</a></p>
 </li>
 </ol>
-<hr />
+<hr>
 <h2 class="new-page">Appendix A. JSON-Like Certificate Schema</h2>
-<p>The following is a normative-shaped schema example, not a claim that a particular implementation exists. <code>null</code> is not silently PASS; every required field with unavailable evidence has a matching reason code. Digests bind artifacts, while verifier identity and challenged spans provide the evidence boundary.</p>
+<p>The following is a normative-shaped schema excerpt, not an executable certificate or a claim that a particular implementation exists. The parent-level record is omitted for space; a real certificate must supply every required level and witness before CERTIFIED is available. <code>null</code> is not silently PASS; every required field with unavailable evidence has a matching reason code. Digests bind artifacts, while verifier identity and challenged spans provide the evidence boundary.</p>
 <pre><code class="language-json">{
-  &quot;schema_version&quot;: &quot;ia-cert-0.1-proposed&quot;,
+  &quot;schema_version&quot;: &quot;ia-cert-0.2-proposed&quot;,
   &quot;certificate_id&quot;: &quot;synthetic:example-A:001&quot;,
   &quot;claim_kind&quot;: &quot;worked_example&quot;,
   &quot;spec&quot;: {
@@ -1025,7 +1024,11 @@ return STRUCTURAL_READY only if every required level is PASS
     &quot;nonempty_required_scales&quot;: [0, 1],
     &quot;min_coverage&quot;: 1.0,
     &quot;max_rounds&quot;: 3,
-    &quot;thresholds&quot;: {&quot;theta_KT&quot;: 1.5, &quot;theta_F&quot;: 2.0}
+    &quot;max_partition_depth&quot;: 1,
+    &quot;failure_order_partition_depths&quot;: [1, 0],
+    &quot;thresholds&quot;: {&quot;theta_KT&quot;: 1.5, &quot;theta_F&quot;: 0.75, &quot;alpha_F&quot;: 0.5},
+    &quot;window_family_digest&quot;: &quot;sha256:...&quot;,
+    &quot;length_convention&quot;: &quot;source-unit-count&quot;
   },
   &quot;versions&quot;: {
     &quot;registry&quot;: &quot;R4&quot;,
@@ -1037,7 +1040,8 @@ return STRUCTURAL_READY only if every required level is PASS
   },
   &quot;scale_records&quot;: [
     {
-      &quot;scale&quot;: 0,
+      &quot;partition_depth&quot;: 1,
+      &quot;induction_level&quot;: 0,
       &quot;partition_digest&quot;: &quot;sha256:...&quot;,
       &quot;parent_map&quot;: {&quot;grain:f1&quot;: &quot;grain:c1&quot;},
       &quot;obligations&quot;: [&quot;o1&quot;, &quot;o2&quot;, &quot;o3&quot;, &quot;o4&quot;, &quot;o5&quot;],
@@ -1097,11 +1101,11 @@ return STRUCTURAL_READY only if every required level is PASS
   &quot;nonce&quot;: &quot;synthetic-nonce-001&quot;
 }
 </code></pre>
-<h3 id="a1-required-witness-rules">A.1 Required witness rules</h3>
+<h3>A.1 Required witness rules</h3>
 <p>A <code>PASS</code> requires positive evidence; a <code>FAIL</code> requires an identified counterexample; <code>UNKNOWN</code> requires an insufficiency reason; <code>NO_VERDICT</code> names missing thresholds or contracts or an operationally unresolved outcome such as exhausted reconciliation. These labels overlap operationally in U, but their reasons remain distinct in the trace. <code>SKIPPED</code> is allowed only for later unsafe checks and is never converted to PASS. The certificate retains sub-conjuncts rather than only the four composite bits.</p>
 <p>A partial record adds <code>dependency_closure_digest</code>, <code>excluded_obligations</code>, <code>partial_label</code>, and separate authority for emission. <code>HELD_PARTIAL</code> cannot be inferred solely from <code>Aff</code> disjointness; N and complete dependency enumeration are also required. An <code>AWAITING_HUMAN</code> record names the authorized adjudicator role and exact question, not a generic request for human oversight.</p>
-<h2 id="appendix-b-reference-pseudocode">Appendix B. Reference Pseudocode</h2>
-<h3 id="b1-evidence-conditioned-local-evaluation">B.1 Evidence-conditioned local evaluation</h3>
+<h2>Appendix B. Reference Pseudocode</h2>
+<h3>B.1 Evidence-conditioned local evaluation</h3>
 <pre><code class="language-python">def evaluate_obligation(q, evidence, contract):
     if q not in contract.required_obligations:
         return {&quot;Ev&quot;: &quot;NO_VERDICT&quot;, &quot;reason&quot;: &quot;UNDECLARED_OBLIGATION&quot;}
@@ -1118,8 +1122,8 @@ return STRUCTURAL_READY only if every required level is PASS
         return {&quot;Ev&quot;: &quot;PASS&quot;, &quot;witness&quot;: positive}
     return {&quot;Ev&quot;: &quot;UNKNOWN&quot;, &quot;reason&quot;: &quot;INSUFFICIENT_EVIDENCE&quot;}
 </code></pre>
-<p><code>find_sound_positive_witness</code> is not a generic LLM call. It invokes the declared checker under its soundness assumptions. The code's existence would not prove those assumptions.</p>
-<h3 id="b2-strong-conjunction-and-boolean-release-projection">B.2 Strong conjunction and boolean release projection</h3>
+<p><code>find_sound_positive_witness</code> is not a generic LLM call. It invokes the declared checker under its soundness assumptions. The code&#39;s existence would not prove those assumptions.</p>
+<h3>B.2 Strong conjunction and boolean release projection</h3>
 <pre><code class="language-python">def evidence_and(records):
     if any(r[&quot;Ev&quot;] == &quot;FAIL&quot; for r in records):
         return &quot;FAIL&quot;
@@ -1135,23 +1139,25 @@ def release_bit(record):
     return 1 if record[&quot;Ev&quot;] == &quot;PASS&quot; else 0
 </code></pre>
 <p>The diagnostic aggregation preserves reason codes; <code>release_bit</code> is applied only at a control boundary. An observed FAIL dominates for semantic conjunction even if another conjunct is unknown. This does not collapse the reasons in the stored trace.</p>
-<h3 id="b3-cross-scale-lift">B.3 Cross-scale lift</h3>
-<pre><code class="language-python">def lift_parent(q, child_certs, witnesses):
-    if not independent_coverage(q, witnesses.C):
-        return no_verdict(&quot;INCOMPLETE_OBLIGATION_UNIVERSE&quot;)
-    if not noninterference(q, witnesses.N):
-        return fail_or_unknown(&quot;NONINTERFERENCE&quot;, witnesses.N)
-    correction = correction_status(q, witnesses.K)
-    if correction.Ev != &quot;PASS&quot;:
-        return fail_or_no_verdict(&quot;CORRECTION_FRONTIER&quot;, correction)
-    if not refinement_valid(q, child_certs, witnesses.R):
-        return fail_or_unknown(&quot;REFINEMENT&quot;, witnesses.R)
-    if any(c.Ev != &quot;PASS&quot; for c in child_certs):
-        return aggregate_children(child_certs)
+<h3>B.3 Cross-scale lift</h3>
+<pre><code class="language-python">def lift_parent(q, child_certs, witnesses, contract):
+    if contract.missing_lift_requirements(q):
+        return no_verdict(&quot;MISSING_LIFT_CONTRACT&quot;)
+    counterexample = independent_parent_counterexample(q, witnesses)
+    if counterexample is not None:
+        return fail_with_witness(q, counterexample)
+    premises = [coverage_status(q, witnesses.C),
+                noninterference_status(q, witnesses.N),
+                correction_status(q, witnesses.K),
+                refinement_status(q, child_certs, witnesses.R)]
+    if any(record.Ev != &quot;PASS&quot; for record in premises + child_certs):
+        return unknown_parent(q, reason=&quot;LIFT_NOT_ESTABLISHED&quot;,
+                              premise_records=premises,
+                              child_records=child_certs)
     return pass_with_path(q, child_certs, witnesses)
 </code></pre>
-<p>The order shown is illustrative, not a security rule that avoids checking adversarial input. Implementations should safely parse and validate all required records before relying on any one result.</p>
-<h3 id="b4-affected-closure-and-partial-release">B.4 Affected closure and partial release</h3>
+<p>R is a sufficient implication, not an equivalence: a failed child or missing premise blocks this lift but does not alone prove the parent false. For example, child predicates <code>p,r</code> imply parent <code>p∨r</code> when both hold; <code>p=F,r=T</code> leaves the parent true. Retain failed-child diagnostics while returning parent UNKNOWN unless an independent parent counterexample or a verified necessity argument establishes falsity. Missing coverage evidence is UNKNOWN; a missing coverage contract is NO_VERDICT. The order shown is illustrative, not a security rule that avoids checking adversarial input. Implementations should safely parse and validate all required records before relying on any one result.</p>
+<h3>B.4 Affected closure and partial release</h3>
 <pre><code class="language-python">def invalidate(seeds, G, old_certs):
     aff = reachable_union(G, seeds)  # includes seeds and all dependents
     for node in aff:
@@ -1168,23 +1174,32 @@ def may_emit_partial(output, aff, evidence):
     return all(x.Ev == &quot;PASS&quot; for x in required)
 </code></pre>
 <p>A failed disjointness test identifies affected content; unknown dependency completeness yields no verdict. Neither case licenses calling the output semantically false.</p>
-<h3 id="b5-reconciliation-loop">B.5 Reconciliation loop</h3>
+<h3>B.5 Reconciliation loop</h3>
 <pre><code class="language-python">def reconcile(trace, max_rounds):
+    # Precondition: helpers terminate or a supervisor enforces a deadline.
+    # A deadline outcome is UNKNOWN/TIMEOUT; unconfirmed effects stay held.
     if max_rounds is None:
         return NO_VERDICT(&quot;MISSING_MAX_ROUNDS&quot;)
-    for round_id in range(max_rounds):
+    if not isinstance(max_rounds, int) or isinstance(max_rounds, bool) or max_rounds &lt; 0:
+        return NO_VERDICT(&quot;INVALID_MAX_ROUNDS&quot;)
+    for round_id in range(max_rounds + 1):
+        # Assess initially and after the last permitted repair.
         seeds = nonpass_structural_seeds(trace)
         if not seeds:
             if all_cross_scale_receipts_pass(trace):
                 return STRUCTURAL_READY(trace)
-            return transfer_status(trace)  # FAIL for a witnessed bad transfer; NO_VERDICT if missing/unresolved
+            # Transfer FAIL requires a witness; absent evidence is UNKNOWN;
+            # an absent contract is NO_VERDICT.
+            return transfer_status(trace)
+        if round_id == max_rounds:
+            break
         aff = invalidate(seeds, trace.G, trace.certificates)
         repaired = repair_only_authorized(trace, aff)
         recheck_entire_closure(trace, aff, repaired)
     return NO_VERDICT(&quot;CORRECTION_STORM_OR_ROUND_CAP&quot;)
 </code></pre>
-<p><code>repair_only_authorized</code> is intentionally abstract. Certificate verification does not invent authority or a repair. If no repair is possible, residuals remain held.</p>
-<h2 id="appendix-c-notation-index">Appendix C. Notation Index</h2>
+<p>The budget limits repair attempts, not readiness assessments: an initially clean trace can pass at zero attempts, and success on the final permitted repair is assessed before reporting exhaustion. The loop cap alone does not establish total termination. A deadline supervisor must return a decision independently of a blocked helper; a timeout does not prove cancellation or successful rollback of external work. <code>repair_only_authorized</code> is intentionally abstract. Certificate verification does not invent authority or a repair. If no repair is possible, residuals remain held.</p>
+<h2>Appendix C. Notation Index</h2>
 <table>
 <thead>
 <tr>
@@ -1192,8 +1207,7 @@ def may_emit_partial(output, aff, evidence):
 <th>Meaning</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><code>ι</code></td>
 <td>typed index <code>(type,name,epoch,version)</code></td>
 </tr>
@@ -1218,12 +1232,12 @@ def may_emit_partial(output, aff, evidence):
 <td>partition at scale <code>k</code>; finer partitions refine coarser ones</td>
 </tr>
 <tr>
-<td><code>Q_k</code></td>
-<td>independently declared obligation universe</td>
+<td><code>Q_j</code></td>
+<td>independent obligations at induction level j, associated with partition P_{M-j}</td>
 </tr>
 <tr>
-<td><code>D_k(q)</code></td>
-<td>child obligations required to lift parent <code>q</code></td>
+<td><code>D_j(q)</code></td>
+<td>children in Q_{j-1} required to lift parent q in Q_j</td>
 </tr>
 <tr>
 <td><code>A_q</code>, <code>C_q</code></td>
@@ -1275,7 +1289,15 @@ def may_emit_partial(output, aff, evidence):
 </tr>
 <tr>
 <td><code>STICKY_k</code></td>
-<td>computational custody nesting, acknowledgments, optional clustering</td>
+<td>custody nesting and acknowledgments, with CLUSTER_OK_k only when required</td>
+</tr>
+<tr>
+<td><code>F_k(α_k)</code></td>
+<td>maximum supported mass fraction in declared proper subspan windows</td>
+</tr>
+<tr>
+<td><code>A_lift(j)</code></td>
+<td>A(M-j), per-partition predicates viewed in induction order</td>
 </tr>
 <tr>
 <td><code>R,C,N,K</code></td>
@@ -1333,9 +1355,8 @@ def may_emit_partial(output, aff, evidence):
 <td><code>EXECUTION_ERROR</code></td>
 <td>execution/enforcement failed, separately from predicate detection</td>
 </tr>
-</tbody>
-</table>
-<h2 id="appendix-d-extended-mutation-and-negative-control-inventory">Appendix D. Extended Mutation and Negative-Control Inventory</h2>
+</tbody></table>
+<h2>Appendix D. Extended Mutation and Negative-Control Inventory</h2>
 <table>
 <thead>
 <tr>
@@ -1346,8 +1367,7 @@ def may_emit_partial(output, aff, evidence):
 <th>Non-detection warns about</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>M01</td>
 <td>registry epoch rollback</td>
 <td>live current expert</td>
@@ -1384,9 +1404,9 @@ def may_emit_partial(output, aff, evidence):
 </tr>
 <tr>
 <td>M06</td>
-<td>correct answer, post-rationalized citation</td>
-<td>causal exposed lineage</td>
-<td>active-evidence mismatch</td>
+<td>visible supporting citation used only for post-rationalization</td>
+<td>source visible and supporting</td>
+<td>lineage may PASS; causal reliance remains unestablished without a separate intervention protocol</td>
 <td>support versus causal faithfulness</td>
 </tr>
 <tr>
@@ -1571,10 +1591,10 @@ def may_emit_partial(output, aff, evidence):
 <td>new epoch required</td>
 <td>governance drift</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
+<p>M06 is an observability-limit control, not a promised lineage detection. An inactive citation is already tested by M04. A causal-intervention study, if added, must specify its assumptions and independent labels.</p>
 <p>A mutant is evidence only when clean baseline, valid execution, and named attributable failure are recorded. Surviving same-author mutants identify blind spots but do not measure deployment prevalence.</p>
-<h2 id="appendix-e-prior-paper-crosswalk">Appendix E. Prior-Paper Crosswalk</h2>
+<h2>Appendix E. Prior-Paper Crosswalk</h2>
 <table>
 <thead>
 <tr>
@@ -1584,8 +1604,7 @@ def may_emit_partial(output, aff, evidence):
 <th>Boundary retained</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>2026a routing–capability consistency</td>
 <td><code>A_route</code></td>
 <td>registry, permission, budget, parentage, optional task rule</td>
@@ -1611,9 +1630,9 @@ def may_emit_partial(output, aff, evidence):
 </tr>
 <tr>
 <td>2026a weighted alignment deficit</td>
-<td>boolean vector plus optional telemetry</td>
+<td>named predicates with non-compensatory release</td>
 <td>required defects cannot be averaged away</td>
-<td>scalar remains diagnostic only</td>
+<td>equivalent scalar zero-deficit rule is allowed</td>
 </tr>
 <tr>
 <td>2026a IA-MoA role proposal</td>
@@ -1669,12 +1688,11 @@ def may_emit_partial(output, aff, evidence):
 <td>typed closure not semantic release</td>
 <td>RH/Coleman untouched</td>
 </tr>
-</tbody>
-</table>
-<h2 id="appendix-f-source-and-contribution-accounting">Appendix F. Source and Contribution Accounting</h2>
-<h3 id="f1-primary-former-papers">F.1 Primary former papers</h3>
+</tbody></table>
+<h2>Appendix F. Source and Contribution Accounting</h2>
+<h3>F.1 Primary former papers</h3>
 <p>Both former papers were primary references and were read in full. Coleman (2026a) supplies the central LLM problem, four consistency relations, role separation, typed indices, and evaluation motivation. Coleman (2026b) supplies scale-order methodology, object firewalls, custody/HELD distinctions, authority boundaries, and claim-status discipline. The continuation is integrated along the <strong>core index-alignment formalism</strong>; the Riemann/program material enters only through that bridge and does not become a separate RH paper.</p>
-<h3 id="f2-reachable-seat-contributions">F.2 Reachable seat contributions</h3>
+<h3>F.2 Reachable seat contributions</h3>
 <table>
 <thead>
 <tr>
@@ -1683,8 +1701,7 @@ def may_emit_partial(output, aff, evidence):
 <th>Not claimed</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>Kakeyalogic</td>
 <td>COV/ORDER/CORR/STICKY, boolean thresholds, geometric firewall</td>
 <td>WZ/GWZ implies LLM alignment</td>
@@ -1724,15 +1741,14 @@ def may_emit_partial(output, aff, evidence):
 <td>public-only provenance and precise archive coverage</td>
 <td>all-repository content review or private access</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>One named room was unreachable; therefore no eight-agent contribution claim is made. The phrase “ten agent team” in coordination notes is not treated as evidence that ten distinct contributors supplied material.</p>
-<h3 id="f3-public-snapshot-coverage">F.3 Public snapshot coverage</h3>
-<p>The final public handoff was inspected at <code>/workspace/peaice/team-formalization-2026-11-05/github-inventory-manny365-2026-11-05.md</code> and the access manifest. It reports 26 commit-pinned official public archives, 177,064,129 bytes, and 717 extracted research-text documents across 26 public repository folders. These are <strong>coverage counts, not reviewed-source counts</strong>. No additional one of those 717 documents was used as evidence without individual inspection; this manuscript's detailed technical claims rely on the separately read local primary papers, seat packets, AIce sources, and public scholarly pages.</p>
+<h3>F.3 Public snapshot coverage</h3>
+<p>The final public handoff was inspected at <code>/workspace/peaice/team-formalization-2026-11-05/github-inventory-manny365-2026-11-05.md</code> and the access manifest. It reports 26 commit-pinned official public archives, 177,064,129 bytes, and 717 extracted research-text documents across 26 public repository folders. These are <strong>coverage counts, not reviewed-source counts</strong>. No additional one of those 717 documents was used as evidence without individual inspection; this manuscript&#39;s detailed technical claims rely on the separately read local primary papers, seat packets, AIce sources, and public scholarly pages.</p>
 <p>Private repositories and <code>-Colemanfiles</code> are excluded by owner scope. Quarantine and excluded legacy GIUS material were not read or used. The snapshot omits complete branch/tag/release/issue/PR/history/LFS/wiki/Actions/submodule exports. Archive availability is not remote-currentness beyond the pinned commits and not a repository transfer to any destination.</p>
-<h3 id="f4-local-snapshot-versus-remote-manifest">F.4 Local snapshot versus remote manifest</h3>
+<h3>F.4 Local snapshot versus remote manifest</h3>
 <p>The Riemann packet records local filesystem Git HEADs for provenance. They are not freshly verified remote HEADs. Where the public handoff reports a different pinned remote snapshot—for example Kakeyalogic—the two observations are kept distinct rather than silently reconciled. This paper does not infer mathematical validity from either commit identifier.</p>
-<h2 id="appendix-g-claim-scope-register">Appendix G. Claim Scope Register</h2>
+<h2>Appendix G. Claim Scope Register</h2>
 <table>
 <thead>
 <tr>
@@ -1741,8 +1757,7 @@ def may_emit_partial(output, aff, evidence):
 <th>Exact scope</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>Semantic A/C bivalence under fixed spec/history</td>
 <td>definition</td>
 <td>does not imply monitor knows value</td>
@@ -1872,9 +1887,8 @@ def may_emit_partial(output, aff, evidence):
 <td>measured by §11 protocol</td>
 <td>future protocol only</td>
 </tr>
-</tbody>
-</table>
-<h2 id="appendix-h-minimal-audit-checklist">Appendix H. Minimal Audit Checklist</h2>
+</tbody></table>
+<h2>Appendix H. Minimal Audit Checklist</h2>
 <p>Before accepting a certificate, an auditor should be able to respond yes to each applicable question:</p>
 <ol>
 <li>Is the specification version fixed and independently reviewed?</li>
@@ -1901,5 +1915,6 @@ def may_emit_partial(output, aff, evidence):
 <li>Do summaries preserve the distinction between external theorems, constructions, proofs, observations, and open questions?</li>
 </ol>
 <p>A “yes” to this checklist supports audit readiness only. It does not substitute for external specification review or empirical evaluation.</p>
-<hr />
-<p><em>Supporting deep-dive research: <code>deep-dives/</code> and <code>CLAIM-EVIDENCE-MATRIX.md</code> in this package.</em></p></body></html>
+<hr>
+<p><em>Supporting deep-dive research: <code>deep-dives/</code> and <code>CLAIM-EVIDENCE-MATRIX.md</code> in this package.</em></p>
+</body></html>

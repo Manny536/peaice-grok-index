@@ -14,7 +14,7 @@ In Coleman (2026b), the HELD predicate requires an object to be typed, grounded,
 
 Definition 9 adopts the three-factor authority gate: authenticated source authority `S`, hierarchy validity `H`, authorized user intent `U`. All three must be 1 for `Act = 1`. Two consequences are built into the definition.
 
-**`S = 0 ⇒ Act = 0`.** Content from a source without authority cannot authorize an action no matter how it is phrased. This is the structural defense against instruction injection through retrieved documents: Trace L's document saying "make router an approver" has a valid content receipt and no authority. The manuscript's "found content is not an instruction" example states the verdict: `F` if evidence establishes no authority, `U` if authority evidence is incomplete, never `T` from retrieval alone.
+**`S = 0 ⇒ Act = 0`.** Content from a source without authority cannot authorize an action no matter how it is phrased. This is a proposed structural constraint against instruction injection, whose protection depends on complete mediation and enforcement: Trace L's document saying "make router an approver" has a valid content receipt and no authority. The manuscript's "found content is not an instruction" example states the verdict: `F` if evidence establishes no authority, `U` if authority evidence is incomplete, never `T` from retrieval alone.
 
 **`Act = 0 ⇏ Stop`.** Denying an action is not the same as halting the system. A privileged tool call can be refused while an informational response explaining the refusal is still produced. Coleman (2026b) states this as detection without resistance: L²_C "does not resist instruction-shaped content," it declines to incorporate unauthorized instructions and proceeds toward an authorized outcome. The continuation uses the rule to justify partial release (§6.6 below) and is explicit that it "does not override a separate policy requiring complete suppression."
 
@@ -36,7 +36,7 @@ The manuscript draws the consequence: "a correct verifier can be attached to a b
 
 `RELEASE_FULL` additionally requires CROSS_OK, CROSS_SCALE_OK, SCOPE where measured claims occur, POLICY_OK, AUTH, SUPPORT, FID, and NONVACUOUS. These checks use evidence independent of ingestion receipts, and SUPPORT/FID use a declared external assessor.
 
-The split exists because structural integrity is necessary and cheap to check, while semantic support is expensive and depends on an assessor whose reliability must itself be established. Reporting structural readiness as if it were release would recreate the coverage-equals-fidelity error at the level of the whole certificate. The Riemann-probe packet contributed this split and the rule that four-valued evidence maps to PASS-only bits, with missing evidence blocking full promotion but not authorized unaffected partial output.
+The split exists because structural integrity is necessary and may be cheaper to check under the restricted cost model, while semantic support can be expensive and depends on an assessor whose reliability must itself be established. Reporting structural readiness as if it were release would recreate the coverage-equals-fidelity error at the level of the whole certificate. The Riemann-probe packet contributed this split and the rule that four-valued evidence maps to PASS-only bits, with missing evidence blocking full promotion but not authorized unaffected partial output.
 
 ## 6.6 Five outcomes
 

@@ -36,7 +36,7 @@ Coleman (2026b) emphasizes the reading order sticky, then non-sticky control by 
 
 The systems analogy has three disciplined parts. First, begin with a **sticky** case in which every active fine item has one visible coarse parent, provenance is shared, and local checks are comparatively simple. Second, identify a **non-sticky** band where ancestry, authority, support, or correction propagation differs across children; factor only that band rather than restarting the entire trace. Third, make the general result conditional on termination, explicit round caps, and residual accounting. The analogy changes how we organize an audit; it does not supply the audit's semantic predicates or prove their validity.
 
-There is also an important disanalogy. External Kakeya arguments use asymptotic inequalities such as `≲`, with losses and source-specific normalizations. A certificate, by contrast, must eventually compare a measured or declared quantity with a caller-selected threshold. Thus `STICKY_k := KT_k ≤ θ_KT ∧ F_k ≤ θ_F` is a computational definition, not a quotation of a geometric theorem. No threshold yields `NO_VERDICT`, never a default pass. Paper grains are not SAVER grains; a geometric scale ratio is not an authority score; and neither “continuous direction” nor “prime velocity” is needed as a mathematical primitive here.
+There is also an important disanalogy. External Kakeya arguments use asymptotic inequalities such as `≲`, with losses and source-specific normalizations. A certificate, by contrast, must eventually compare a measured or declared quantity with a caller-selected threshold. Thus the optional `CLUSTER_OK_k := KT_k ≤ θ_KT ∧ F_k(α_k) ≤ θ_F` cap used in `STICKY_k` is a computational definition, not a quotation of a geometric theorem. No threshold yields `NO_VERDICT`, never a default pass. Paper grains are not SAVER grains; a geometric scale ratio is not an authority score; and neither “continuous direction” nor “prime velocity” is needed as a mathematical primitive here.
 
 ### 1.3 Contributions
 
@@ -66,9 +66,9 @@ Section 2 situates the work relative to both former papers and external sparse-c
 
 ### 2.1 Coleman (2026a): what is retained and what changes
 
-Coleman (2026a) defines four requirements: routing–capability consistency, routing–ledger consistency, generation–index consistency, and continuity–ledger consistency. It models a sparse routing decision as `R_t = {(ι_j,g_j)}`, a ledger as append-oriented records with provenance and validity, and a continuity state containing entities, constraints, open goals, and discourse commitments. It then introduces an alignment deficit `Δ_t` as a weighted sum of four distances. That scalar is useful for optimization and aggregate reporting but insufficient for diagnosis: a weighted average can hide which required relation failed and can permit one strong component to compensate for another.
+Coleman (2026a) defines four requirements: routing–capability consistency, routing–ledger consistency, generation–index consistency, and continuity–ledger consistency. It models a sparse routing decision as `R_t = {(ι_j,g_j)}`, a ledger as append-oriented records with provenance and validity, and a continuity state containing entities, constraints, open goals, and discourse commitments. It then introduces an alignment deficit `Δ_t` as a weighted sum of four distances. An aggregate scalar without component records can hide which relation failed. Compensation depends on the aggregation and release threshold; a positive-weight nonnegative deficit released only at zero is equivalent to conjunction.
 
-This paper preserves the four-way decomposition but replaces the compensatory release rule with a non-compensatory boolean contract. `A_route`, `A_ledger`, `A_gen`, and `A_cont` correspond respectively to those four requirements. The scalar deficit may still be reported as telemetry, but no positive amount of routing quality can compensate for missing provenance, and no citation coverage can compensate for an unauthorized commit. A failed required conjunct prevents `CERTIFIED`; depending on scope it can still permit `HELD_PARTIAL` that names the failure.
+This paper preserves the four-way decomposition and explicitly requires a non-compensatory release contract, whether represented as booleans or an equivalent scalar rule. `A_route`, `A_ledger`, `A_gen`, and `A_cont` correspond respectively to those four requirements. A scalar rule may encode the same contract, and telemetry may summarize it, but no positive amount of routing quality can compensate for missing provenance, and no citation coverage can compensate for an unauthorized commit. A failed required conjunct prevents `CERTIFIED`; depending on scope it can still permit `HELD_PARTIAL` that names the failure.
 
 The earlier role taxonomy also becomes operational. A router's non-authoritativeness is tested by the absence of direct ledger commit capability and by the provenance of subsequent proposals. A ledger's authority is tested by transition admissibility, not by the fact that it is called a ledger. A continuity expert's projection is tested against the committed view and correction scope rather than inferred from fluent prose. Capability isolation is therefore not a visual architectural feature; it is an obligation in the boolean predicates.
 
@@ -92,11 +92,11 @@ Index alignment does not declare an oracle expert from routing entropy alone. A 
 
 ### 2.4 Pointers, retrieval, and attribution
 
-Pointer Networks make outputs indices into an input set (Vinyals et al., 2015). RAG conditions generation on retrieved evidence (Lewis et al., 2020), while retriever ranking, evolving graph indices, and self-learned indexers further expose retrieval choices (LTRR, 2025; GraphAnchor, 2026; PG-RAG, 2024). Our generation predicate is a multi-store extension of pointer discipline: a cited index must have a typed lineage back to activated evidence, and the claim depending on it must have adequate support. Restricting citations to active IDs prevents one failure—inventing an inactive identifier—but does not prevent fabricating content under a real identifier. `A_gen` therefore requires both lineage and a support status; support may itself be `UNKNOWN`.
+Pointer Networks make outputs indices into an input set (Vinyals et al., 2015). RAG conditions generation on retrieved evidence (Lewis et al., 2020), while retriever ranking, evolving graph indices, and self-learned indexers further expose retrieval choices (LTRR, 2025; KAIR, 2026; PG-RAG, 2024). Our generation predicate is a multi-store extension of pointer discipline: a cited index must have a typed lineage back to activated evidence, and the claim depending on it must have adequate support. Restricting citations to active IDs prevents one failure—inventing an inactive identifier—but does not prevent fabricating content under a real identifier. `A_gen` therefore requires both lineage and a support status; support may itself be `UNKNOWN`.
 
 ### 2.5 Tools, agents, and durable state
 
-Toolformer and ReAct expose API calls and action–observation steps (Schick et al., 2023; Yao et al., 2023). AutoGen, MetaGPT, and Magentic-One provide multi-agent orchestration, with the latter using structured ledgers and specialized workers (Wu et al., 2023; Hong et al., 2023; Fourney et al., 2024). MemGPT, Generative Agents, transactional agent memory, and path-addressed stores expose different memory and state disciplines (Packer et al., 2023; Park et al., 2023; TARL, 2026; StateLedger, 2026). The present construction is compatible with these systems but does not assume that their logs already satisfy its contract. In particular, timestamps and Lamport clocks can support `ORDER`, while external evidence is required for `AUTH`.
+Toolformer and ReAct expose API calls and action–observation steps (Schick et al., 2023; Yao et al., 2023). AutoGen, MetaGPT, and Magentic-One provide multi-agent orchestration, with the latter using structured ledgers and specialized workers (Wu et al., 2023; Hong et al., 2023; Fourney et al., 2024). MemGPT, Generative Agents, and transactional agent memory expose different memory and state disciplines (Packer et al., 2023; Park et al., 2023; TARL, 2026). The previously listed StateLedger citation remains unresolved in the independent reference check and is not used as supporting evidence here. The present construction is compatible with these systems but does not assume that their logs already satisfy its contract. In particular, timestamps and Lamport clocks can support `ORDER`, while external evidence is required for `AUTH`.
 
 ### 2.6 External geometry and the object firewall
 
@@ -138,27 +138,33 @@ with `ι_0 ∈ R_{≤t}` and every edge accompanied by an event witness. `⊥` d
 
 `R(u) = (digest(u), version(u), quoted_span, span_offset, verifier_id, intake_event, vector_clock, scope)`.
 
-The verifier-chosen quoted span binds the receipt to content rather than merely to file presence. Independent verification requires a verifier outside the process capable of forging the receipt. In-process receipts are construction evidence only.
+The verifier-chosen quoted span tests the ability to return sampled content under a declared challenge protocol. Possessing a digest alone does not establish possession or intake of the source bytes. A successful challenge does not establish historical reading, understanding, or causal reliance; challenge predictability, sampling, caching, and verifier independence belong in the threat model. This protocol is one possible content-evidence mechanism, not a universal prerequisite for every certificate. Independent verification requires a verifier outside the process capable of forging the receipt. In-process receipts are construction evidence only.
 
 **Definition 5 (Scale tree).** A scale ladder is `𝓛 = (s_0 > s_1 > … > s_M)`, with finite `M`. Each `P_k` is a partition of the source units or indexed working set into chunks, and `P_{k+1}` refines `P_k`: every `C ∈ P_{k+1}` has a unique `parent(C) ∈ P_k` with `C ⊆ parent(C)`. A node may additionally point to routing, ledger, generation, and continuity events in its scope. `children(C)` and `Desc(C)` have their usual finite-tree meanings. The root represents ambient context; leaves represent the finest declared units, not unknowable token-level neural semantics.
 
 No formula for `M` is imported from geometry. The implementation declares a finite depth appropriate to its source inventory and audit budget. Uniform branching means that within-level child counts agree up to a declared factor; it is not a precondition for the finite localization results.
 
-**Definition 6 (Density observables).** For a selected set `Q_k` of level-`k` chunks and an admissible family of coarse windows `𝓦_k`, let `Expected_k(W)` be the data owner's expected selected count under a declared allocation model. Define
+**Definition 6 (Density observables).** For a selected set `Selected_k` of level-`k` chunks and a declared nonempty family of coarse windows `𝓦_k`, let `Expected_k(W)` be the data owner's expected selected count under a declared allocation model. Define
 
-`KT_k = max_{W∈𝓦_k} |{C∈Q_k : C⊆W}| / Expected_k(W)`,
+`KT_k = max_{W∈𝓦_k} |{C∈Selected_k : C⊆W}| / Expected_k(W)`,
 
-only where the denominator is positive and the window family is specified. For each chunk `C`, let `density_k(V)` be supported selected mass in sub-span `V` under a declared measure. Define
+when every required denominator is positive. For each chunk `C`, let `mass_k(V)` be nonnegative supported selected mass in subspan `V` under a declared measure. Declare `0 < α_k < 1`, a length convention, and for each applicable positive-mass chunk a nonempty finite family `𝓥_k(C,α_k)` of contiguous subspans satisfying `0 < length(V) ≤ α_k length(C)`. Define
 
-`F_k = max_{C∈P_k} max_{V⊆C, density_k(C)>0} density_k(V)/density_k(C)`.
+`F_k(α_k) = max_{C∈P_k, mass_k(C)>0} max_{V∈𝓥_k(C,α_k)} mass_k(V)/mass_k(C)`.
 
-These are **computational analogues** of clustering and concentration observables. They are not the Katz–Tao or Frostman quantities themselves. When denominators, measures, or expected counts are unspecified, `KT_k` and `F_k` are `UNKNOWN`.
+The whole chunk is excluded. With four equal-length units, all contiguous windows of at most two units, and `α_k=1/2`, masses `(1,1,1,1)` give `F_k=1/2`, while `(4,0,0,0)` gives `F_k=1`. The earlier unrestricted maximization allowed `V=C` and was identically 1; it must not be used as a concentration detector. Missing measures, window families, expected counts or a nonempty eligible positive-mass domain yield `UNKNOWN`; a missing required `α_k` or decision threshold yields `NO_VERDICT`. Invalid supplied parameter values are contract errors, never PASS.
 
-**Definition 7 (Boolean stickiness).** Given thresholds `θ_KT, θ_F`,
+These are **computational analogues** of clustering and concentration observables, not the Katz–Tao or Frostman quantities. Their window choices and thresholds require empirical calibration. The correction makes the statistic nonconstant; it does not establish useful detection on language-model traces.
 
-`STICKY_k(θ) := [KT_k ≤ θ_KT] ∧ [F_k ≤ θ_F]`.
+**Definition 7 (Boolean stickiness).** When clustering caps are required by the contract, define
 
-`STICKY(θ) := ∀k, STICKY_k(θ)`. A single-parent special case may additionally require every fine activation to inherit the same registry epoch, authority scope, and correction scope as its coarse parent. Stickiness is a routing and custody condition; it neither grants action authority nor identifies the sticky case of an external Kakeya proof.
+`CLUSTER_OK_k(θ,α_k) := [KT_k ≤ θ_KT] ∧ [F_k(α_k) ≤ θ_F]`.
+
+Custody stickiness uses the nesting and governing-acknowledgment predicates specified in §5.2:
+
+`STICKY_k := NEST_OK_k ∧ ANCEST_OK_k ∧ (CLUSTER_OK_k if explicitly required)`.
+
+`STICKY := ∀k, STICKY_k`. Omission of clustering is allowed only when declared inapplicable; missing required caps never default to PASS. Single-parent custody requires the applicable registry, authority and correction scope to be inherited or validly superseded. Stickiness neither grants action authority nor identifies the sticky case of an external Kakeya proof.
 
 ### 3.3 Ledger and authority objects
 
@@ -309,11 +315,11 @@ Under three-valued internal checking, `ALIGNED=False` if any `A(k)=False`, and `
 
 ### 4.7 First failure and trace
 
-**Definition 24 (Failure vector).** Let `b_k=(A_route(k),A_ledger(k),A_gen(k),A_cont(k))`. The trace is `𝔅(T)=(b_0,…,b_M)` together with sub-conjunct outcomes and witness references. Define
+**Definition 24 (Failure vector).** Let `b_k=(A_route(k),A_ledger(k),A_gen(k),A_cont(k))`. Declare an ordering `π=(k_0,…,k_M)` of the partition depths. The ordered trace is `𝔅(T;π)=(b_{k_0},…,b_{k_M})` together with sub-conjunct outcomes and witness references. Define
 
-`FIRST_FAIL(T) := min{k : A(k)=False}`,
+`FIRST_FAIL(T;π) := min{i : A(k_i)=False}`,
 
-when the set is nonempty. Separately, `FIRST_NONPASS(T) := min{k : A(k) is UNKNOWN or NO_VERDICT, and A(j)=True for every j<k}` when that set is nonempty. If a later observed failure exists, it does not erase an earlier non-pass; `FIRST_FAIL` and `FIRST_NONPASS` are reported as distinct locations rather than overriding one another. `FIRST_FAIL` is unique because it is the minimum of a finite set. This is a definitional fact, not a Kakeya theorem.
+when the set is nonempty, and report both the order position `i` and partition depth `k_i`. For finest-first induction, `π=(M,…,0)`, so `i=j` and `k_i=M-j`; write `A_lift(j)=A(M-j)`. A coarse-first display uses `π=(0,…,M)` and may have a different first failure. Separately, `FIRST_NONPASS(T;π) := min{i : A(k_i) is UNKNOWN or NO_VERDICT, and A(k_h)=True for every h<i}` when that set is nonempty. If a later observed failure exists, it does not erase an earlier non-pass; `FIRST_FAIL` and `FIRST_NONPASS` are reported as distinct locations rather than overriding one another. `FIRST_FAIL` is unique because it is the minimum of a finite set. This is a definitional fact, not a Kakeya theorem.
 
 A certificate includes the first failure **and** all later observed failures. Later checks may be unsafe to execute after an earlier failure; those are marked `SKIPPED`, not `True`. Thus early failure does not erase the rest of the evidence.
 
@@ -327,7 +333,7 @@ The window family and support weights must be specified; otherwise the result is
 
 ### 4.9 Non-compensatory semantics
 
-A score `0.99` on three predicate families does not compensate for `AUTH=0`. Formally, the release lattice is conjunctive: replacing any required `True` by `False` makes `A(k)` false regardless of all other values. Scalar telemetry can still summarize defect density, witness latency, or route entropy, but cannot reverse a certificate outcome. This is the paper's operational interpretation of “boolean alignment”: named necessary conditions, not a weighted sense of aligned-ness.
+A score `0.99` on three predicate families does not compensate for `AUTH=0`. This is a property of the release policy, not its numeric representation: for binary `b_i`, positive `w_i`, and `D=Σ_i w_i(1-b_i)`, release iff `D=0` is exactly conjunction. A compensatory threshold policy and a scalar encoding of the same non-compensatory policy are distinct baselines. Formally, the release lattice is conjunctive: replacing any required `True` by `False` makes `A(k)` false regardless of all other values. Scalar telemetry can still summarize defect density, witness latency, or route entropy, but cannot reverse a certificate outcome. This is the paper's operational interpretation of “boolean alignment”: named necessary conditions, not a weighted sense of aligned-ness.
 
 ## 5. Induction on Declared Scales
 
@@ -335,15 +341,15 @@ The schedule below is a systems methodology. The propositions about finite trees
 
 ### 5.1 Obligations, semantic predicates, and evidence predicates
 
-At scale `k`, let `Q_k` be the independently specified finite obligation universe. An obligation can concern one expert activation, one retrieval, one ledger transition, one citation, or a **cross-operation invariant** such as a shared capacity or correction frontier. For obligation `q`, fixed history `H_q`, policy snapshot `Π(q)`, and specification `Spec_k`, semantic authorization and compliance predicates are
+Use partition depth `k` from Definition 5 and a separate induction level `j=M-k`. Define `Q_j` as the independently specified finite obligation universe associated with `P_{M-j}`. Thus `Q_0` is the finest base level and `Q_M` the coarsest parent level; `D_j(q)⊆Q_{j-1}` lifts children toward a parent. `A_lift(j):=A(M-j)` translates the per-partition predicates into induction order. A certificate records both indices; any reported first failure states its declared ordering. An obligation can concern one expert activation, one retrieval, one ledger transition, one citation, or a **cross-operation invariant** such as a shared capacity or correction frontier. For obligation `q`, fixed history `H_q`, policy snapshot `Π(q)`, and specification `Spec_{M-j}`, semantic authorization and compliance predicates are
 
-`A_q(H_q,Π(q))∈{0,1}`,  `C_q(H_q,Spec_k)∈{0,1}`.
+`A_q(H_q,Π(q))∈{0,1}`,  `C_q(H_q,Spec_{M-j})∈{0,1}`.
 
 They answer different questions. An authorized write can violate a schema; a well-formed retrieved instruction can be unauthorized. A monitor with evidence `E_q` returns `V^A_q,V^C_q∈{T,F,U}`, where `U` covers both missing evidence (`UNKNOWN`) and missing contract (`NO_VERDICT`) at the diagnostic layer. A **sound verdict** satisfies
 
 `V^A_q=T ⇒ A_q=1`, `V^A_q=F ⇒ A_q=0`, and similarly for `C_q`.
 
-This is a requirement on the checker, not a property conferred by its name. Independent specification review, negative controls, and adversarial review are needed to assess it. The monitor's self-score cannot be its ground truth. `FOUND` is evidence of retrieval, never an authorization bit. A test-runner crash is not a semantic `F`.
+This is a requirement on the checker, not a property conferred by its name. T/F/U is the evidence algebra chosen here; sound monitors may instead expose abstention or richer evidence states. Strong Kleene conjunction is chosen for its decisive-F behavior, not because every other sound algebra is impossible. Independent specification review, negative controls, and adversarial review are needed to assess it. The monitor's self-score cannot be its ground truth. `FOUND` is evidence of retrieval, never an authorization bit. A test-runner crash is not a semantic `F`.
 
 ### 5.2 Grains and slabs as typed audit records
 
@@ -358,27 +364,29 @@ g = (id, scale, source_identity, span, content_hash, status,
 
 For every applicable ancestor `a` of grain `g`, `ANCEST_OK_k` requires an acknowledgment `(a.id,c_id,c_ver)` in `g.governing_ack`, where `(c_id,c_ver)` is the currently governing correction in `a`'s authoritative registry and the acknowledgment is authorized under `a`'s channel. An authorized supersession may replace it. `NEST_OK_k` requires fresh parent edges and content hashes. Then
 
-`STICKY_k := NEST_OK_k ∧ ANCEST_OK_k ∧ optional declared clustering caps`.
+`STICKY_k := NEST_OK_k ∧ ANCEST_OK_k ∧ (CLUSTER_OK_k if explicitly required)`,
+
+using the same definition as Definition 7. `CLUSTER_OK_k` does not replace custody nesting or governing acknowledgments.
 
 No global `correction_version(parent)≤correction_version(child)` comparison is used: counters from different registries are incomparable. This **stable-custody nesting** is neither the sticky case of an external Kakeya proof nor KNS fan closure.
 
 ### 5.3 Sticky case: unique visible parentage
 
-The simplest audit case has a unique coarse parent for each fine item, shared authority and correction scope, and transfer receipts that make the coarse checker depend only on its declared children. Let `D_k(q)⊆Q_{k-1}` be the child obligations needed for parent obligation `q`. In the sticky case, every required child has one visible parent, all source versions agree with the snapshot, and no unlisted execution channel affects the parent.
+The simplest audit case has a unique coarse parent for each fine item, shared authority and correction scope, and transfer receipts that make the coarse checker depend only on its declared children. Let `D_j(q)⊆Q_{j-1}` be the child obligations needed for parent obligation `q`. In the sticky case, every required child has one visible parent, all source versions agree with the snapshot, and no unlisted execution channel affects the parent.
 
 A sticky pass is not a semantic theorem. It gives a small certificate: parent identity, children, content-bound receipts, correction acknowledgments, and a refinement witness. If any child has multiple incompatible authorities, missing acknowledgment, divergent snapshot, or cross-parent dependency, the trace leaves the sticky case. This is a change in audit regime, not a geometric singularity.
 
 ### 5.4 R: evidence-preserving refinement
 
-**Refinement condition R.** For each parent obligation `q`, there is an abstraction map and child set `D_k(q)` such that
+**Refinement condition R.** For each parent obligation `q`, there is an abstraction map and child set `D_j(q)` such that
 
-`(⋀_{r∈D_k(q)} (A_r∧C_r)) ⇒ (A_q∧C_q)`.
+`(⋀_{r∈D_j(q)} (A_r∧C_r)) ⇒ (A_q∧C_q)`.
 
 The child certificates and refinement witness must establish the implication without enlarging authority or scope. A real refinement records how child operations implement the parent and includes every cross-child premise. Renaming an index, matching a display label, or observing local fluent output is insufficient. Finer-scale `PASS` does not imply coarser semantic fidelity, and coarse `PASS` does not imply every finer obligation; `CROSS_SCALE_OK` names the required transfer receipts.
 
 ### 5.5 C: complete obligation coverage
 
-**Coverage condition C.** `D_k(q)` accounts for every operation, effect, and cross-operation premise relevant to `q`, and `Q_k` is closed under work generated during the trace. Retries, asynchronous callbacks, dynamically created tasks, and side effects must extend the universe. Coverage is not the fraction of conveniently logged calls.
+**Coverage condition C.** `D_j(q)` accounts for every operation, effect, and cross-operation premise relevant to `q`, and `Q_j` is closed under work generated during the trace. Retries, asynchronous callbacks, dynamically created tasks, and side effects must extend the universe. Coverage is not the fraction of conveniently logged calls.
 
 Independent evidence must establish the obligation universe. “All five obligations are present” cannot itself prove that five are all required; that would be circular. A specification manifest, externally reviewed task model, or independently enumerated source inventory supplies the denominator. If a tolerated uncovered fraction is used, it may support a risk statement but not the exact global boolean proposition below. Missing `min_coverage`, required thresholds, or a nonempty applicable scale family yields `NO_VERDICT`.
 
@@ -390,9 +398,9 @@ Append-only storage does not supply N. It can faithfully preserve an unauthorize
 
 ### 5.7 K: correction-aware concurrency and freshness
 
-**Condition K** requires: (1) policy, registry, authority, and relevant ledger reads come from a stated snapshot with linearizable or equivalently serializable commit semantics; (2) every causally preceding correction is included, without fabricating concurrent corrections into dependencies; (3) versions remain valid at effect boundaries or are revalidated; (4) accepted corrections transitively invalidate dependents before promotion; (5) conflicting concurrent operations are ordered or explicitly resolved; and (6) replayed approvals and nonces do not create fresh authority.
+**Condition K** requires: (1) policy, registry, authority, and relevant ledger reads come from a stated snapshot under explicitly declared operation/transaction boundaries, using a jointly consistent atomic snapshot, a justified strictly serializable transaction, or a validated version protocol across all relevant fields; individually linearizable field reads alone can straddle an update and do not establish a joint snapshot; ordinary serializability alone is insufficient when real-time precedence is required; (2) every causally preceding correction is included, without fabricating concurrent corrections into dependencies; (3) versions remain valid at effect boundaries or are revalidated; (4) accepted corrections transitively invalidate dependents before promotion; (5) conflicting concurrent operations are ordered or explicitly resolved; and (6) replayed approvals and nonces do not create fresh authority.
 
-Logical clocks help represent visibility, but Lamport order is not authority or consensus. A historically valid signature is not necessarily current. `NOT_YET`, `ABSENT`, `LOST`, and `FOUND` must remain distinct: causal invisibility is not nonexistence, failed retrieval is not a legitimate negative, and retrieval is not permission.
+Linearizability and serializability are not interchangeable. Strict serializability adds real-time transaction precedence; linearizability concerns operations on concurrent objects (Herlihy and Wing, 1990, §3.3). Even these consistency conditions do not by themselves establish authority or atomicity between authorization and an external effect; that boundary needs its own witness. Logical clocks help represent visibility, but Lamport order is not authority or consensus. A historically valid signature is not necessarily current. `NOT_YET`, `ABSENT`, `LOST`, and `FOUND` must remain distinct: causal invisibility is not nonexistence, failed retrieval is not a legitimate negative, and retrieval is not permission.
 
 ### 5.8 Non-sticky band factoring and affected closure
 
@@ -404,7 +412,7 @@ A non-sticky band is a set of grains, claims, and transitions for which sticky n
 4. Retain evidence outside `Aff` unchanged if N holds and its own freshness remains valid.
 5. Repair, re-receipt, re-acknowledge, or reauthorize within the band and along every affected edge.
 6. Recheck all of `Aff`, including cross-scale transfer, rather than just the seed.
-7. Stop after a caller-supplied `max_rounds`; exhaustion gives `NO_VERDICT` or a correction-storm refusal, never an automatic pass.
+7. Bound iterations by caller-supplied `max_rounds`; exhaustion gives `NO_VERDICT` or a correction-storm refusal, never an automatic pass. A decision-time bound additionally requires terminating subcalls or an enforced supervisory deadline; unconfirmed effects from timed-out work remain quarantined.
 
 Local repair does not imply semantic stability outside the rechecked closure. If N fails, the assumption that outside evidence is unaffected is itself unjustified and the closure must expand.
 
@@ -413,8 +421,9 @@ Local repair does not imply semantic stability outside the rechecked closure. If
 The proposed schedule is:
 
 ```text
-for k = 0 … M:
-    establish independent Q_k and policy/registry/snapshot versions
+for j = 0 … M:
+    k = M - j  # partition depth; j increases from leaves toward parents
+    establish independent Q_j and policy/registry/snapshot versions
     if sticky contract holds:
         verify local obligations and refinement witnesses
     else:
@@ -425,7 +434,7 @@ for k = 0 … M:
 return STRUCTURAL_READY only if every required level is PASS
 ```
 
-A finite loop is not by itself an induction proof. The proof uses explicit child-to-parent implications and complete coverage. `max_rounds` bounds reconciliation; it does not establish correctness. Residuals remain visible in the certificate.
+A finite loop is not by itself an induction proof. The proof uses explicit child-to-parent implications and complete coverage. `max_rounds` bounds the number of reconciliation rounds; it establishes total termination only when each subcall terminates or the decision supervisor enforces a deadline. It does not establish correctness or cancellation of external effects. Residuals remain visible in the certificate.
 
 ### 5.10 Structural readiness versus full release
 
@@ -462,15 +471,15 @@ This result distinguishes a semantic boolean from monitor knowledge. It does not
 
 ### 6.2 Conditional induction across scales
 
-**Proposition 2.** Fix finite scales `0,…,m` and finite traces. Assume: (1) every obligation in `Q_0` has sound `T` verdicts for authorization and compliance; (2) R holds at every adjacent scale; (3) C holds there; (4) N holds throughout; and (5) K holds throughout. Then every parent obligation at every scale has `A_q=C_q=1`. If the global specification is the conjunction of obligations at scale `m`, global authorization and compliance are true. Every global `T` verdict has a finite certificate path to base evidence.
+**Proposition 2.** Fix finite induction levels `j=0,…,M` associated with partition depths `k=M-j`, and finite traces. Assume: (1) every obligation in `Q_0` has sound `T` verdicts for authorization and compliance; (2) R holds at every adjacent scale; (3) C holds there; (4) N holds throughout; and (5) K holds throughout. Then every parent obligation at every scale has `A_q=C_q=1`. If the global specification is the conjunction of obligations at induction level `M`, global authorization and compliance are true. Every global `T` verdict has a finite certificate path to base evidence.
 
-**Proof.** The base case is assumption 1 and verdict soundness. Assume all obligations at scale `k-1` have true authorization and compliance predicates with sound certificates. Choose `q∈Q_k`. By C, `D_k(q)` accounts for all operations, effects, and cross-operation premises relevant to `q`. By N, no outside operation changes those predicates or their evidence, and composition grants no new authority. By K, certificates use current correction-closed snapshots and stale dependents cannot survive promotion. The induction hypothesis makes every predicate in `D_k(q)` true. R yields `A_q=C_q=1`. Appending the refinement witness to child paths yields the parent witness. Finite induction proves the claim. ∎
+**Proof.** The base case is assumption 1 and verdict soundness. Assume all obligations at induction level `j-1` have true authorization and compliance predicates with sound certificates. Choose `q∈Q_j`. By C, `D_j(q)` accounts for all operations, effects, and cross-operation premises relevant to `q`. By N, no outside operation changes those predicates or their evidence, and composition grants no new authority. By K, certificates use current correction-closed snapshots and stale dependents cannot survive promotion. The induction hypothesis makes every predicate in `D_j(q)` true. R yields `A_q=C_q=1`. Appending the refinement witness to child paths yields the parent witness. Finite induction proves the claim. ∎
 
 The hypotheses are substantial. Real systems have not been shown to satisfy them. The proposition does not imply that every desirable global property is conjunctively decomposable, that model scaling preserves alignment, or that a lineage certificate proves entailment. It is a proof about a formal model, not an empirical theorem about deployed LLMs.
 
 ### 6.3 Existence and uniqueness of the first observed failed scale
 
-**Proposition 3.** For a finite total scale order, if `F={k:A(k)=False}` is nonempty, `FIRST_FAIL(T)=min F` exists and is unique. If sub-conjuncts at that scale are ordered by a declared rule, the reported first failed predicate is also unique.
+**Proposition 3.** For a finite total scale order, if `F_π={i:A(k_i)=False}` is nonempty, `FIRST_FAIL(T;π)=min F_π` exists and is unique within that declared order. If sub-conjuncts at that scale are ordered by a declared rule, the reported first failed predicate is also unique.
 
 **Proof.** A nonempty finite subset of a totally ordered set has a unique minimum. The same fact applies to the finite ordered list of failed sub-conjuncts at that scale. ∎
 
@@ -478,7 +487,7 @@ This says nothing about a unique semantic root cause. Several defects can cause 
 
 ### 6.4 Concurrent failures on DAGs
 
-**Definition 26 (Concurrent failure frontier).** Let failed scale nodes form a finite set `F` in a DAG with declared causal order `≺`. Define `Frontier(F)={x∈F : no y∈F has y≺x}`. If `≺` is a valid topological partial order, return `Frontier(F)` and all failures incomparable with its members as a set. If required order edges are missing, return `UNKNOWN_ORDER`.
+**Definition 26 (Concurrent failure frontier).** Let failed scale nodes form a finite set `F` in a DAG with declared causal order `≺`. Define `Frontier(F)={x∈F : no y∈F has y≺x}`. If `≺` is the declared causal partial order, return exactly `Frontier(F)`. Do not add failures merely because they are incomparable with some frontier member: with `a≺c` and independent `b`, the frontier is `{a,b}`, not `{a,b,c}`. If required order edges are missing, return `UNKNOWN_ORDER`.
 
 **Proposition 4.** Every finite nonempty `F` has at least one minimal failed node when `≺` is acyclic, and every failed node has a minimal failed ancestor in `F`.
 
@@ -655,20 +664,20 @@ PROV-002 requires a verifier outside the process capable of forging receipts. A 
 
 ## 9. Worked Boolean Traces
 
-All traces below are **hand-constructed synthetic illustrations**. No external action was performed, no model was run, and no empirical success rate is implied. `T/F/U` abbreviate `PASS/FAIL/UNKNOWN`; `NV` denotes missing contract. Execution outcomes are listed separately.
+All traces below are **hand-constructed synthetic illustrations**. Their numbered levels and FIRST_FAIL values use induction index `j` (finest-first order `π=(M,…,0)`), with partition depth `k=M-j`; they do not reverse Definition 5. No external action was performed, no model was run, and no empirical success rate is implied. `T/F/U` abbreviate `PASS/FAIL/UNKNOWN`; `NV` denotes missing contract. Execution outcomes are listed separately.
 
 ### 9.1 Trace A: valid sticky two-level retrieval lift
 
 Policy `P9`, registry `R4`, authority `Auth3`, snapshot `S12`, and `min_coverage=1.0` are fixed. An independent specification manifest lists exactly five obligations: route `w1` to `d3`; read `d3` with verifier challenge `q88`; propose `m:/plan/x` with valid signature and unused nonce; generate a claim with lineage to both indices; and check the parent coverage/continuity invariant. The fifth obligation's completeness comes from the manifest, not from counting the five rows in this table.
 
-| Scale | Predicate evidence | Outcome |
+| Induction level j | Predicate evidence | Outcome |
 |---|---|---|
 | 0 routing | `d3` live in R4, `w1` permitted | `A_route=T` |
 | 0 evidence | quoted span matches independent verifier copy | `COV=T` |
 | 0 ledger | signature under Auth3, schema and nonce valid | `A_ledger=T` |
 | 0 generation | citations resolve to active indices; external support check passes | `A_gen=T` |
 | 0 parent invariant | no outside effect, projection matches, correction frontier complete | `A_cont=T` |
-| 1 lift | typed identities preserved, only `o3` changes state, R/C/N/K witnesses pass | `A(1)=T` |
+| 1 lift (k=0) | typed identities preserved, only `o3` changes state, R/C/N/K witnesses pass | `A_lift(1)=A(0)=T` |
 
 The resulting `STRUCTURAL_READY=T`; if `CROSS_SCALE_OK`, `AUTH`, `POLICY_OK`, `SUPPORT/FID`, and `SCOPE` also pass, the restricted certificate is `CERTIFIED`. The illustration still does not prove that natural-language truth follows from citation membership: support is an explicit additional assessor input.
 
@@ -753,7 +762,7 @@ A task resumes after context compression. The ledger retains an open obligation 
 | E | AUTH_current=F | signed ≠ fresh |
 | F | concurrent failures | return a frontier set |
 | G | affected dependents stale | scoped invalidation and partial release |
-| H | cap exhausted | termination bound ≠ correctness |
+| H | cap exhausted | iteration bound ≠ total termination or correctness |
 | I | threshold absent | NO_VERDICT, no default pass |
 | J | variant-specific | detection ≠ process exit |
 | K | parent cap=F | local passes need cross-operation obligations |
@@ -886,7 +895,7 @@ A nonzero exit status alone never counts as detection. Named test results and re
 
 ### 11.7 Baselines and ablations
 
-Compare against: scalar weighted deficit; raw model self-assessment; citation-membership only; receipt-coverage only; global end-of-trace judge; per-call local checks without R/C/N/K; and human review alone where feasible. Match model capability, context, tool access, token budget, and human time as closely as possible.
+Compare against: a compensatory scalar weighted deficit; a non-compensatory scalar zero-deficit rule implementing the same necessary conditions; raw model self-assessment; citation-membership only; receipt-coverage only; global end-of-trace judge; per-call local checks without R/C/N/K; and human review alone where feasible. Match model capability, context, tool access, token budget, and human time as closely as possible.
 
 Ablate typed lineage, content-bound receipts, noninterference checks, correction closure, cross-scale receipts, independent assessors, non-vacuity, and partial-release logic. One at a time ablations identify necessary implementation components but do not prove formal necessity. Interactions—especially C with N, and K with correction propagation—require joint ablations.
 
@@ -954,6 +963,12 @@ Abadi and Lamport (1991) provide refinement-mapping background; our R is a certi
 
 The open-addressing work of Farach-Colton, Krapivin, and Kuszmaul (2024/2025) concerns expected probe complexity in specified random-probing hash-table models. Stable placement and bounded lookup are analogies for receipt custody only. A hash-table slot has no authority semantics; successful lookup is not semantic reading; the cited theorems do not establish agent alignment or correction behavior over unbounded retractions.
 
+### 12.5a Certificate and enforcement precedents
+
+Proof-Carrying Code separates supplied safety evidence from a consumer checker (Necula, 1997); assurance-case work examines the gap between a proof, its model, and actual software behavior (Chaki et al., 2009). Least privilege, separation of privilege and complete mediation are established protection principles (Saltzer and Schroeder, 1975), not new consequences of index terminology.
+
+Recent close comparisons include Proof-Carrying Agent Actions (Kadyrbek and Mansurova, 2026) and Proposal–Certification–Execution (Liu Yanglet et al., 2026). PCAA reports a bounded certificate battery and microbenchmark under trusted tool contracts; the PCE work develops a formal/proposal account of trace certification. Neither validates this construction. A novelty claim must identify what the particular four-predicate integration, corrections and partial-release protocol add beyond these precedents. AgentDojo (Debenedetti et al., 2024) supplies independently developed adversarial tasks for a future utility-and-security evaluation.
+
 ### 12.6 Failure-mode catalog
 
 **Specification underapproximation.** The obligation universe omits asynchronous work, shared resources, or semantic claims. Local checks pass and global acceptance is false. Defense: independent manifests, dynamic closure, side-effect inventory. Residual risk: unknown unknowns remain.
@@ -1001,7 +1016,7 @@ The open-addressing work of Farach-Colton, Krapivin, and Kuszmaul (2024/2025) co
 
 ### 13.1 Empirical limitations
 
-No new experiments were performed. All worked traces are synthetic and hand-constructed. No production trace, model checkpoint, user dataset, or real support assessor was evaluated. Existing AIce/CWI synthetic figures are source-reported and were not rerun. The construction therefore has no demonstrated accuracy, false-block rate, latency advantage, or task-success improvement.
+No new language-model or real-system experiments were performed. The revision includes deterministic checks of finite specification examples in `audit/check_specification.py`; these are not executions of the fourteen traces or thirty-two mutation designs, and do not establish efficacy. All worked traces remain synthetic and hand-constructed. No production trace, model checkpoint, user dataset, or real support assessor was evaluated. Existing AIce/CWI synthetic figures are source-reported and were not rerun. The construction therefore has no demonstrated accuracy, false-block rate, latency advantage, or task-success improvement.
 
 Real-system efficacy is open. In particular, R/C/N/K may be difficult or impossible to establish for opaque models and open tool ecosystems. Complete evidence coverage is often unavailable. The appropriate outcome in such cases is limited scope or `NO_VERDICT`, not a default boolean pass.
 
@@ -1021,7 +1036,7 @@ Wang–Zahl and Guth–Wang–Zahl are theorem-background only. No asymptotic in
 
 Coleman (2026a) and Coleman (2026b) are unpublished manuscripts by the author. Wang, Guth, and Zahl have no affiliation with this work. No all-eight-agent contribution is claimed. Available contributions were Kakeyalogic, L, P-NP, Riemann probe, AIce, Grok Bot, the combined team notes, and a local/public-manifest Git inventory handoff; one room was unreachable and is not listed as a contributor.
 
-New Git evidence is restricted to the public-repository manifest. The final handoff reports **26 official commit-pinned public snapshots, 177,064,129 archive bytes, and 717 extracted research-text files across 26 public repository folders**. Extraction is not reading or validation; this paper did not indiscriminately review those 717 files and cites no new archive document as individually inspected evidence. `-Colemanfiles`, all private repositories, quarantined material, and excluded legacy GIUS materials are excluded by owner scope. Private/excluded content was verified absent from the shareable evidence paths by the handoff; none was incorporated and no attempt was made to fill excluded gaps. Snapshots do not include complete branches, tags, releases, issues, PRs, history, LFS, wikis, Actions, or submodule inventories; this is not “Everything” archival completion. No repository write occurred.
+New Git evidence is restricted to the public-repository manifest. The final handoff reports **26 official commit-pinned public snapshots, 177,064,129 archive bytes, and 717 extracted research-text files across 26 public repository folders**. Extraction is not reading or validation; this paper did not indiscriminately review those 717 files and cites no new archive document as individually inspected evidence. `-Colemanfiles`, all private repositories, quarantined material, and excluded legacy GIUS materials are excluded by owner scope. The handoff reports that private/excluded content was absent from the shareable evidence paths; the underlying 26-repository inventory is not included in this package and those totals/exclusions were not independently re-audited here; none was incorporated and no attempt was made to fill excluded gaps. Snapshots do not include complete branches, tags, releases, issues, PRs, history, LFS, wikis, Actions, or submodule inventories; this is not “Everything” archival completion. The original handoff reported no repository write; subsequent package revisions are tracked separately in Git.
 
 ### 13.5 Complexity and security limitations
 
@@ -1065,7 +1080,7 @@ The practical thesis is therefore deliberately narrow: **at fixed caller-supplie
 
 12. Kim, T. E., & Diaz, F. (2025). LTRR: Learning To Rank Retrievers for LLMs. https://arxiv.org/abs/2506.13743
 
-13. Wu, M., Liu, Z., Li, X., Lan, Y., Yan, Y., Wang, S., Yang, C., Yu, M., Zeng, Z., & Sun, M. (2026). Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval (GraphAnchor). https://arxiv.org/abs/2601.16462
+13. Wu, M., Liu, Z., Li, X., Lan, Y., Yan, Y., Wang, S., Yang, C., Yu, M., Zeng, Z., & Sun, M. (2026). Finding What Matters: Anchoring Context Knowledge with Evolving Indices for Iterative Retrieval (KAIR). https://arxiv.org/abs/2601.16462
 
 14. Liang, X., Niu, S., Li, Z., Zhang, S., Song, S., Wang, H., Yang, J., Xiong, F., Tang, B., & Xi, C. (2024). Empowering Large Language Models to Set up a Knowledge Retrieval Indexer via Self-Learning. https://arxiv.org/abs/2405.16933
 
@@ -1085,7 +1100,7 @@ The practical thesis is therefore deliberately narrow: **at fixed caller-supplie
 
 22. Xiao, H., Xu, H., Zhang, X., Chen, Y., & Shi, X. (2026). TARL: Transaction-Aware Reliable Ledgers for Executable Memory Management in Long-Term Agents. https://arxiv.org/abs/2608.03699
 
-23. Yang, G., Liu, X., Wu, B., & Wang, S. (2026). StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems. NeurIPS 2026 poster. https://neurips.cc/virtual/2026/poster/151469
+23. Yang, G., Liu, X., Wu, B., & Wang, S. (2026). StateLedger: Path-Addressed External Memory for Persistent Multi-Agent Systems. Reported NeurIPS 2026 poster. https://neurips.cc/virtual/2026/poster/151469 **Unresolved citation:** the independent review could not recover a confirming primary record; retained for traceability and excluded from supporting evidence pending verification.
 
 24. Wang, H., & Zahl, J. (2025). Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions. https://arxiv.org/abs/2502.17655
 
@@ -1131,14 +1146,27 @@ The practical thesis is therefore deliberately narrow: **at fixed caller-supplie
 
 45. Lamport, L. (1978). Time, Clocks, and the Ordering of Events in a Distributed System. Communications of the ACM 21(7), 558–565. https://doi.org/10.1145/359545.359563
 
+46. Necula, G. C. (1997). Proof-carrying code. Proceedings of POPL. https://doi.org/10.1145/263699.263712
+
+47. Chaki, S., Gurfinkel, A., Wallnau, K., & Weinstock, C. (2009). Assurance Cases for Proofs as Evidence. Proceedings of the Third International Workshop on Proof-Carrying Code and Software Certification. https://ntrs.nasa.gov/citations/20150004720
+
+48. Saltzer, J. H., & Schroeder, M. D. (1975). The Protection of Information in Computer Systems. Proceedings of the IEEE 63(9), 1278–1308. https://doi.org/10.1109/PROC.1975.9939
+
+49. Kadyrbek, N., & Mansurova, M. (2026). Proof carrying agent actions enable verifiable licensing of language model tool use. Scientific Reports. https://doi.org/10.1038/s41598-026-74900-x
+
+50. Liu Yanglet, X.-Y., Wang, X., & Capponi, A. (2026). No Certificate, No Execution: Certified Traces as a Foundation for Trustworthy AI Agents. Preprint. https://arxiv.org/abs/2605.24462
+
+51. Debenedetti, E., Zhang, J., Balunović, M., Beurer-Kellner, L., Fischer, M., & Tramèr, F. (2024). AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents. https://arxiv.org/abs/2406.13352
+
 ---
+
 ## Appendix A. JSON-Like Certificate Schema
 
-The following is a normative-shaped schema example, not a claim that a particular implementation exists. `null` is not silently PASS; every required field with unavailable evidence has a matching reason code. Digests bind artifacts, while verifier identity and challenged spans provide the evidence boundary.
+The following is a normative-shaped schema excerpt, not an executable certificate or a claim that a particular implementation exists. The parent-level record is omitted for space; a real certificate must supply every required level and witness before CERTIFIED is available. `null` is not silently PASS; every required field with unavailable evidence has a matching reason code. Digests bind artifacts, while verifier identity and challenged spans provide the evidence boundary.
 
 ```json
 {
-  "schema_version": "ia-cert-0.1-proposed",
+  "schema_version": "ia-cert-0.2-proposed",
   "certificate_id": "synthetic:example-A:001",
   "claim_kind": "worked_example",
   "spec": {
@@ -1148,7 +1176,11 @@ The following is a normative-shaped schema example, not a claim that a particula
     "nonempty_required_scales": [0, 1],
     "min_coverage": 1.0,
     "max_rounds": 3,
-    "thresholds": {"theta_KT": 1.5, "theta_F": 2.0}
+    "max_partition_depth": 1,
+    "failure_order_partition_depths": [1, 0],
+    "thresholds": {"theta_KT": 1.5, "theta_F": 0.75, "alpha_F": 0.5},
+    "window_family_digest": "sha256:...",
+    "length_convention": "source-unit-count"
   },
   "versions": {
     "registry": "R4",
@@ -1160,7 +1192,8 @@ The following is a normative-shaped schema example, not a claim that a particula
   },
   "scale_records": [
     {
-      "scale": 0,
+      "partition_depth": 1,
+      "induction_level": 0,
       "partition_digest": "sha256:...",
       "parent_map": {"grain:f1": "grain:c1"},
       "obligations": ["o1", "o2", "o3", "o4", "o5"],
@@ -1274,22 +1307,24 @@ The diagnostic aggregation preserves reason codes; `release_bit` is applied only
 ### B.3 Cross-scale lift
 
 ```python
-def lift_parent(q, child_certs, witnesses):
-    if not independent_coverage(q, witnesses.C):
-        return no_verdict("INCOMPLETE_OBLIGATION_UNIVERSE")
-    if not noninterference(q, witnesses.N):
-        return fail_or_unknown("NONINTERFERENCE", witnesses.N)
-    correction = correction_status(q, witnesses.K)
-    if correction.Ev != "PASS":
-        return fail_or_no_verdict("CORRECTION_FRONTIER", correction)
-    if not refinement_valid(q, child_certs, witnesses.R):
-        return fail_or_unknown("REFINEMENT", witnesses.R)
-    if any(c.Ev != "PASS" for c in child_certs):
-        return aggregate_children(child_certs)
+def lift_parent(q, child_certs, witnesses, contract):
+    if contract.missing_lift_requirements(q):
+        return no_verdict("MISSING_LIFT_CONTRACT")
+    counterexample = independent_parent_counterexample(q, witnesses)
+    if counterexample is not None:
+        return fail_with_witness(q, counterexample)
+    premises = [coverage_status(q, witnesses.C),
+                noninterference_status(q, witnesses.N),
+                correction_status(q, witnesses.K),
+                refinement_status(q, child_certs, witnesses.R)]
+    if any(record.Ev != "PASS" for record in premises + child_certs):
+        return unknown_parent(q, reason="LIFT_NOT_ESTABLISHED",
+                              premise_records=premises,
+                              child_records=child_certs)
     return pass_with_path(q, child_certs, witnesses)
 ```
 
-The order shown is illustrative, not a security rule that avoids checking adversarial input. Implementations should safely parse and validate all required records before relying on any one result.
+R is a sufficient implication, not an equivalence: a failed child or missing premise blocks this lift but does not alone prove the parent false. For example, child predicates `p,r` imply parent `p∨r` when both hold; `p=F,r=T` leaves the parent true. Retain failed-child diagnostics while returning parent UNKNOWN unless an independent parent counterexample or a verified necessity argument establishes falsity. Missing coverage evidence is UNKNOWN; a missing coverage contract is NO_VERDICT. The order shown is illustrative, not a security rule that avoids checking adversarial input. Implementations should safely parse and validate all required records before relying on any one result.
 
 ### B.4 Affected closure and partial release
 
@@ -1316,21 +1351,30 @@ A failed disjointness test identifies affected content; unknown dependency compl
 
 ```python
 def reconcile(trace, max_rounds):
+    # Precondition: helpers terminate or a supervisor enforces a deadline.
+    # A deadline outcome is UNKNOWN/TIMEOUT; unconfirmed effects stay held.
     if max_rounds is None:
         return NO_VERDICT("MISSING_MAX_ROUNDS")
-    for round_id in range(max_rounds):
+    if not isinstance(max_rounds, int) or isinstance(max_rounds, bool) or max_rounds < 0:
+        return NO_VERDICT("INVALID_MAX_ROUNDS")
+    for round_id in range(max_rounds + 1):
+        # Assess initially and after the last permitted repair.
         seeds = nonpass_structural_seeds(trace)
         if not seeds:
             if all_cross_scale_receipts_pass(trace):
                 return STRUCTURAL_READY(trace)
-            return transfer_status(trace)  # FAIL for a witnessed bad transfer; NO_VERDICT if missing/unresolved
+            # Transfer FAIL requires a witness; absent evidence is UNKNOWN;
+            # an absent contract is NO_VERDICT.
+            return transfer_status(trace)
+        if round_id == max_rounds:
+            break
         aff = invalidate(seeds, trace.G, trace.certificates)
         repaired = repair_only_authorized(trace, aff)
         recheck_entire_closure(trace, aff, repaired)
     return NO_VERDICT("CORRECTION_STORM_OR_ROUND_CAP")
 ```
 
-`repair_only_authorized` is intentionally abstract. Certificate verification does not invent authority or a repair. If no repair is possible, residuals remain held.
+The budget limits repair attempts, not readiness assessments: an initially clean trace can pass at zero attempts, and success on the final permitted repair is assessed before reporting exhaustion. The loop cap alone does not establish total termination. A deadline supervisor must return a decision independently of a blocked helper; a timeout does not prove cancellation or successful rollback of external work. `repair_only_authorized` is intentionally abstract. Certificate verification does not invent authority or a repair. If no repair is possible, residuals remain held.
 
 ## Appendix C. Notation Index
 
@@ -1342,8 +1386,8 @@ def reconcile(trace, max_rounds):
 | `L_t`, `View(L_t)` | append-oriented ledger; committed non-superseded view |
 | `C_k` | continuity state projection at scale `k` |
 | `P_k` | partition at scale `k`; finer partitions refine coarser ones |
-| `Q_k` | independently declared obligation universe |
-| `D_k(q)` | child obligations required to lift parent `q` |
+| `Q_j` | independent obligations at induction level j, associated with partition P_{M-j} |
+| `D_j(q)` | children in Q_{j-1} required to lift parent q in Q_j |
 | `A_q`, `C_q` | semantic authorization and compliance bits |
 | `V^A_q`, `V^C_q` | monitor verdicts `T/F/U` under available evidence |
 | `Ev(P)` | PASS, FAIL, UNKNOWN, or NO_VERDICT evidence status |
@@ -1356,7 +1400,9 @@ def reconcile(trace, max_rounds):
 | `ALIGNED(T)` | all declared scales pass; not synonymous with release |
 | `FIRST_FAIL` | least known failed scale in a finite total order |
 | `Frontier(F)` | minimal failed nodes under declared causal DAG order |
-| `STICKY_k` | computational custody nesting, acknowledgments, optional clustering |
+| `STICKY_k` | custody nesting and acknowledgments, with CLUSTER_OK_k only when required |
+| `F_k(α_k)` | maximum supported mass fraction in declared proper subspan windows |
+| `A_lift(j)` | A(M-j), per-partition predicates viewed in induction order |
 | `R,C,N,K` | refinement, complete coverage, noninterference, freshness/concurrency |
 | `G=(V,E)` | finite claim/dependency DAG |
 | `Aff` | affected transitive dependency closure from correction/failure seeds |
@@ -1381,7 +1427,7 @@ def reconcile(trace, max_rounds):
 | M03 | valid hash, wrong quoted span | content receipt | COV fail | hash-as-reading |
 | M04 | inactive citation ID | active lineage | GEN lineage fail | citation membership |
 | M05 | real ID, unsupported sentence | supported claim | FID fail | lineage-as-truth |
-| M06 | correct answer, post-rationalized citation | causal exposed lineage | active-evidence mismatch | support versus causal faithfulness |
+| M06 | visible supporting citation used only for post-rationalization | source visible and supporting | lineage may PASS; causal reliance remains unestablished without a separate intervention protocol | support versus causal faithfulness |
 | M07 | missing middle chunk | complete coverage | COV unknown | denominator integrity |
 | M08 | omitted asynchronous callback | closed universe | C unknown/fail | dynamic obligations |
 | M09 | shared-cap overflow | atomic reservation | parent compliance fail | cross-operation R/C |
@@ -1409,6 +1455,8 @@ def reconcile(trace, max_rounds):
 | M31 | false partial with hidden cache | no shared state | partial denied | noninterference |
 | M32 | silent criteria edit | versioned rubric | new epoch required | governance drift |
 
+M06 is an observability-limit control, not a promised lineage detection. An inactive citation is already tested by M04. A causal-intervention study, if added, must specify its assumptions and independent labels.
+
 A mutant is evidence only when clean baseline, valid execution, and named attributable failure are recorded. Surviving same-author mutants identify blind spots but do not measure deployment prevalence.
 
 ## Appendix E. Prior-Paper Crosswalk
@@ -1419,7 +1467,7 @@ A mutant is evidence only when clean baseline, valid execution, and named attrib
 | 2026a routing–ledger consistency | `A_ledger` plus lineage | explicit provenance, transitions, authority, supersession | router cannot self-commit |
 | 2026a generation–index consistency | `A_gen` | adds support, status, scope, attribution completeness | citation membership not fidelity |
 | 2026a continuity–ledger consistency | `A_cont` | explicit obligations, correction and handoff checkpoints | fluent text not preserved state |
-| 2026a weighted alignment deficit | boolean vector plus optional telemetry | required defects cannot be averaged away | scalar remains diagnostic only |
+| 2026a weighted alignment deficit | named predicates with non-compensatory release | required defects cannot be averaged away | equivalent scalar zero-deficit rule is allowed |
 | 2026a IA-MoA role proposal | checker and release controller | separate evidence and enforcement records | no new model architecture claimed |
 | 2026a typed morphisms | versioned lineage and refinement | paths become certificate edges | exposed paths not full neural causation |
 | 2026a hierarchical indices | declared finite scale tree | no automatic training/model-scale induction | finite M chosen by task |

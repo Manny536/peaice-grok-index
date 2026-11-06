@@ -1,4 +1,25 @@
-# Reference Verification Record
+# Reference verification — independent-review revision
+
+November 5, 2026 (America/Los_Angeles). The bibliography now has 51 entries: two same-author unpublished manuscripts and 49 external entries. Reference 23 (StateLedger) remains unresolved and is excluded from substantive support. The former blanket “43/43 verified” conclusion is not adopted.
+
+The [45-entry identity audit](bibliography-identity-audit.csv) records the review of the original bibliography; the [organized literature](organized-literature.md) contains 20 prioritized papers and source links. Identity, source contents, claim support and experimental replication are different checks. The independent review used SciSpace for discovery and selected extractions, then primary records to check substantive points. Its generated search metadata was corrected when primary records disagreed. No claim of full-text reading or replication of every reference is made.
+
+| Entry / issue | Current disposition |
+|---|---|
+| 13, Wu et al., arXiv:2601.16462v2 | Primary §3.2 names KAIR; evolving keyword/relation/RDF indexing supports the mechanism description. GraphAnchor alias removed from current claims. |
+| 23, claimed StateLedger NeurIPS poster | Given primary page inaccessible; no confirming primary record recovered by the review. Unresolved, not a finding of nonexistence. |
+| 46, Necula 1997 | Original Proof-Carrying Code paper; DOI 10.1145/263699.263712. A later SciSpace record was not used as the original publication. |
+| 47, Chaki et al. 2009 | NASA record 20150004720 confirms title and four authors, including Charles Weinstock. |
+| 48, Saltzer & Schroeder 1975 | Primary paper; DOI 10.1109/PROC.1975.9939. Established security principles, not validation of this framework. |
+| 49, Kadyrbek & Mansurova 2026 | Publisher identifies Scientific Reports, correcting SciSpace venue metadata. DOI 10.1038/s41598-026-74900-x. Reported small tests and microbenchmark do not validate INDEX-ALIGN-CERT. |
+| 50, Liu Yanglet et al. 2026 | arXiv:2605.24462; trace certification proposal/formal background, not field efficacy evidence. |
+| 51, Debenedetti et al. 2024 | arXiv:2406.13352; AgentDojo supplies an external adversarial evaluation comparison. |
+
+The current manuscript and REFERENCES.md contain identical numbered entries. The original check is retained below as provenance, with its narrower methods and superseded conclusion visible.
+
+---
+
+# Original authoring check (historical)
 
 Checked November 5, 2026 (America/Los_Angeles) from the box.
 
@@ -50,4 +71,4 @@ Checked November 5, 2026 (America/Los_Angeles) from the box.
 | Herlihy & Wing 1990 | doi:10.1145/78969.78972 | doi.org | resolves |
 | Lamport 1978 | doi:10.1145/359545.359563 | doi.org | resolves |
 
-**Result.** 43 of 43 external references resolve to the stated work. One title was corrected (GraphAnchor) and seven author lists that the earlier bibliography left as placeholders were filled from the primary records. Venue/page fields for DOI-only references were carried over from the prior bibliography and were not re-read from the publisher page. The two Coleman (2026a/b) manuscripts are included in `sources/`.
+**Original reported result (not adopted by the independent review).** 43 of 43 external references resolve to the stated work. One title was corrected (GraphAnchor) and seven author lists that the earlier bibliography left as placeholders were filled from the primary records. Venue/page fields for DOI-only references were carried over from the prior bibliography and were not re-read from the publisher page. The two Coleman (2026a/b) manuscripts are included in `sources/`.

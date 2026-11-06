@@ -35,7 +35,7 @@ The monitor's verdict depends on what it knows about the correction frontier. Be
 
 Condition K (§5.7) is the formal summary of what freshness requires:
 
-1. Reads of policy, registry, authority, and relevant ledger state come from a stated snapshot with linearizable or serializable commit semantics. Linearizability (Herlihy and Wing, 1990) guarantees that each operation appears to take effect atomically at some point between invocation and response, consistent with real-time order; it is what makes "the policy at commit time" a well-defined object.
+1. The contract declares operation/transaction boundaries and the required real-time freshness property. Linearizability applies to single-object operations; strict serializability can supply real-time transaction order for multi-operation transactions. Ordinary serializability alone is insufficient for that order and is not equivalent to linearizability (Herlihy and Wing, 1990, §3.3). Individually linearizable field reads do not ensure a joint snapshot: use a joint atomic snapshot, a justified strictly serializable transaction, or a validated version protocol across all relevant fields. Policy-dependent effects require an appropriate atomic admission or revalidation boundary.
 2. Every causally preceding correction is included — and concurrent corrections are not fabricated into dependencies. Overstating dependencies is also an error: it can invalidate certificates that were never affected.
 3. Versions remain valid at effect boundaries or are revalidated. Time-of-check/time-of-use gaps are the classic violation.
 4. Accepted corrections transitively invalidate dependents before promotion.
@@ -68,7 +68,7 @@ Trace F applies closure to concurrency. Agent A commits a valid plan; agent B us
 
 ## 5.9 Correction storms and the round cap
 
-Trace H is the adversarial case for closure: two authorized registries alternately supersede conflicting values. Each correction correctly invalidates the other's dependents, and the system can oscillate indefinitely. The manuscript's reconciliation loop (Appendix B.5) has a caller-supplied `max_rounds`; exhausting it returns `NO_VERDICT("CORRECTION_STORM_OR_ROUND_CAP")`, or `REFUSED` if policy prohibits unresolved contested output, or `AWAITING_HUMAN` where the contract names an adjudicator. "No arithmetic average of versions chooses a winner." The cap guarantees termination; it does not decide which registry is right. That decision is an authority question outside the loop.
+Trace H is the adversarial case for closure: two authorized registries alternately supersede conflicting values. Each correction correctly invalidates the other's dependents, and the system can oscillate indefinitely. The manuscript's reconciliation loop (Appendix B.5) has a caller-supplied `max_rounds`; exhausting it returns `NO_VERDICT("CORRECTION_STORM_OR_ROUND_CAP")`, or `REFUSED` if policy prohibits unresolved contested output, or `AWAITING_HUMAN` where the contract names an adjudicator. "No arithmetic average of versions chooses a winner." The cap bounds iterations. Total termination of the decision requires every repair/check/I/O call to terminate or a supervisor that can return a deadline outcome independently of a blocked call. A timeout does not establish cancellation or rollback; unconfirmed effects remain held. A timeout is an execution status, not evidence that a registry is wrong; the cap does not decide which registry is right. That decision is an authority question outside the loop.
 
 ## 5.10 Freshness as part of certificate identity
 
@@ -76,4 +76,4 @@ The freshness table in §8.2 lists, for each predicate, the evidence that makes 
 
 ## 5.11 What this layer establishes
 
-Corrections are handled as authorized, scoped seeds whose consequences are the reachable closure in an explicit dependency graph. Happened-before, not timestamps, determines what a step could have seen; linearizable snapshots make "current policy" well defined; reachability makes invalidation complete and linear-time; isolation makes partial preservation provable. The stale-approval and storm examples show both why these conditions are needed and where their guarantees stop.
+Corrections are handled as authorized, scoped seeds whose consequences are the reachable closure in an explicit dependency graph. Happened-before, not timestamps, determines what a step could have seen; declared real-time snapshot/effect semantics constrain "current policy"; one traversal computes invalidation closure on the supplied graph in linear time; completeness and isolation remain explicit assumptions of partial preservation. The stale-approval and storm examples show both why these conditions are needed and where their guarantees stop.

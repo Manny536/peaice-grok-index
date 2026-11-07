@@ -401,13 +401,32 @@ def main():
 
     iframe_srcs = [frame.get("src", "") for frame in parsed.iframes]
     if set(iframe_srcs) != DEMO_FRAMES or len(iframe_srcs) != 2:
-        failures.append(f"demo frames {iframe_srcs} != the two user-owned demos")
+        failures.append(f"demo frames {iframe_srcs} != the two Manuel Coleman GitHub Pages demos")
+    game_frames = [frame for frame in parsed.iframes if "peaice-games" in frame.get("src", "")]
+    sim_frames = [frame for frame in parsed.iframes if "cannona-dd-onv1" in frame.get("src", "")]
+    if len(game_frames) != 1 or len(sim_frames) != 1:
+        failures.append("expected one game iframe and one simulator iframe")
+    else:
+        game = game_frames[0]
+        sim = sim_frames[0]
+        if game.get("class") != "game-frame":
+            failures.append(f"game iframe class {game.get('class')!r}")
+        if "allowfullscreen" not in game or "fullscreen" not in game.get("allow", ""):
+            failures.append(f"game iframe is missing fullscreen permission: {game}")
+        if sim.get("class") != "sim-frame":
+            failures.append(f"simulator iframe class {sim.get('class')!r}")
+        if "allowfullscreen" in sim:
+            failures.append("simulator iframe should not request fullscreen")
+    if "height:min(28rem,70vh)" in html.replace(" ", ""):
+        failures.append("game and simulator still share the 28rem frame")
+    if "aspect-ratio:5/8" not in html.replace(" ", "") or "aspect-ratio:16/10" not in html.replace(" ", ""):
+        failures.append("game stage is missing the page and wide aspect ratios")
+    if 'id="game-expand"' not in html or ">Open game<" not in html:
+        failures.append("game expand control or open-game link is missing")
     for frame in parsed.iframes:
         src = frame.get("src", "")
         if "peaice.org" in src or "canva" in src or "docs.google" in src or "chatgpt.site" in src:
             failures.append(f"disallowed iframe {src}")
-        if "height" in frame or "width" in {k for k in frame if k == "height"}:
-            failures.append(f"iframe has a fixed height attribute: {frame}")
         if frame.get("height"):
             failures.append(f"iframe height attribute: {frame.get('height')}")
 

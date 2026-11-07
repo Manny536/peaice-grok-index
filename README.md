@@ -30,6 +30,18 @@ The independent review, organized literature and applied corrections are linked 
 
 Use the `embedHeight` posted by the references page. A modest starting height is enough until that message arrives. Do not reuse the Home frame, and do not pin an enormous fixed height.
 
+**Game frame.** The shooter paints 1:1 into its iframe, so the catalog sizes that one frame instead of cropping it. In the Services column, and any catalog viewport under 840px, the stage is a 5:8 page and uses the full catalog width. At 840px and wider it is 16:10. Viewport-height units are not used for this stage, because the outer frame's height is the catalog's own `embedHeight`. Expand game asks the game iframe to go fullscreen. Open game leaves the catalog for the game page. The simulator keeps a separate frame, `min(36rem, 640px)`, and its scrolling stays in that frame (`overscroll-behavior: contain`). Wheel input on the game does not chain to the catalog (`overscroll-behavior: none`).
+
+The live Services module already listens for `embedHeight` and starts the outer iframe at 900px. Two host changes are still required, and they are outside this repository:
+
+```html
+<iframe src="https://manny536.github.io/peaice-grok-index/references/" title="PeAIce reference catalog" style="width:100%;border:0;display:block;height:900px" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+```
+
+`allow="fullscreen"` and `allowfullscreen` are required on that outer frame. Without them, Expand game cannot leave the nested iframe. Keep the existing `message` listener so the outer height follows `embedHeight`. A fixed outer height will clip the taller game stage. `references/nested-scroll-fixture.html` is a local 600px column used to check that wheel input on the game does not scroll the page around it.
+
+The module currently sits in `grid-column-medium-6` / `grid-column-large-8` beside an empty column, inside `section-inner-width-small` (960px). That is the ~600px column. The game already uses 100% of that width. A wider arena means moving this HTML module to a full-width row (`grid-column-small-12 grid-column-medium-12 grid-column-large-12`). This repository cannot change that IONOS layout.
+
 **Why it is separate.** The catalog is not placed inside a KakeyaLogic frame. Whole peaice.org pages are linked. The inventory said framing those pages was untested and recommended link cards. The only frames on the catalog are the two demos on Manuel Coleman's GitHub Pages, `/games` and `/pnp-loop`, each capped at `min(28rem, 70vh)`. The public page does not repeat this integration note.
 
 **Canonical root.** Public PeAIce links use `https://peaice.org/lovelabslca`. The site root, `http://peaice.org`, `https://peaice.org`, and `https://www.peaice.org` fold into that home. `https://peaice.org/lovelabslca/` folds into the same page without the trailing slash.

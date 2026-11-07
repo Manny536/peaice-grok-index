@@ -60,7 +60,14 @@ section>h3{font-size:1rem;color:var(--accent);margin:16px 0 8px}
 .tag.open{color:var(--blue);border-color:#2a4060;background:#101820}
 .tag.archived{color:var(--muted);border-color:var(--stroke);background:#10141c}
 .tag.hold{color:var(--danger);border-color:#4a2020;background:#1a1014}
-.demo-frame{width:100%;height:min(28rem,70vh);min-height:12rem;border:0;border-radius:10px;background:#0a0e16;display:block;margin-top:10px}
+.play-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.play-actions button,.play-actions a{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.04em;padding:8px 12px;border-radius:999px;border:1px solid var(--stroke);background:#10141c;color:var(--ink);cursor:pointer}
+.play-actions a{color:var(--blue);text-decoration:none}
+.game-stage{width:100%;margin-top:10px;background:#0a0a12;border-radius:10px;overflow:hidden;aspect-ratio:5/8;overscroll-behavior:none}
+@media (min-width:840px){.game-stage{aspect-ratio:16/10}}
+.game-frame{width:100%;height:100%;border:0;display:block;background:#0a0a12;overscroll-behavior:none;touch-action:none}
+.game-frame:fullscreen,.game-stage:fullscreen,.game-stage:fullscreen .game-frame{width:100%;height:100%;aspect-ratio:auto;border-radius:0;background:#0a0a12}
+.sim-frame{width:100%;height:min(36rem,640px);min-height:20rem;margin-top:10px;border:0;border-radius:10px;display:block;background:#0a0e16;overscroll-behavior:contain}
 .table-wrap{overflow-x:auto;margin:10px 0}
 .status-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:0}
 .status-table th,.status-table td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--stroke);vertical-align:top}
@@ -319,21 +326,27 @@ footer p{margin:.3em 0}
 
   <section id="interactive-demos">
     <h2>Interactive demos</h2>
-    <p class="note">Both paths redirect to Manuel Coleman's GitHub Pages.</p>
+    <p class="note">Both paths redirect to Manuel Coleman's GitHub Pages. The game uses this page's width. The simulator scrolls inside its own frame.</p>
     <div class="card-grid">
       <article class="record" id="rec-games" data-path="https://peaice.org/games" data-final="https://manny536.github.io/peaice-games/" data-group="interactive-demos" data-relation="redirect">
         <h3>PEAICE FREE SHOOTER — Excellence Engine</h3>
         <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/games">https://peaice.org/games</a></p>
         <p class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-games/">https://manny536.github.io/peaice-games/</a></p>
         <p class="explain">peaice.org/games redirects to Manuel Coleman's GitHub Pages browser game whose enemies are Benevolence Drift, Session Amnesia, and Alignment Illusion.</p>
-        <iframe class="demo-frame" title="PEAICE FREE SHOOTER on Manuel Coleman's GitHub Pages" src="https://manny536.github.io/peaice-games/" loading="lazy" referrerpolicy="no-referrer"></iframe>
+        <div class="play-actions">
+          <button type="button" id="game-expand">Expand game</button>
+          <a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-games/">Open game</a>
+        </div>
+        <div class="game-stage">
+          <iframe class="game-frame" title="PEAICE FREE SHOOTER on Manuel Coleman's GitHub Pages" src="https://manny536.github.io/peaice-games/" loading="lazy" referrerpolicy="no-referrer" allow="fullscreen" allowfullscreen></iframe>
+        </div>
       </article>
       <article class="record" id="rec-pnp-loop" data-path="https://peaice.org/pnp-loop" data-final="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/" data-group="interactive-demos" data-relation="redirect">
         <h3>L²_C Live Loop — A Computational Example</h3>
         <p class="url"><a target="_blank" rel="noopener" href="https://peaice.org/pnp-loop">https://peaice.org/pnp-loop</a></p>
         <p class="url"><a target="_blank" rel="noopener" href="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/">https://manny536.github.io/peaice-propsed-cannona-dd-onv1/</a></p>
         <p class="explain">peaice.org/pnp-loop redirects to an interactive simulator with β, noise, and care sliders, live traces, and a P vs NP comparison.</p>
-        <iframe class="demo-frame" title="L²_C Live Loop on Manuel Coleman's GitHub Pages" src="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/" loading="lazy" referrerpolicy="no-referrer"></iframe>
+        <iframe class="sim-frame" title="L²_C Live Loop on Manuel Coleman's GitHub Pages" src="https://manny536.github.io/peaice-propsed-cannona-dd-onv1/" loading="lazy" referrerpolicy="no-referrer"></iframe>
       </article>
     </div>
   </section>
@@ -440,6 +453,18 @@ footer p{margin:.3em 0}
     <p>Canonical root <a target="_blank" rel="noopener" href="https://peaice.org/lovelabslca">https://peaice.org/lovelabslca</a></p>
   </footer>
 </div>
+<script>
+(function(){
+  var button=document.getElementById("game-expand");
+  var frame=document.querySelector("iframe.game-frame");
+  if(!button||!frame)return;
+  button.addEventListener("click",function(){
+    var active=document.fullscreenElement;
+    if(active){document.exitFullscreen();return;}
+    if(frame.requestFullscreen)frame.requestFullscreen();
+  });
+})();
+</script>
 <div id="embed-end" style="height:0;clear:both"></div><script>/* embed-height: post the content height, measured at an end marker so it never follows the frame size */(function(){var last=0;function s(){var h=Math.ceil(document.getElementById("embed-end").getBoundingClientRect().top+scrollY);if(Math.abs(h-last)>2){last=h;parent.postMessage({embedHeight:h,src:location.href},"*")}}addEventListener("load",s);addEventListener("resize",s);new ResizeObserver(s).observe(document.body);})();</script>
 </body>
 </html>

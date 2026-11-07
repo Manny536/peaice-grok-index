@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nested catalog scroll fixture</title>
+<style>
+  body{margin:0;background:#e4f0ed;font-family:Georgia,serif}
+  #page{height:100vh;overflow:auto}
+  #column{width:600px;max-width:100%;margin:0 auto;background:#fff}
+  iframe{width:100%;height:900px;border:0;display:block}
+  .spacer{padding:24px}
+</style>
+</head>
+<body>
+<div id="page">
+  <div class="spacer" style="height:70vh">Services page above the catalog column.</div>
+  <div id="column">
+    <iframe id="catalog" title="PeAIce reference catalog" src="index.html#interactive-demos" allow="fullscreen" allowfullscreen></iframe>
+  </div>
+  <div class="spacer" style="height:80vh">Services page below the catalog column.</div>
+</div>
+<script>
+window.addEventListener("message", function (event) {
+  if (!event.data || typeof event.data.embedHeight !== "number") return;
+  var frame = document.getElementById("catalog");
+  if (frame && event.data.src && String(event.data.src).indexOf("index.html") !== -1) {
+    frame.style.height = Math.ceil(event.data.embedHeight) + "px";
+  }
+});
+</script>
+</body>
+</html>

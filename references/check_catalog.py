@@ -25,7 +25,8 @@ CATALOG = ROOT / "references" / "index.html"
 HOME = ROOT / "index.html"
 INVENTORY_SHA256 = "b355b3a87e01a32096f1720325513eacd0651dfc8bddbdb13c42fa808dbc6c9a"
 
-# Home modules must stay byte-for-byte. The catalog is a separate page.
+# The three original Home modules must stay byte-for-byte. A fourth section,
+# Cross-model compaction research, follows them. The catalog is a separate page.
 HOME_BLOCKS = {
     "granular-compaction": (
         '<div class="part gc" id="granular-compaction">',
@@ -39,8 +40,13 @@ HOME_BLOCKS = {
     ),
     "index-alignment": (
         '<div class="part ia" id="index-alignment">',
-        '<div id="embed-end"',
-        "a09297e74cc09f439ab9c5f51a3b6730deb14623fc1c5359d270b7f3f96d8584",
+        '<div class="part cmc" id="cross-model-compaction">',
+        "4b363a1de53b65456d5ee27998284ed57dce254b72bf2f3f44cab765ef3b6187",
+    ),
+    "cross-model-compaction": (
+        '<div class="part cmc" id="cross-model-compaction">',
+        '</main>',
+        "df735ad68e9d473178871473fcbb8ee4f31f07c655b8996db2d909aeb7e2fe5c",
     ),
 }
 
